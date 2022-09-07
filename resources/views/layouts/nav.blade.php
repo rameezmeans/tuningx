@@ -25,11 +25,13 @@
                 <a href="#switch-language" class="modal-trigger inline waves-effect tooltipped" data-tooltip="Language" data-tooltip-id="fadf0895-13d2-6695-827b-a5139a3bd3b8" style="z-index: 1003;">
                     <i class="fa-solid fa-globe"></i>
                 </a>
+
                 <a onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();" href="{{ route('logout'); }}" class="inline waves-effect tooltipped" data-tooltip="Logout" data-tooltip-id="e5a03688-582a-aef9-925b-060305f20995">
                    <i class="fa-solid fa-right-from-bracket"></i>
                 </a>
-                <form id="logout-form" action="{{route('logout'); }}" method="POST" class="d-none">@csrf</form>
+                
+                <form id="logout-form" action="{{ route('logout'); }}" method="POST" class="d-none">@csrf</form>
             </li>
     
             <li class="active">
