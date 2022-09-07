@@ -21,6 +21,18 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'language',
+        'address',
+        'zip',
+        'city',
+        'country',
+        'status',
+        'company_name',
+        'company_id',
+        'slave_tools_flag',
+        'master_tools',
+        'slave_tools',
     ];
 
     /**
