@@ -44,12 +44,12 @@
                 </a>
             </li>
                             <li class="">
-                <a href="/en/client/file-upload" class="waves-effect">
+                <a href="{{ route('file-upload') }}" class="waves-effect">
                     <i class="fa-solid fa-upload"></i><span>File Upload</span>
                 </a>
             </li>
                     <li class="">
-                <a href="/en/client/file-history" class="waves-effect">
+                <a href="{{ route('file-history'); }}" class="waves-effect">
                     <i class="fa-solid fa-clock-rotate-left"></i><span>File History</span>
                 </a>
             </li>

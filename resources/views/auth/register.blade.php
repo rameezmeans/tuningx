@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front')
 
 @section('content')
 
@@ -413,7 +413,7 @@
                                     <option value="Galetto">Galetto</option>
                                     <option value="HPturners">HPturners</option>
                                     <option value="IO_Terminal">I/O Terminal</option>
-                                    <option value="IO_Terminal">K-tag</option>
+                                    <option value="K_tag">K-tag</option>
                                     <option value="Kess_V2">Kess V2</option>
                                     <option value="Kess_V3">Kess V3</option>
                                     <option value="Magic_MAGPro2">Magic MAGPro2</option>
@@ -437,7 +437,7 @@
                                     <option value="CMD">CMD</option>
                                     <option value="EVC_BDM100">EVC BDM100</option>
                                     <option value="Flex">Flex (magic)</option>
-                                    <option value="IO_Terminal">K-tag</option>
+                                    <option value="K_tag">K-tag</option>
                                     <option value="Kess_V2">Kess V2</option>
                                     <option value="Kess_V3">Kess V3</option>
                                   </select>

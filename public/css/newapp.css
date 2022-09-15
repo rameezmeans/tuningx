@@ -24228,3 +24228,8 @@ button[type="submit"].error i.error-icon {
         display: block;
     }
 }
+
+.bordered_div {
+    border: red 1px solid;
+    border-radius: 2px;
+}
