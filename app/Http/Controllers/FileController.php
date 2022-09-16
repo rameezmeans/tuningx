@@ -52,8 +52,26 @@ class FileController extends Controller
      */
     public function postFile(Request $request)
     {
-        $file = $request->all();
-        unset($file['_token']);
+
+        $file = $request->validate([
+            'tool' => 'required|max:255',
+            'tool_type' => 'required|max:255',
+            'file_attached' => 'required|max:255',
+            'file_type' => 'required|max:255',
+            'name' => 'required|max:255',
+            'email' => 'required|max:255',
+            'phone' => 'required|max:255',
+            'model_year' => 'required|max:255',
+            'license_plate' => 'required|max:255',
+            'vin_number' => 'required|max:255',
+            'brand' => 'required|max:255',
+            'model' => 'required|max:255',
+            'version' => 'required|max:255',
+            'model' => 'required|max:255',
+            'tools' => 'required|max:255',
+            'gear_box' => 'required|max:255',
+        ]);
+
         File::create($file);
 
         return back()->with('success', 'File successfully Added!');
@@ -77,6 +95,8 @@ class FileController extends Controller
      */
     public function showFile($id)
     {
+
+        
         $file = File::findOrFail($id);
         return view('files.file', [ 'file' => $file ]);
     }

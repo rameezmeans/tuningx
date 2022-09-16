@@ -29,15 +29,15 @@
                                 </a>
                                     <span class="brand-name">Mercedes</span>
                                 </td>
-                                <td class="clickable-row">{{$file->file_attached}}</td>
+                                <td class="clickable-row"><a href="{{route('file', $file->id)}}">{{$file->file_attached}}</a></td>
                                 <td class="clickable-row">
-                                    <span class="label label-green">Received<i class="fa fa-check"></i></span>
+                                    <a href="{{route('file', $file->id)}}"><span class="label label-green">Received<i class="fa fa-check"></i></span></a>
                                 </td>
-                                <td class="clickable-row"><span class="label label-black">9</span></td>
-                                <td class="clickable-row"><input class="vehicle-id-input" id="125091" value="{{$file->vin_number}}" readonly="" onclick="copyVin(125091)"></td>
-                                <td class="clickable-row">{{$file->name}}</td>
-                                <td class="clickable-row">{{$file->license_plate}}</td>
-                                <td class="clickable-row">{{$file->created_at->diffForHumans();}}</td>
+                                <td class="clickable-row"><a href="{{route('file', $file->id)}}"><span class="label label-black">9</span></a></td>
+                                <td class="clickable-row"><a href="{{route('file', $file->id)}}"><input class="vehicle-id-input" id="125091" value="{{$file->vin_number}}" readonly="" onclick="copyVin(125091)"></a></td>
+                                <td class="clickable-row"><a href="{{route('file', $file->id)}}">{{$file->name}}</a></td>
+                                <td class="clickable-row"><a href="{{route('file', $file->id)}}">{{$file->license_plate}}</a></td>
+                                <td class="clickable-row"><a href="{{route('file', $file->id)}}">{{$file->created_at->diffForHumans();}}</a></td>
                             </tr>
                         
                         @endforeach

@@ -8,6 +8,9 @@
         <div class="file-service-process">
             <div class="process-panel">
                 <div class="row">
+                    @if($errors->any())
+                        {{ implode('', $errors->all('message')) }}
+                    @endif
                     <div class="col s12 master-tools">
                         <h2>Reading tool</h2>
                         <small><i class="fa fa-info-circle"></i> To edit reading tool list <a href="{{ route('account') }}" target="_blank">click here</a></small>
@@ -96,7 +99,13 @@
                                     <button class="btn" type="button"><i class="fa fa-home"></i></button>
                                     <p>Gearbox File</p>
                                 </span>
+                                @error('file_type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
+                            
                         </div>
 
                             <div class="row mt-5">
@@ -234,10 +243,8 @@ $( document ).ready(function(event) {
 
         console.log($(this).prev().data('type'));
         console.log($(this).prev().val());
-
         $('#tool_type').val($(this).prev().data('type'));
         $('#tool').val($(this).prev().val());
-    
         $('#upload-area').removeClass('hide');
     
 });
