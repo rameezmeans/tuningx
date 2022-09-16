@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->text('vehicle_internal_notes');
-            $table->text('customer_internal_notes');
+            $table->text('vehicle_internal_notes')->nullable();
+            $table->text('customer_internal_notes')->nullable();
+            $table->integer('kilometrage')->nullable();
+            $table->string('first_registration')->nullable();
         });
     }
 
