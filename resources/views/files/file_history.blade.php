@@ -58,6 +58,8 @@
             window.location.href = $(this).data('redirect');
             return false;
         });
+
+        $('table').DataTable();
     });
 
 </script>
