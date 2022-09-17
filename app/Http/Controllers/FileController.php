@@ -72,9 +72,13 @@ class FileController extends Controller
             'gear_box' => 'required|max:255',
         ]);
 
-        File::create($file);
+        $flag = File::create($file);
 
-        return back()->with('success', 'File successfully Added!');
+        if($flag){
+            return redirect()->route('file-history',['success', 'File successfully Added!'])->withInput();;
+        }
+
+        return redirect()->back()->withInput();
     }
 
     /**
@@ -95,9 +99,42 @@ class FileController extends Controller
      */
     public function showFile($id)
     {
-
-        
         $file = File::findOrFail($id);
+        return view('files.file', [ 'file' => $file ]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function EditMilage(Request $request)
+    {
+        
+        $file = File::findOrFail($request->id);
+        $file->license_plate = $request->license_plate;
+        $file->first_registration = $request->first_registration;
+        $file->kilometrage = $request->kilometrage;
+        $file->vehicle_internal_notes = $request->vehicle_internal_notes;
+        $file->save();
+        return redirect()->back()->with('success', 'File successfully Edited!');
+
+    }
+
+     /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function addCustomerNote(Request $request)
+    {
+        $file = File::findOrFail($request->id);
+        $file->name = $request->name;
+        $file->phone = $request->phone;
+        $file->email = $request->email;
+        $file->customer_internal_notes = $request->customer_internal_notes;
+        $file->save();
+        return redirect()->back()->with('success', 'File successfully Edited!');
         return view('files.file', [ 'file' => $file ]);
     }
 }

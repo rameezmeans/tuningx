@@ -24229,6 +24229,19 @@ button[type="submit"].error i.error-icon {
     }
 }
 
+.show {
+    display: block !important;
+    
+}
+
+.danger {
+    color: red;
+}
+
+.invalid-feedback{
+    color:red;
+}
+
 .bordered_div {
     border: red 1px solid;
     border-radius: 2px;

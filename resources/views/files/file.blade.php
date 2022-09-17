@@ -1,6 +1,84 @@
 @extends('layouts.file_layout')
+
+@section('pagespecificstyles')
+
+<style>
+
+.tab .tablinks .wow  i {
+    display: block;
+    font-size: 1.5em;
+}
+
+.tab .tablinks .wow  span {
+    display: block;
+}
+
+.tab .tablinks .wow  small {
+    display: block;
+}
+
+.tablinks {
+    height: 100px;
+}
+
+ /* Style the tab */
+ .tab {
+  /* overflow: hidden; */
+  
+  color: #f02429;
+  background-color: #fff;
+    box-shadow: none;
+    display: flex;
+    font-size: 16px;
+    height: 100px;
+    margin: 0 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    white-space: nowrap;
+    width: 100%;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  width: 34%;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  border-bottom: #f02429 2px solid;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    border-bottom: #f02429 2px solid;
+}
+
+/* Style the tab content */
+.tabcontent {
+    background-color: #fff;
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+    margin-top:5px;
+}
+
+</style>
+
+@endsection
+
+
 @section('content')
+
 <main>
+    <div class="header-id-overlay hide-on-med-and-down"></div>
     <section>
         <div class="parallax-container hide-on-med-and-down">
             <a href="{{route('file-history')}}" class="modal-action modal-close corner-right" aria-label="Close">
@@ -47,12 +125,65 @@
         <div class="container">
             <div class="row" style="margin: 0px">
                 <div class="col s12 m12 l7">
+
+                <!-- Tab links -->
+                <div class="tab timeline-actions z-depth-1">
+                    <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">
+                        <div class="wow" style="visibility: visible !important;">
+                            <i class="fa fa-cloud-upload"></i>
+                            <span>
+                                New request
+                            </span>
+                            <small>Upload new read file</small>
+                        </div>
+                    
+                    </button>
+                    <button class="tablinks" onclick="openCity(event, 'Paris')">
+                        
+                        <div class="wow" style="visibility: visible !important;">
+                            <i class="fa fa-headset"></i>
+                            <span>
+                                Help
+                            </span>
+                            <small>Get in touch with the engineer</small>
+                        </div>
+    
+                </button>
+                    <button class="tablinks" onclick="openCity(event, 'Tokyo')">
+                        <div class="wow" style="visibility: visible !important;">
+                            <i class="fa fa-calendar"></i>
+                            <span>
+                                Internal event
+                            </span>
+                            <small>Add new internal event</small>
+                        </div>
+                    </button>
+                </div>
+                
+                <!-- Tab content -->
+                <div id="London" class="tabcontent timeline-actions z-depth-1">
+                    <h3>London</h3>
+                    <p>London is the capital city of England.</p>
+                </div>
+                
+                <div id="Paris" class="tabcontent timeline-actions z-depth-1">
+                    <h3>Paris</h3>
+                    <p>Paris is the capital of France.</p>
+                </div>
+                
+                <div id="Tokyo" class="tabcontent timeline-actions z-depth-1">
+                    <h3>Tokyo</h3>
+                    <p>Tokyo is the capital of Japan.</p>
+                </div>
+
+
+                    {{--
                     <div class="timeline block-content-full">
                         <div class="timeline-actions z-depth-1">
                             <ul class="tabs">
                                 <li class="tab">
                                     <a href="#request-file" class="wow pulse active animated" data-wow-iteration="infinite" data-wow-delay="2s" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-delay: 2s; animation-iteration-count: infinite;">
-                                        <i class="mdi mdi-action-backup"></i>
+                                        <i class="fa fa-cloud-upload" style="margin-top: 15px;"></i>
                                         <span>
                                             New request
                                         </span>
@@ -61,7 +192,7 @@
                                 </li>
                                 <li class="tab">
                                     <a href="#helpDesk">
-                                        <i class="mdi-hardware-headset-mic"></i>
+                                        <i class="fa fa-headset" style="margin-top: 15px;"></i>
                                         <span>
                                             Help
                                         </span>
@@ -70,7 +201,7 @@
                                 </li>
                                 <li class="tab">
                                     <a href="#add-event">
-                                        <i class="mdi mdi-notification-event-note"></i>
+                                        <i class="fa fa-calendar" style="margin-top: 15px;"></i>
                                         <span>
                                             Internal event
                                         </span>
@@ -820,8 +951,11 @@
 
 
                                                                                                                                     </ul>
-                    </div>
-                </div>
+                    </div> --}}
+
+                </div> 
+
+
                 <div class="col s12 m12 l4 offset-l1">
 
                     <div class="car-id">
@@ -846,8 +980,11 @@
                     </div>
 
                     <div class="vehicle-id">
-                        <form action="/en/client/file-history/MTI1MDkxOjE2NjMyMzgwNjk/update-memo" class="car-info-form" name="car-info" enctype="application/x-www-form-urlencoded" method="post" novalidate="novalidate">
+                        <form action="{{route('edit-milage');}}" class="car-info-form" name="car-info" enctype="application/x-www-form-urlencoded" method="post" novalidate="novalidate">
                             <h3 class="id-info">Car information</h3>
+
+                            @csrf
+                            <input type="hidden" name="id" value="{{$file->id}}">
 
                             <p>VIN <span class="label">{{$file->vin_number}}</span></p>
                             <p>Gearbox
@@ -862,23 +999,23 @@
                             </p>
                             <p>
                                 Plate
-                                <input type="text" name="licence_plate]" value="{{$file->license_plate}}" class="validate vehicle-id-input">
+                                <input type="text" name="license_plate" value="{{$file->license_plate}}" class="validate vehicle-id-input">
                             </p>
                             <p>
                                 1st registration year
-                                <input type="text" name="first_registration" value="2006" class="validate vehicle-id-input" pattern="[0-9]{4}">
+                                <input type="text" name="first_registration" value="{{$file->first_registration}}" class="validate vehicle-id-input" pattern="[0-9]{4}">
                             </p>
                             <p>
                                 Mileage
-                                <input type="text" name="kilometrage" value="" class="validate vehicle-id-input" pattern="[0-9]{0,12}">
+                                <input type="text" name="kilometrage" value="{{$file->kilometrage}}" class="validate vehicle-id-input">
                             </p>
 
                                                             <div class="input-field ">
-                                <textarea id="car-info-memo" name="car-info[memo]" class="materialize-textarea" placeholder="Internal note related to the vehicle :"></textarea>
+                                <textarea id="car-info-memo" name="vehicle_internal_notes" class="materialize-textarea" placeholder="Internal note related to the vehicle :">{{$file->vehicle_internal_notes}}</textarea>
                             </div>
                             <div class="center">
-                                <button type="submit" name="car-info[submit]" class="btn btn-clear waves-effect waves-light btn-vehicle-id">
-                                    Save <i class="mdi-content-save right submit-icon"></i>
+                                <button type="submit" class="btn btn-clear waves-effect waves-light btn-vehicle-id">
+                                    Save <i class="fa fa-save"></i>
                                     <i class="fa fa-refresh fa-spin fa-fw loading-icon"></i>
                                     <i class="fa fa-check success-icon"></i>
                                     <i class="fa fa-times error-icon"></i>
@@ -890,27 +1027,28 @@
                         <h3 class="id-info">Parts</h3>
                                                 </div>
                                                 <div class="vehicle-id">
-                            <form action="/en/client/file-history/MTI1MDkxOjE2NjMyMzgwNjk/update-customer" class="customer-info-form" name="customer-info" enctype="application/x-www-form-urlencoded" method="post" novalidate="novalidate">
-                                <input type="hidden" name="customer-info[id]" value="NDc0MzM6MTY2MzI0MDAxMA">
+                            <form action="{{route('add-customer-note');}}" class="customer-info-form" name="customer-info" enctype="application/x-www-form-urlencoded" method="post" novalidate="novalidate">
+                                @csrf
+                            <input type="hidden" name="id" value="{{$file->id}}">
                                 <span class="id-info">Customer information</span>
                                 <div class="input-field ">
-                                    <i class="mdi-action-account-circle prefix"></i>
+                                    <i class="fa fa-user prefix" style="margin-top: 8px;"></i>
                                     <input id="icon_prefix" type="text" class="validate" required="" name="name" value="{{$file->name}}" placeholder="Customer name">
                                 </div>
                                 <div class="input-field">
-                                    <i class="mdi-communication-phone prefix"></i>
-                                    <input id="icon_telephone" type="tel" class="validate" name="phoe" value="{{$file->phone}}" placeholder="Phone">
+                                    <i class="fa fa-phone prefix" style="margin-top: 8px;"></i>
+                                    <input id="icon_telephone" type="tel" class="validate" name="phone" value="{{$file->phone}}" placeholder="Phone">
                                 </div>
                                 <div class="input-field">
-                                    <i class="mdi-communication-email prefix"></i>
+                                    <i class="fa fa-envelope prefix" style="margin-top: 8px;"></i>
                                     <input id="icon_telephone" type="email" class="validate" name="email" value="{{$file->email}}" placeholder="Email">
                                 </div>
                                 <div class="input-field ">
-                                    <textarea id="icon_prefix2" class="materialize-textarea" name="customer-info[notes]" placeholder="Internal note related to the customer :"></textarea>
+                                    <textarea id="icon_prefix2" class="materialize-textarea" name="customer_internal_notes" placeholder="Internal note related to the customer :">{{$file->customer_internal_notes}}</textarea>
                                 </div>
                                 <div class="center">
-                                    <button class="btn btn-clear waves-effect waves-light btn-vehicle-id" type="submit" name="customer-info[submit]">
-                                        Save <i class="mdi-content-save right submit-icon"></i>
+                                    <button class="btn btn-clear waves-effect waves-light btn-vehicle-id" type="submit">
+                                        Save <i class="fa fa-save"></i>
                                         <i class="fa fa-refresh fa-spin fa-fw loading-icon"></i>
                                         <i class="fa fa-check success-icon"></i>
                                         <i class="fa fa-times error-icon"></i>
@@ -941,5 +1079,30 @@
             'slow');
     });
 });
+
+function openCity(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+
+    }
+document.getElementById("defaultOpen").click();
+
+
 </script>
 @endsection

@@ -22,22 +22,22 @@
                     <tbody>
                         @foreach($files as $file)
                         
-                            <tr>
+                            <tr class="redirect-click" href="#" data-redirect="{{route('file', $file->id)}}">
                                 <td class="clickable-row">
-                                    <a href="{{route('file', $file->id)}}">
+                                    
                                     <img alt="" class="img-circle-car-history" src="https://www.shiftech.eu/media/resized/100x100/manufacturers/5f98ae3c7c4f9f03b4033f72a4d20dd6.png">
-                                </a>
+                              
                                     <span class="brand-name">Mercedes</span>
                                 </td>
-                                <td class="clickable-row"><a href="{{route('file', $file->id)}}">{{$file->file_attached}}</a></td>
+                                <td class="clickable-row">{{$file->file_attached}}</td>
                                 <td class="clickable-row">
-                                    <a href="{{route('file', $file->id)}}"><span class="label label-green">Received<i class="fa fa-check"></i></span></a>
+                                    <span class="label label-green">Received<i class="fa fa-check"></i></span></a>
                                 </td>
-                                <td class="clickable-row"><a href="{{route('file', $file->id)}}"><span class="label label-black">9</span></a></td>
-                                <td class="clickable-row"><a href="{{route('file', $file->id)}}"><input class="vehicle-id-input" id="125091" value="{{$file->vin_number}}" readonly="" onclick="copyVin(125091)"></a></td>
-                                <td class="clickable-row"><a href="{{route('file', $file->id)}}">{{$file->name}}</a></td>
-                                <td class="clickable-row"><a href="{{route('file', $file->id)}}">{{$file->license_plate}}</a></td>
-                                <td class="clickable-row"><a href="{{route('file', $file->id)}}">{{$file->created_at->diffForHumans();}}</a></td>
+                                <td class="clickable-row"><span class="label label-black">9</span></td>
+                                <td class="clickable-row"><input class="vehicle-id-input" id="125091" value="{{$file->vin_number}}" readonly="" onclick="copyVin(125091)"></td>
+                                <td class="clickable-row">{{$file->name}}</td>
+                                <td class="clickable-row">{{$file->license_plate}}</td>
+                                <td class="clickable-row">{{$file->created_at->diffForHumans();}}</td>
                             </tr>
                         
                         @endforeach
@@ -47,4 +47,19 @@
         </div>
     </div>
 </main>
+@endsection
+
+@section('pagespecificscripts')
+
+<script type="text/javascript">
+
+    $( document ).ready(function(event) {
+        $('.redirect-click').click(function() {
+            window.location.href = $(this).data('redirect');
+            return false;
+        });
+    });
+
+</script>
+
 @endsection

@@ -26,6 +26,10 @@ Route::post('/create-language', [App\Http\Controllers\LanguageController::class,
 Route::post('/change-password', [App\Http\Controllers\AccountController::class, 'changePassword'])->name('change-password');
 
 Route::get('/file-upload', [App\Http\Controllers\FileController::class, 'index'])->name('file-upload');
+
+Route::post('/edit-milage', [App\Http\Controllers\FileController::class, 'EditMilage'])->name('edit-milage');
+Route::post('/add-customer-note', [App\Http\Controllers\FileController::class, 'addCustomerNote'])->name('add-customer-note');
+
 Route::post('/post-file', [App\Http\Controllers\FileController::class, 'postFile'])->name('post-file');
 Route::post('/upload-file', [App\Http\Controllers\FileController::class, 'uploadFile'])->name('upload-file');
 Route::get('/file-history', [App\Http\Controllers\FileController::class, 'fileHistory'])->name('file-history');
