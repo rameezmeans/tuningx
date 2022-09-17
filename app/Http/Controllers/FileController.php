@@ -28,7 +28,7 @@ class FileController extends Controller
        
         $masterTools = explode(',',Auth::user()->master_tools);
         $slaveTools = explode(',',Auth::user()->slave_tools);
-        return view('files.index', ['masterTools' => $masterTools, 'slaveTools' => $slaveTools]);
+        return view('files.submit_file', ['masterTools' => $masterTools, 'slaveTools' => $slaveTools]);
     }
 
     /**
@@ -100,7 +100,7 @@ class FileController extends Controller
     public function showFile($id)
     {
         $file = File::findOrFail($id);
-        return view('files.file', [ 'file' => $file ]);
+        return view('files.show_file', [ 'file' => $file ]);
     }
 
     /**
@@ -135,6 +135,5 @@ class FileController extends Controller
         $file->customer_internal_notes = $request->customer_internal_notes;
         $file->save();
         return redirect()->back()->with('success', 'File successfully Edited!');
-        return view('files.file', [ 'file' => $file ]);
     }
 }
