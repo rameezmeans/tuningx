@@ -182,6 +182,10 @@
                                 </div>
                             </div>
 
+                            <div class="input-field col s12">
+                                <label style="color: #f02429;">Cost: 12 Credits</label>
+                            </div>
+
                             </div>
 
                             <div class="row">

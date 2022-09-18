@@ -127,6 +127,7 @@
                 <div class="col s12 m12 l7">
 
                 <!-- Tab links -->
+                <div class="timeline block-content-full">
                 <div class="tab timeline-actions z-depth-1">
                     <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">
                         <div class="wow" style="visibility: visible !important;">
@@ -162,9 +163,94 @@
                 
                 <!-- Tab content -->
                 <div id="London" class="tabcontent timeline-actions z-depth-1">
-                    <h3>London</h3>
-                    <p>London is the capital city of England.</p>
+                    <form method="POST" action="{{ route('request-file') }}" enctype="multipart/form-data">
+                    <div class="tab-content">
+                        @if ($message = Session::get('success'))
+                            <div style="background: #28a745!important; padding: 10px;">
+                                <span style="margin:0; color:white;">{{ $message }}</span>
+                                <i class="fa fa-close close-message" style="float:right; margin-top:2px; color:white;"></i>
+                            </div>
+                        @endif
+                    <label style="font-size: 16px;">Send a new file request</label>
+                    
+                        @csrf
+                        <input type="hidden" id="file_type" name="file_type" value="">
+                        <input type="hidden" id="file_id" name="file_id" value="{{$file->id}}">
+                        <div class="row mt-5">
+
+                            <h3 style="margin-left:12px;">Select File Type</h3>
+                            <div class="input-field col s12" style="margin-left:5px; display:flex;">
+                                <div class="col s6" style="display: flex;">
+                                    <span class="file_type_area" style="padding: 20px;" data-type="ecu_file">
+                                        <div><img src="https://resellers.ecutech.tech/assets/img/OLSx-pictogram-file-02.svg"></div>
+                                        <p>ECU File</p>
+                                    </span>
+                                    <span style="margin-left: 10px; padding: 20px;" class="file_type_area" data-type="gearbox_file">
+                                        <div><img src="https://resellers.ecutech.tech/assets/img/OLSxGearBox.svg"></div>
+                                        <p>Gearbox File</p>
+                                    </span>
+                                    @error('file_type')
+                                        <p class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </p>
+                                    @enderror
+                                </div>
+                                <div class="col s6">
+                                    <div class="select-wrapper form-control">
+                                        <select name="ecu_file_select" id="ecu_file_select" class="select-dropdown hide">
+                                            <option value="status" selected disabled>Request Type </option>
+                                            <option value="new_upload">New upload</option>
+                                            <option value="tuning_evolution">Tuning Evolution - I want to make a new tuning request.</option>
+                                            <option value="back_to_tuned">Back to tuned - The car has been updated by the dealer, please renew the tuning.</option>
+                                            <option value="back_to_stock">Back to stock - Send me back the original version.</option>
+                                            <option value="back_to_stock_with_virtual_read">Back to stock with virtual read - Its a virtual read, can you send me this file back to flash the car in stock mode?</option>
+                                            <option value="problem_RMA">Problem - RMA - I've an issue with this file, can you check?</option>
+                                        </select>
+                                    </div>
+                                    <div class="select-wrapper form-control">
+                                        <select name="gearbox_file_select" id="gearbox_file_select" class="select-dropdown hide">
+                                            <option value="status" selected disabled>Request Type </option>
+                                            <option value="new_upload">New Upload</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field col s12">
+                                <div class="select-wrapper form-control">
+                                    <select name="master_tools[]" id="master_tools" class="select-dropdown" multiple>
+                                        <option value="status" selected disabled>Select Tools You Use *</option>
+                                        @foreach($masterTools as $ma)
+                                            <option value="{{$ma}}">{{get_tools(trim_str($ma)).' (master)'}}</option>
+                                        @endforeach
+                                        @foreach($slaveTools as $s)
+                                        <option value="{{$s}}">{{get_tools(trim_str($s)).' (slave)'}}</option>
+                                    @endforeach
+                                    </select>
+                                    @error('file_type')
+                                        <p class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="input-field col s12">
+                                <div class="select-wrapper form-control">
+                                    <input type="file" name="request_file" id="request_file">
+                                </div>
+                                @error('request_file')
+                                <p class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </p>
+                            @enderror
+                            </div>
+                        </div>
+                        </div>
+                        <div class="tab-footer text-center">
+                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Next</button>
+                        </div>
+                    </form>
                 </div>
+            
                 
                 <div id="Paris" class="tabcontent timeline-actions z-depth-1">
                     <h3>Paris</h3>
@@ -175,13 +261,43 @@
                     <h3>Tokyo</h3>
                     <p>Tokyo is the capital of Japan.</p>
                 </div>
-                </div> 
+                
+                <ul class="timeline-list">
+                    @foreach($file->files as $f)
+                        <li class="timeline-event" id="">
+                            <div class="timeline-icon alert-blue">
+                                <i class="fa fa-download"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span class="push-bit">File received</span>
+                                <ul class="actions-list">
+                                </ul>
+                                <small class="timeline-time-small">{{$f->created_at->diffForHumans()}}</small>
+                                                    <div class="divider"></div>
+                                    <span class="red-olsx-text">Filename :</span>
+                                    <span>
+                                        {{ $f->request_file }}
+                                    </span>
+                                                        
+                                        <div class="divider"></div>
+                                <div>
+                                    
+                                </div>
+                                
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+
+            </div>
+
+            </div>
 
 
                 <div class="col s12 m12 l4 offset-l1">
 
                     <div class="car-id">
-                                                    <div class="table-id">
+                        <div class="table-id">
                             <table>
                                 <tbody><tr>
                                     <td>
@@ -294,13 +410,35 @@
 @section('pagespecificscripts')
 <script type="text/javascript">
     $( document ).ready(function(event) {
+        $('.close-message').click(function() {
+            $(this).parent().addClass('hide');
+        });
+
         $(".scroll-animation").click(function() {
             console.log('scroll');
         $('html,body').animate({
             scrollTop: $("#content").offset().top},
             'slow');
     });
-});
+
+    $("span.file_type_area").click(function() { 
+
+            let file_type = $(this).data('type');
+            if(file_type == 'ecu_file'){
+                $('#ecu_file_select').removeClass('hide');
+                $('#gearbox_file_select').addClass('hide');
+            }
+            else {
+                $('#ecu_file_select').addClass('hide');
+                $('#gearbox_file_select').removeClass('hide');
+            }
+                $('span.file_type_area').removeClass('bordered_div');
+                $(this).addClass('bordered_div');
+                console.log(file_type);
+                $('#file_type').val(file_type);
+        });
+
+    });
 
 function openCity(evt, cityName) {
   // Declare all variables

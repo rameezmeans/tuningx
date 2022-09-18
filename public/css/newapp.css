@@ -17686,6 +17686,7 @@ ul.actions-list li .btn-large i.red-icon {
     position: relative;
 }
 .timeline-list {
+    margin-top: 20px !important;
     list-style: none;
     margin: 0;
     padding: 0 0 50px;
@@ -24231,18 +24232,25 @@ button[type="submit"].error i.error-icon {
 
 .show {
     display: block !important;
-    
 }
 
 .danger {
     color: red;
 }
 
-.invalid-feedback{
-    color:red;
+.invalid-feedback {
+    color: red;
 }
 
 .bordered_div {
     border: red 1px solid;
     border-radius: 2px;
+}
+
+.invalid-feedback {
+    display: block !important;
+}
+
+.text-center {
+    text-align: center;
 }

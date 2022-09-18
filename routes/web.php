@@ -31,6 +31,9 @@ Route::post('/edit-milage', [App\Http\Controllers\FileController::class, 'EditMi
 Route::post('/add-customer-note', [App\Http\Controllers\FileController::class, 'addCustomerNote'])->name('add-customer-note');
 
 Route::post('/post-file', [App\Http\Controllers\FileController::class, 'postFile'])->name('post-file');
+Route::post('/request-file', [App\Http\Controllers\FileController::class, 'requestFile'])->name('request-file');
+
+
 Route::post('/upload-file', [App\Http\Controllers\FileController::class, 'uploadFile'])->name('upload-file');
 Route::get('/file-history', [App\Http\Controllers\FileController::class, 'fileHistory'])->name('file-history');
 Route::get('/file/{id}', [App\Http\Controllers\FileController::class, 'showFile'])->name('file');

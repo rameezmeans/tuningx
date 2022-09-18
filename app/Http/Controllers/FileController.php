@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\RequestFile;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,10 +99,43 @@ class FileController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function requestFile(Request $request)
+    {
+
+        $requestFile = $request->validate([
+            'file_id' => 'required',
+            'request_file' => 'required|max:255',
+            'file_type' => 'required|max:255',
+            'master_tools' => 'required|max:255',
+            'ecu_file_select' => '',
+            'gearbox_file_select' => ''
+        ]);
+
+        $file = $request->file('request_file');
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path('uploads'),$fileName);
+
+        $requestFile['request_file'] = $fileName;
+        $requestFile['master_tools'] = implode(',', $requestFile['master_tools'] );
+        
+        $requestFile = RequestFile::create($requestFile);
+
+        return redirect()->back()->with('success', 'File successfully Added!');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function showFile($id)
     {
         $file = File::findOrFail($id);
-        return view('files.show_file', [ 'file' => $file ]);
+        $user = Auth::user();
+        $masterTools = explode(',',  Auth::user()->master_tools );
+        $slaveTools = explode(',',  Auth::user()->slave_tools );
+        $attachedFiles = $file->files;
+        return view('files.show_file', [ 'attachedFiles' => $attachedFiles,'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools ]);
     }
 
     /**

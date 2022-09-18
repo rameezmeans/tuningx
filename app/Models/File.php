@@ -14,4 +14,8 @@ class File extends Model
     'phone', 'model_year', 'license_plate', 
     'vin_number', 'brand', 'model','version', 
     'tools', 'gear_box'];
+
+    public function files(){
+        return $this->hasMany(RequestFile::class); 
+    }
 }
