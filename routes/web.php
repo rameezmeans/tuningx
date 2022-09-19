@@ -32,6 +32,8 @@ Route::post('/add-customer-note', [App\Http\Controllers\FileController::class, '
 
 Route::post('/post-file', [App\Http\Controllers\FileController::class, 'postFile'])->name('post-file');
 Route::post('/request-file', [App\Http\Controllers\FileController::class, 'requestFile'])->name('request-file');
+Route::post('/file-engineers-notes', [App\Http\Controllers\FileController::class, 'fileEngineersNotes'])->name('file-engineers-notes');
+Route::post('/file-events-notes', [App\Http\Controllers\FileController::class, 'fileEventsNotes'])->name('file-events-notes');
 
 
 Route::post('/upload-file', [App\Http\Controllers\FileController::class, 'uploadFile'])->name('upload-file');

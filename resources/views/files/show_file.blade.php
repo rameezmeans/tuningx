@@ -175,7 +175,7 @@
                     
                         @csrf
                         <input type="hidden" id="file_type" name="file_type" value="">
-                        <input type="hidden" id="file_id" name="file_id" value="{{$file->id}}">
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
                         <div class="row mt-5">
 
                             <h3 style="margin-left:12px;">Select File Type</h3>
@@ -253,47 +253,146 @@
             
                 
                 <div id="Paris" class="tabcontent timeline-actions z-depth-1">
-                    <h3>Paris</h3>
-                    <p>Paris is the capital of France.</p>
+                    <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <div class="tab-content">
+                            @if ($message = Session::get('success'))
+                                <div style="background: #28a745!important; padding: 10px;">
+                                    <span style="margin:0; color:white;">{{ $message }}</span>
+                                    <i class="fa fa-close close-message" style="float:right; margin-top:2px; color:white;"></i>
+                                </div>
+                            @endif
+                        <label style="font-size: 16px;">Ask for engineer's support</label>
+                        <div class="row mt-5">
+                            <div class="input-field col s12">
+                                <textarea id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="Internal note for Engineers."></textarea>
+                                <div class="select-wrapper form-control">
+                                    <input type="file" name="engineers_attachement" id="engineer_attachement">
+                                </div>
+                                @error('request_file')
+                                    <p class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+                        </div>
+                        <div class="tab-footer text-center">
+                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Send</button>
+                        </div>
+                    </form>
                 </div>
                 
                 <div id="Tokyo" class="tabcontent timeline-actions z-depth-1">
-                    <h3>Tokyo</h3>
-                    <p>Tokyo is the capital of Japan.</p>
+                    <form method="POST" action="{{ route('file-events-notes') }}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <div class="tab-content">
+                            @if ($message = Session::get('success'))
+                                <div style="background: #28a745!important; padding: 10px;">
+                                    <span style="margin:0; color:white;">{{ $message }}</span>
+                                    <i class="fa fa-close close-message" style="float:right; margin-top:2px; color:white;"></i>
+                                </div>
+                            @endif
+                        <p style="font-size: 16px;">Add internal note to vehicle's timeline</p>
+                        <br>
+                        <small class="blue-olsx-text"><i class="fa fa-warning"></i> You are the only one to see this information, engineers are not notified. This is not a support
+                            request.
+                        </small>
+                        <div class="row mt-5">
+                            <div class="input-field col s12">
+                                <textarea id="events_internal_notes" name="events_internal_notes" class="materialize-textarea" placeholder="Internal note for Engineers."></textarea>
+                                <div class="select-wrapper form-control">
+                                    <input type="file" name="events_attachement" id="events_attachement">
+                                </div>
+                                @error('request_file')
+                                    <p class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+                        </div>
+                        <div class="tab-footer text-center">
+                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Send</button>
+                        </div>
+                    </form>
                 </div>
                 
                 <ul class="timeline-list">
-                    @foreach($file->files as $f)
-                        <li class="timeline-event" id="">
-                            <div class="timeline-icon alert-blue">
-                                <i class="fa fa-download"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <span class="push-bit">File received</span>
-                                <ul class="actions-list">
-                                </ul>
-                                <small class="timeline-time-small">{{$f->created_at->diffForHumans()}}</small>
-                                                    <div class="divider"></div>
-                                    <span class="red-olsx-text">Filename :</span>
-                                    <span>
-                                        {{ $f->request_file }}
+                    @foreach($attachedFiles as $f)
+                        {{-- @isset($f['request_file']) --}}
+                            <li class="timeline-event" id="">
+                                @isset($f['request_file'])
+                                    <div class="timeline-icon alert-blue">
+                                        <i class="fa fa-download"></i>
+                                    </div>
+                                @endisset
+                                @isset($f['egnineers_internal_notes'])
+                                    <div class="timeline-icon alert-blue">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                @endisset
+                                @isset($f['events_internal_notes'])
+                                    <div class="timeline-icon alert-blue">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                @endisset
+                                <div class="timeline-content">
+                                    <span class="push-bit">
+                                        @isset($f['request_file'])
+                                            File received
+                                        @endisset
+                                        @isset($f['egnineers_internal_notes'])
+                                            Messge Sent
+                                        @endisset
+
+                                        @isset($f['events_internal_notes'])
+                                            Messge Sent
+                                        @endisset
                                     </span>
-                                                        
-                                        <div class="divider"></div>
-                                <div>
+
+                                    <ul class="actions-list">
+                                    </ul>
+                                    <small class="timeline-time-small">{{\Carbon\Carbon::parse($f['created_at'])->diffForHumans()}}</small>
+                                                        <div class="divider"></div>
+                                        @isset($f['request_file'])
+                                            <span class="red-olsx-text">Filename :</span>
+                                        @endisset
+                                        <span>
+                                            @isset($f['request_file'])
+                                                {{ $f['request_file'] }}
+                                            @endisset
+
+                                            @isset($f['egnineers_internal_notes'])
+                                                {{ $f['egnineers_internal_notes'] }}
+                                            @endisset
+
+                                            @isset($f['events_internal_notes'])
+                                                {{ $f['events_internal_notes'] }}
+                                            @endisset
+
+                                        </span>
+                                                            
+                                            <div class="divider"></div>
+                                    <div>
+                                        
+                                    </div>
                                     
                                 </div>
-                                
-                            </div>
-                        </li>
+                                {{-- @isset($f['egnineers_internal_notes'])
+                                    egnineers_internal_notes
+                                @endisset
+                                @isset($f['events_internal_notes'])
+                                    events_internal_notes
+                                @endisset --}}
+                            </li>
+                        {{-- @endisset --}}
                     @endforeach
                 </ul>
-
             </div>
-
             </div>
-
-
                 <div class="col s12 m12 l4 offset-l1">
 
                     <div class="car-id">
@@ -394,11 +493,7 @@
                                 </div>
                             </form>
                         </div>
-                                            <div class="btn-group">
-                        
-                    
-                    
-                                            
+                <div class="btn-group">                  
                 </div>
             </div>
         </div>

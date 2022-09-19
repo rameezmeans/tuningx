@@ -18,4 +18,12 @@ class File extends Model
     public function files(){
         return $this->hasMany(RequestFile::class); 
     }
+
+    public function engineer_file_notes(){
+        return $this->hasMany(EngineerFileNote::class); 
+    }
+
+    public function file_internel_events(){
+        return $this->hasMany(FileInternalEvent::class);
+    }
 }

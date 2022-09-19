@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EngineerFileNote;
 use App\Models\File;
+use App\Models\FileInternalEvent;
 use App\Models\RequestFile;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -134,8 +136,27 @@ class FileController extends Controller
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
         $slaveTools = explode(',',  Auth::user()->slave_tools );
-        $attachedFiles = $file->files;
-        return view('files.show_file', [ 'attachedFiles' => $attachedFiles,'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools ]);
+        $unsortedTimelineObjects = $file->files->toArray();
+
+        $createdTimes = [];
+
+        foreach($file->files->toArray() as $t) {
+            $createdTimes []= $t['created_at'];
+        } 
+    
+        foreach($file->engineer_file_notes->toArray() as $a) {
+            $unsortedTimelineObjects []= $a;
+            $createdTimes []= $a['created_at'];
+        }   
+
+        foreach($file->file_internel_events->toArray() as $b) {
+            $unsortedTimelineObjects []= $b;
+            $createdTimes []= $b['created_at'];
+        } 
+
+        array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
+        
+        return view('files.show_file', [ 'attachedFiles' => $unsortedTimelineObjects,'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools ]);
     }
 
     /**
@@ -170,5 +191,49 @@ class FileController extends Controller
         $file->customer_internal_notes = $request->customer_internal_notes;
         $file->save();
         return redirect()->back()->with('success', 'File successfully Edited!');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function fileEngineersNotes(Request $request)
+    {
+        $file = new EngineerFileNote();
+        $file->egnineers_internal_notes = $request->egnineers_internal_notes;
+
+        if($request->file('engineers_attachement')){
+            $attachment = $request->file('engineers_attachement');
+            $fileName = $attachment->getClientOriginalName();
+            $attachment->move(public_path('uploads'),$fileName);
+            $file->engineers_attachement = $fileName;
+        }
+
+        $file->file_id = $request->file_id;
+        $file->save();
+        return redirect()->back()->with('success', 'Engineer note successfully Added!');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function fileEventsNotes(Request $request)
+    {
+        $file = new FileInternalEvent();
+        $file->events_internal_notes = $request->events_internal_notes;
+       
+        if($request->file('events_attachement')){
+            $attachment = $request->file('events_attachement');
+            $fileName = $attachment->getClientOriginalName();
+            $attachment->move(public_path('uploads'),$fileName);
+            $file->events_attachement = $fileName;
+        }
+
+        $file->file_id = $request->file_id;
+        $file->save();
+        return redirect()->back()->with('success', 'Events note successfully Added!');
     }
 }
