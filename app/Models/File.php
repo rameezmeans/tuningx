@@ -26,4 +26,8 @@ class File extends Model
     public function file_internel_events(){
         return $this->hasMany(FileInternalEvent::class);
     }
+
+    public function file_urls(){
+        return $this->hasMany(FileUrl::class);
+    }
 }

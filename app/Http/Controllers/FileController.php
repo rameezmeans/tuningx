@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\FileInternalEvent;
+use App\Models\FileUrl;
 use App\Models\RequestFile;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -154,7 +155,12 @@ class FileController extends Controller
             $createdTimes []= $b['created_at'];
         } 
 
-        array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
+        foreach($file->file_urls->toArray() as $b) {
+            $unsortedTimelineObjects []= $b;
+            $createdTimes []= $b['created_at'];
+        } 
+
+        array_multisort($createdTimes, SORT_DESC, $unsortedTimelineObjects);
         
         return view('files.show_file', [ 'attachedFiles' => $unsortedTimelineObjects,'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools ]);
     }
@@ -235,5 +241,28 @@ class FileController extends Controller
         $file->file_id = $request->file_id;
         $file->save();
         return redirect()->back()->with('success', 'Events note successfully Added!');
+    }
+
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function fileURL(Request $request)
+    {
+        $file = new FileUrl();
+        $file->file_url = $request->file_url;
+       
+        if($request->file('file_url_attachment')){
+            $attachment = $request->file('file_url_attachment');
+            $fileName = $attachment->getClientOriginalName();
+            $attachment->move(public_path('uploads'),$fileName);
+            $file->file_url_attachment = $fileName;
+        }
+
+        $file->file_id = $request->file_id;
+        $file->save();
+        return redirect()->back()->with('success', 'URL successfully Added!');
     }
 }

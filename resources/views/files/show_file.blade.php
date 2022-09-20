@@ -17,8 +17,9 @@
     display: block;
 }
 
-.tablinks {
-    height: 100px;
+.tablinks-smaller {
+    height: 50px;
+    width: 50% !important;
 }
 
  /* Style the tab */
@@ -69,6 +70,314 @@
     border-top: none;
     margin-top:5px;
 }
+
+
+.feedback {
+	 --normal: #eceaf3;
+	 --normal-shadow: #d9d8e3;
+	 --normal-mouth: #9795a4;
+	 --normal-eye: #595861;
+	 --active: #f8da69;
+	 --active-shadow: #f4b555;
+	 --active-mouth: #f05136;
+	 --active-eye: #313036;
+	 --active-tear: #76b5e7;
+	 --active-shadow-angry: #e94f1d;
+	 margin: auto;
+     width: 50%;
+	 padding: 0;
+	 list-style: none;
+	 display: flex;
+}
+ .feedback li {
+     padding: 0 !important;
+	 position: relative;
+	 border-radius: 50%;
+	 background: var(--sb, var(--normal));
+	 box-shadow: inset 3px -3px 4px var(--sh, var(--normal-shadow));
+	 transition: background 0.4s, box-shadow 0.4s, transform 0.3s;
+	 -webkit-tap-highlight-color: transparent;
+}
+ .feedback li:not(:last-child) {
+	 margin-right: 20px;
+}
+ .feedback li div {
+	 width: 40px;
+	 height: 40px;
+	 position: relative;
+	 transform: perspective(240px) translateZ(4px);
+}
+ .feedback li div svg, .feedback li div:before, .feedback li div:after {
+	 display: block;
+	 position: absolute;
+	 left: var(--l, 9px);
+	 top: var(--t, 13px);
+	 width: var(--w, 8px);
+	 height: var(--h, 2px);
+	 transform: rotate(var(--r, 0deg)) scale(var(--sc, 1)) translateZ(0);
+}
+ .feedback li div svg {
+	 fill: none;
+	 stroke: var(--s);
+	 stroke-width: 2px;
+	 stroke-linecap: round;
+	 stroke-linejoin: round;
+	 transition: stroke 0.4s;
+}
+ .feedback li div svg.eye {
+	 --s: var(--e, var(--normal-eye));
+	 --t: 17px;
+	 --w: 7px;
+	 --h: 4px;
+}
+ .feedback li div svg.eye.right {
+	 --l: 23px;
+}
+ .feedback li div svg.mouth {
+	 --s: var(--m, var(--normal-mouth));
+	 --l: 11px;
+	 --t: 23px;
+	 --w: 18px;
+	 --h: 7px;
+}
+ .feedback li div:before, .feedback li div:after {
+	 content: '';
+	 z-index: var(--zi, 1);
+	 border-radius: var(--br, 1px);
+	 background: var(--b, var(--e, var(--normal-eye)));
+	 transition: background 0.4s;
+}
+ .feedback li.angry {
+	 --step-1-rx: -24deg;
+	 --step-1-ry: 20deg;
+	 --step-2-rx: -24deg;
+	 --step-2-ry: -20deg;
+}
+ .feedback li.angry div:before {
+	 --r: 20deg;
+}
+ .feedback li.angry div:after {
+	 --l: 23px;
+	 --r: -20deg;
+}
+ .feedback li.angry div svg.eye {
+	 stroke-dasharray: 4.55;
+	 stroke-dashoffset: 8.15;
+}
+ .feedback li.angry.active {
+	 animation: angry 1s linear;
+}
+ .feedback li.angry.active div:before {
+	 --middle-y: -2px;
+	 --middle-r: 22deg;
+	 animation: toggle 0.8s linear forwards;
+}
+ .feedback li.angry.active div:after {
+	 --middle-y: 1px;
+	 --middle-r: -18deg;
+	 animation: toggle 0.8s linear forwards;
+}
+ .feedback li.sad {
+	 --step-1-rx: 20deg;
+	 --step-1-ry: -12deg;
+	 --step-2-rx: -18deg;
+	 --step-2-ry: 14deg;
+}
+ .feedback li.sad div:before, .feedback li.sad div:after {
+	 --b: var(--active-tear);
+	 --sc: 0;
+	 --w: 5px;
+	 --h: 5px;
+	 --t: 15px;
+	 --br: 50%;
+}
+ .feedback li.sad div:after {
+	 --l: 25px;
+}
+ .feedback li.sad div svg.eye {
+	 --t: 16px;
+}
+ .feedback li.sad div svg.mouth {
+	 --t: 24px;
+	 stroke-dasharray: 9.5;
+	 stroke-dashoffset: 33.25;
+}
+ .feedback li.sad.active div:before, .feedback li.sad.active div:after {
+	 animation: tear 0.6s linear forwards;
+}
+ .feedback li.ok {
+	 --step-1-rx: 4deg;
+	 --step-1-ry: -22deg;
+	 --step-1-rz: 6deg;
+	 --step-2-rx: 4deg;
+	 --step-2-ry: 22deg;
+	 --step-2-rz: -6deg;
+}
+ .feedback li.ok div:before {
+	 --l: 12px;
+	 --t: 17px;
+	 --h: 4px;
+	 --w: 4px;
+	 --br: 50%;
+	 box-shadow: 12px 0 0 var(--e, var(--normal-eye));
+}
+ .feedback li.ok div:after {
+	 --l: 13px;
+	 --t: 26px;
+	 --w: 14px;
+	 --h: 2px;
+	 --br: 1px;
+	 --b: var(--m, var(--normal-mouth));
+}
+ .feedback li.ok.active div:before {
+	 --middle-s-y: 0.35;
+	 animation: toggle 0.2s linear forwards;
+}
+ .feedback li.ok.active div:after {
+	 --middle-s-x: 0.5;
+	 animation: toggle 0.7s linear forwards;
+}
+ .feedback li.good {
+	 --step-1-rx: -14deg;
+	 --step-1-rz: 10deg;
+	 --step-2-rx: 10deg;
+	 --step-2-rz: -8deg;
+}
+ .feedback li.good div:before {
+	 --b: var(--m, var(--normal-mouth));
+	 --w: 5px;
+	 --h: 5px;
+	 --br: 50%;
+	 --t: 22px;
+	 --zi: 0;
+	 opacity: 0.5;
+	 box-shadow: 16px 0 0 var(--b);
+	 filter: blur(2px);
+}
+ .feedback li.good div:after {
+	 --sc: 0;
+}
+ .feedback li.good div svg.eye {
+	 --t: 15px;
+	 --sc: -1;
+	 stroke-dasharray: 4.55;
+	 stroke-dashoffset: 8.15;
+}
+ .feedback li.good div svg.mouth {
+	 --t: 22px;
+	 --sc: -1;
+	 stroke-dasharray: 13.3;
+	 stroke-dashoffset: 23.75;
+}
+ .feedback li.good.active div svg.mouth {
+	 --middle-y: 1px;
+	 --middle-s: -1;
+	 animation: toggle 0.8s linear forwards;
+}
+ .feedback li.happy div {
+	 --step-1-rx: 18deg;
+	 --step-1-ry: 24deg;
+	 --step-2-rx: 18deg;
+	 --step-2-ry: -24deg;
+}
+ .feedback li.happy div:before {
+	 --sc: 0;
+}
+ .feedback li.happy div:after {
+	 --b: var(--m, var(--normal-mouth));
+	 --l: 11px;
+	 --t: 23px;
+	 --w: 18px;
+	 --h: 8px;
+	 --br: 0 0 8px 8px;
+}
+ .feedback li.happy div svg.eye {
+	 --t: 14px;
+	 --sc: -1;
+}
+ .feedback li.happy.active div:after {
+	 --middle-s-x: 0.95;
+	 --middle-s-y: 0.75;
+	 animation: toggle 0.8s linear forwards;
+}
+ .feedback li:not(.active) {
+	 cursor: pointer;
+}
+ .feedback li:not(.active):active {
+	 transform: scale(0.925);
+}
+ .feedback li.active {
+	 --sb: var(--active);
+	 --sh: var(--active-shadow);
+	 --m: var(--active-mouth);
+	 --e: var(--active-eye);
+}
+ .feedback li.active div {
+	 animation: shake 0.8s linear forwards;
+}
+ @keyframes shake {
+	 30% {
+		 transform: perspective(240px) rotateX(var(--step-1-rx, 0deg)) rotateY(var(--step-1-ry, 0deg)) rotateZ(var(--step-1-rz, 0deg)) translateZ(10px);
+	}
+	 60% {
+		 transform: perspective(240px) rotateX(var(--step-2-rx, 0deg)) rotateY(var(--step-2-ry, 0deg)) rotateZ(var(--step-2-rz, 0deg)) translateZ(10px);
+	}
+	 100% {
+		 transform: perspective(240px) translateZ(4px);
+	}
+}
+ @keyframes tear {
+	 0% {
+		 opacity: 0;
+		 transform: translateY(-2px) scale(0) translateZ(0);
+	}
+	 50% {
+		 transform: translateY(12px) scale(0.6, 1.2) translateZ(0);
+	}
+	 20%, 80% {
+		 opacity: 1;
+	}
+	 100% {
+		 opacity: 0;
+		 transform: translateY(24px) translateX(4px) rotateZ(-30deg) scale(0.7, 1.1) translateZ(0);
+	}
+}
+ @keyframes toggle {
+	 50% {
+		 transform: translateY(var(--middle-y, 0)) scale(var(--middle-s-x, var(--middle-s, 1)), var(--middle-s-y, var(--middle-s, 1))) rotate(var(--middle-r, 0deg));
+	}
+}
+ @keyframes angry {
+	 40% {
+		 background: var(--active);
+	}
+	 45% {
+		 box-shadow: inset 3px -3px 4px var(--active-shadow), inset 0 8px 10px var(--active-shadow-angry);
+	}
+}
+
+ body .dribbble {
+	 position: fixed;
+	 display: block;
+	 right: 20px;
+	 bottom: 20px;
+}
+ body .dribbble img {
+	 display: block;
+	 height: 28px;
+}
+ body .twitter {
+	 position: fixed;
+	 display: block;
+	 right: 64px;
+	 bottom: 14px;
+}
+ body .twitter svg {
+	 width: 32px;
+	 height: 32px;
+	 fill: #1da1f2;
+}
+ 
 
 </style>
 
@@ -270,7 +579,7 @@
                                 <div class="select-wrapper form-control">
                                     <input type="file" name="engineers_attachement" id="engineer_attachement">
                                 </div>
-                                @error('request_file')
+                                @error('engineers_attachement')
                                     <p class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </p>
@@ -302,7 +611,7 @@
                         </small>
                         <div class="row mt-5">
                             <div class="input-field col s12">
-                                <textarea id="events_internal_notes" name="events_internal_notes" class="materialize-textarea" placeholder="Internal note for Engineers."></textarea>
+                                <textarea id="events_internal_notes" name="events_internal_notes" class="materialize-textarea" placeholder="Internal note description."></textarea>
                                 <div class="select-wrapper form-control">
                                     <input type="file" name="events_attachement" id="events_attachement">
                                 </div>
@@ -351,6 +660,10 @@
                                         @isset($f['events_internal_notes'])
                                             Messge Sent
                                         @endisset
+
+                                        @isset($f['file_url'])
+                                        Messge Sent
+                                    @endisset
                                     </span>
 
                                     <ul class="actions-list">
@@ -360,6 +673,7 @@
                                         @isset($f['request_file'])
                                             <span class="red-olsx-text">Filename :</span>
                                         @endisset
+                                        
                                         <span>
                                             @isset($f['request_file'])
                                                 {{ $f['request_file'] }}
@@ -373,9 +687,121 @@
                                                 {{ $f['events_internal_notes'] }}
                                             @endisset
 
+                                            @isset($f['file_url'])
+                                            {{ $f['file_url'] }}
+                                        @endisset
+
                                         </span>
                                                             
-                                            <div class="divider"></div>
+                                            <div class="divider">
+                                            </div>
+                                            @isset($f['request_file'])
+                                                <div class="tab" style="height: 70px;">
+                                                    <button class="tablinks-smaller defaulti tablinks{{$f['id']}}" onclick="openCity1(event, 'London1', {{$f['id']}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>Results</button>
+                                                    <button class="tablinks-smaller tablinks{{$f['id']}}" onclick="openCity1(event, 'Paris1', {{$f['id']}})"><i class="fa fa-file" style="margin-right:10px;"></i>Logs</button>
+                                                </div>
+                                                
+                                                <!-- Tab content -->
+                                                <div id="London1{{$f['id']}}" class="tabcontent{{$f['id']}}" style=" margin: 30px 0px;">
+                                                    <ul class="feedback">
+                                                        <li class="angry" data-type="angry" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                            <div>
+                                                                <svg class="eye left">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="eye right">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="mouth">
+                                                                    <use xlink:href="#mouth">
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sad" data-type="sad" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                            <div>
+                                                                <svg class="eye left">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="eye right">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="mouth">
+                                                                    <use xlink:href="#mouth">
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                        <li class="ok" data-type="ok" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                            <div></div>
+                                                        </li>
+                                                        <li class="good active" data-type="good" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                            <div>
+                                                                <svg class="eye left">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="eye right">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="mouth">
+                                                                    <use xlink:href="#mouth">
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                        <li class="happy" data-type="happy" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                            <div>
+                                                                <svg class="eye left">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="eye right">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                            
+                                                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                                        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
+                                                            <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+                                                        </symbol>
+                                                        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
+                                                            <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+                                                        </symbol>
+                                                    </svg>
+                                                    
+                                                </div>
+                                                
+                                                <div id="Paris1{{$f['id']}}" class="tabcontent{{$f['id']}}" style=" margin: 30px 0px;">
+                                                    <form method="POST" action="{{ route('file-url') }}" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                                                        <div class="tab-content">
+                                                            @if ($message = Session::get('success'))
+                                                                <div style="background: #28a745!important; padding: 10px;">
+                                                                    <span style="margin:0; color:white;">{{ $message }}</span>
+                                                                    <i class="fa fa-close close-message" style="float:right; margin-top:2px; color:white;"></i>
+                                                                </div>
+                                                            @endif
+                                                        <p style="font-size: 16px;">Upload and watch the datalogs</p>
+                                                        
+                                                        <div class="row mt-5">
+                                                            <div class="input-field col s12">
+                                                                <textarea id="file_url" name="file_url" class="materialize-textarea" placeholder="URL"></textarea>
+                                                                <div class="select-wrapper form-control">
+                                                                    <input type="file" name="file_url_attachment" id="file_url_attachment">
+                                                                </div>
+                                                                @error('file_url_attachment')
+                                                                    <p class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </p>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="tab-footer text-center">
+                                                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Add To The Timeline</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                              @endisset
                                     <div>
                                         
                                     </div>
@@ -505,6 +931,19 @@
 @section('pagespecificscripts')
 <script type="text/javascript">
     $( document ).ready(function(event) {
+
+        $('.feedback li').click(function(e){
+            $('.feedback li').removeClass('active');
+            $(this).addClass('active');
+            let type = $(this).data('type');
+            let id = $(this).data('id');
+            let file_id = $(this).data('file_id');
+
+            console.log('type:'+type)
+            console.log('id:'+id)
+            console.log('file_id:'+file_id)
+        });
+
         $('.close-message').click(function() {
             $(this).parent().addClass('hide');
         });
@@ -558,6 +997,33 @@ function openCity(evt, cityName) {
     }
 document.getElementById("defaultOpen").click();
 
+
+function openCity1(evt, cityName, id) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent"+id);
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks"+id);
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName+id).style.display = "block";
+  evt.currentTarget.className += " active";
+
+    }
+
+    var el = document.getElementsByClassName('defaulti');
+        for (var i=0;i<el.length; i++) {
+            el[i].click();
+        }
 
 </script>
 @endsection
