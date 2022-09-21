@@ -849,17 +849,25 @@ body {
                         <small class="blue-olsx-text"><i class="fa fa-warning"></i> You are the only one to see this information, engineers are not notified. This is not a support
                             request.
                         </small>
+                        
                         <div class="row mt-5">
                             <div class="input-field col s12">
                                 <textarea id="events_internal_notes" name="events_internal_notes" class="materialize-textarea" placeholder="Internal note description."></textarea>
-                                <div class="select-wrapper form-control">
-                                    <input type="file" name="events_attachement" id="events_attachement">
+                                
+                                <div class="file-field input-field col s12">
+                                    <div class="btn">
+                                        <span><i class="fa fa-paperclip"></i></span>
+                                        <input type="file" name="engineers_attachement" class="" id="engineers_attachement">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" name="attachment" type="text" placeholder="File">
+                                    </div>
+                                    @error('engineers_attachement')
+                                        <p class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </p>
+                                    @enderror
                                 </div>
-                                @error('request_file')
-                                    <p class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </p>
-                                @enderror
                             </div>
                         </div>
                         </div>
@@ -935,6 +943,74 @@ body {
                                             <div class="divider">
                                             </div>
                                             @isset($f['request_file'])
+
+                                            <p class="push-bit m-t-em">
+                                                The file has been sent to engineers with the following request :
+                                            </p>
+                                            <div class="chip-stage">
+                                                <img src="https://www.shiftech.eu/media/olsx/tunings/icons/06b67cee92e4fea2919e83d6fa2a8edd.svg" alt="">
+                                            Stock (no remap - only options)
+                                            </div>  
+
+                                            <div class="chip-stage">
+                                                <img src="https://www.shiftech.eu/media/olsx/options/icons/29c2dd7e1e2cf29fd7d5038d47022958.svg" alt="">
+                                            EGR OFF
+                                        </div>
+
+                                        <div class="chip-stage">
+                                            <img src="https://www.shiftech.eu/media/olsx/options/icons/20f24f635d2597c65d620d977d5fd185.svg" alt="">
+                                        DPF OFF
+                                    </div>
+
+                                    <div class="divider">
+                                    </div>
+
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Reading tool : </span>
+                                        <span class="chip-stage">
+                                            <img src="https://www.shiftech.eu/media/olsx/tools/4283215581bc46c7f5a4687a35c45e31.png" class="tool-logo-small"> SLAVE                 </span>
+                                                    </p>
+
+                                                    <div class="divider">
+                                                    </div>
+
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Brand Group: </span> <img src="https://storage.googleapis.com/olsx_images/Intellitune_Brands_Group/mercedes.png" alt="Mercedes group" class="feedback-logo">
+                                                    </p>
+
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">ECU: </span>
+                                                                        <img src="https://storage.googleapis.com/olsx_images/Intellitune_Manufacturers/bosch.svg" alt="Bosch" class="feedback-logo m-r-xs">
+                                                                        EDC16CP31_CR40
+                                                    </p>
+
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Engine Code: </span> OM642DE30
+                                                    </p>
+
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Engine name: </span> 280-320CDI
+                                                    </p>
+
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Displacement: </span> 3.0                </p>
+
+                                                        <p class="push-bit">
+                                                            <span class="red-olsx-text">Power: </span> 190-224 hp
+                                                        </p>
+
+                                                        <p class="push-bit">
+                                                            <span class="red-olsx-text">Torque: </span> 440-510 Nm
+                                                        </p>
+
+                                                        <p class="push-bit">
+                                                            <span class="red-olsx-text">Software ID 1: </span> 1037386921P409
+                                                        </p>
+
+                                                        <div class="divider">
+                                                        </div>
+
+
                                                 <div class="tab" style="height: 70px;">
                                                     <button class="tablinks-smaller defaulti tablinks{{$f['id']}}" onclick="openCity1(event, 'London1', {{$f['id']}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>Results</button>
                                                     <button class="tablinks-smaller tablinks{{$f['id']}}" onclick="openCity1(event, 'Paris1', {{$f['id']}})"><i class="fa fa-file" style="margin-right:10px;"></i>Logs</button>
@@ -1025,14 +1101,28 @@ body {
                                                         <div class="row mt-5">
                                                             <div class="input-field col s12">
                                                                 <textarea id="file_url" name="file_url" class="materialize-textarea" placeholder="URL"></textarea>
-                                                                <div class="select-wrapper form-control">
+                                                                <div class="file-field input-field col s12">
+                                                                    <div class="btn">
+                                                                        <span><i class="fa fa-paperclip"></i></span>
+                                                                        <input type="file" name="file_url_attachment" class="" id="file_url_attachment">
+                                                                    </div>
+                                                                    <div class="file-path-wrapper">
+                                                                        <input class="file-path validate" name="attachment" type="text" placeholder="File">
+                                                                    </div>
+                                                                    @error('file_url_attachment')
+                                                                        <p class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </p>
+                                                                    @enderror
+                                                                </div>
+                                                                {{-- <div class="select-wrapper form-control">
                                                                     <input type="file" name="file_url_attachment" id="file_url_attachment">
                                                                 </div>
                                                                 @error('file_url_attachment')
                                                                     <p class="invalid-feedback" role="alert">
                                                                         <strong>{{ $message }}</strong>
                                                                     </p>
-                                                                @enderror
+                                                                @enderror --}}
                                                             </div>
                                                         </div>
                                                         </div>
