@@ -460,6 +460,7 @@
   width: auto;
   height: 40px;
   float: right;
+  padding-bottom: 5px;
 }
 .f-dropdown ul li a:hover {
   color: #5C6BC0;
@@ -993,7 +994,8 @@ body {
                                                     </p>
 
                                                     <p class="push-bit">
-                                                        <span class="red-olsx-text">Displacement: </span> 3.0                </p>
+                                                        <span class="red-olsx-text">Displacement: </span> 3.0                
+                                                    </p>
 
                                                         <p class="push-bit">
                                                             <span class="red-olsx-text">Power: </span> 190-224 hp
