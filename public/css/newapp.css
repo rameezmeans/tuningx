@@ -18386,7 +18386,9 @@ span.timeline-date-time small {
     .timeline-list li {
         padding: 0 0 30px;
     }
-    
+    .feedback-li {
+        padding: 0 !important;
+    }
     .timeline-list li.add-event {
         padding-bottom: 50px;
         padding-top: 0;

@@ -9,6 +9,14 @@
     font-size: 1.5em;
 }
 
+#ecu_file_select + ul + span{
+    display: none;
+}
+
+#gearbox_file_select + ul + span{
+    display: none;
+}
+
 .tab .tablinks .wow  span {
     display: block;
 }
@@ -356,28 +364,205 @@
 	}
 }
 
- body .dribbble {
-	 position: fixed;
-	 display: block;
-	 right: 20px;
-	 bottom: 20px;
+.f-dropdown {
+  --max-scroll: 3;
+  position: relative;
+  z-index: 10;
 }
- body .dribbble img {
-	 display: block;
-	 height: 28px;
+.f-dropdown select {
+  display: none;
 }
- body .twitter {
-	 position: fixed;
-	 display: block;
-	 right: 64px;
-	 bottom: 14px;
+.f-dropdown > span {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #bbb;
+  border: 1px solid #ccc;
+  background: #fff;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
- body .twitter svg {
-	 width: 32px;
-	 height: 32px;
-	 fill: #1da1f2;
+
+.f-dropdown ul li a span {
+    font-size: 20px;
 }
- 
+.f-dropdown > span > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 12px;
+  font-size: 20px;
+}
+.f-dropdown > span img {
+  width: 30px;
+  margin-right: 10px;
+}
+.f-dropdown > span:before, .f-dropdown > span:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 8px;
+  height: 2px;
+  border-radius: 1px;
+  top: 50%;
+  right: 12px;
+  background: #000;
+  transition: all 0.3s ease;
+}
+.f-dropdown > span:before {
+  margin-right: 4px;
+  transform: scale(0.96, 0.8) rotate(50deg);
+}
+.f-dropdown > span:after {
+  transform: scale(0.96, 0.8) rotate(-50deg);
+}
+.f-dropdown ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  max-height: calc(var(--max-scroll) * 75px);
+  top: 30px;
+  left: 0;
+  z-index: 1;
+  right: 0;
+  background: #FFF;
+  border: 1px solid #CCC;
+  border-radius: 6px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transform-origin: 0 0;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+  transform: translate(0, 5px);
+}
+.f-dropdown ul li {
+  padding: 0;
+  margin: 0;
+}
+.f-dropdown ul li a {
+  cursor: pointer;
+  display: block;
+  padding: 8px 12px;
+  color: #000;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  transition: all 0.2s ease;
+  align-items: center;
+}
+.f-dropdown ul li a img {
+  width: auto;
+  height: 40px;
+  float: right;
+}
+.f-dropdown ul li a:hover {
+  color: #5C6BC0;
+}
+.f-dropdown ul li.active a {
+  color: #FFF;
+  background: lightgrey;
+}
+.f-dropdown ul li.active a:before, .f-dropdown ul li.active a:after {
+  --scale: 0.6;
+  content: "";
+  display: block;
+  width: 10px;
+  height: 2px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  opacity: 0;
+  background: #FFF;
+  transition: all 0.2s ease;
+}
+.f-dropdown ul li.active a:before {
+  transform: rotate(45deg) scale(var(--scale));
+}
+.f-dropdown ul li.active a:after {
+  transform: rotate(-45deg) scale(var(--scale));
+}
+.f-dropdown ul li.active a:hover:before, .f-dropdown ul li.active a:hover:after {
+  --scale: 0.9;
+  opacity: 1;
+}
+.f-dropdown ul li:first-child a {
+  border-radius: 6px 6px 0 0;
+}
+.f-dropdown ul li:last-child a {
+  border-radius: 0 0 6px 6px;
+}
+.f-dropdown.disabled {
+  opacity: 0.7;
+}
+.f-dropdown.disabled > span {
+  cursor: not-allowed;
+}
+.f-dropdown.filled > span {
+  color: #000;
+}
+.f-dropdown.open {
+  z-index: 15;
+}
+.f-dropdown.open > span {
+  border-color: #AAA;
+}
+.f-dropdown.open > span:before, .f-dropdown.open > span:after {
+  background: #000;
+}
+.f-dropdown.open > span:before {
+  transform: scale(0.96, 0.8) rotate(-50deg);
+}
+.f-dropdown.open > span:after {
+  transform: scale(0.96, 0.8) rotate(50deg);
+}
+.f-dropdown.open ul {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 12px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.4, 0.6, 0.5, 1.32);
+}
+
+/* --------------------------- */
+.f-group {
+  max-width: 250px;
+  margin: 0 auto;
+  text-align: left;
+}
+.f-group select {
+  width: 100%;
+}
+
+.f-control {
+  font-size: 14px;
+  line-height: normal;
+  color: #000;
+  display: inline-block;
+  background-color: #ffffff;
+  border: #ccc 1px solid;
+  border-radius: 6px;
+  padding: 8px 12px;
+  outline: none;
+  max-width: 250px;
+}
+
+/* label {
+  width: 100%;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+} */
+
+body {
+  /* font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding: 80px 10px;
+  background: #e3f3ff; */
+}
 
 </style>
 
@@ -488,8 +673,30 @@
                         <div class="row mt-5">
 
                             <h3 style="margin-left:12px;">Select File Type</h3>
-                            <div class="input-field col s12" style="margin-left:5px; display:flex;">
-                                <div class="col s6" style="display: flex;">
+                            {{-- <div class="input-field col s12" style="margin-left:5px; display:flex;"> --}}
+                                <div class="col s12 m4 file-type-buttons">
+                                    <label class="file-type-label col s6">
+                                        <input type="radio" value="ECU" class="file-selection file_type" name="file_type">
+                                            <img src="https://resellers.ecutech.tech/assets/img/OLSx-pictogram-file-02.svg">
+                                            <span>
+                                                ECU file
+                                            </span>
+                                    </label>
+                                    <label class="file-type-label col s6">
+                                        <input type="radio" value="TCU" class="file-selection file_type" name="file_type">
+                                        <img src="https://resellers.ecutech.tech/assets/img/OLSxGearBox.svg">
+                                        <span>
+                                            Gearbox file
+                                        </span>
+                                    </label>
+
+                                    @error('file_type')
+                                    <p class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </p>
+                                @enderror
+                            </div>
+                                {{-- <div class="col s6" style="display: flex;">
                                     <span class="file_type_area" style="padding: 20px;" data-type="ecu_file">
                                         <div><img src="https://resellers.ecutech.tech/assets/img/OLSx-pictogram-file-02.svg"></div>
                                         <p>ECU File</p>
@@ -503,10 +710,10 @@
                                             <strong>{{ $message }}</strong>
                                         </p>
                                     @enderror
-                                </div>
-                                <div class="col s6">
+                                </div> --}}
+                                <div class="col s6" style="float: right !important;">
                                     <div class="select-wrapper form-control">
-                                        <select name="ecu_file_select" id="ecu_file_select" class="select-dropdown hide">
+                                        <select name="ecu_file_select" id="ecu_file_select" class="select-dropdown  f-dropdown hide">
                                             <option value="status" selected disabled>Request Type </option>
                                             <option value="new_upload">New upload</option>
                                             <option value="tuning_evolution">Tuning Evolution - I want to make a new tuning request.</option>
@@ -517,30 +724,31 @@
                                         </select>
                                     </div>
                                     <div class="select-wrapper form-control">
-                                        <select name="gearbox_file_select" id="gearbox_file_select" class="select-dropdown hide">
+                                        <select name="gearbox_file_select" id="gearbox_file_select" class="select-dropdown  f-dropdown hide">
                                             <option value="status" selected disabled>Request Type </option>
                                             <option value="new_upload">New Upload</option>
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            {{-- </div> --}}
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
-                                    <select name="master_tools[]" id="master_tools" class="select-dropdown" multiple>
-                                        <option value="status" selected disabled>Select Tools You Use *</option>
+                                    <select class="f-control f-dropdown" name="master_tools" placeholder="Select your reading tool">
+                                        <option value=""> </option>
                                         @foreach($masterTools as $ma)
-                                            <option value="{{$ma}}">{{get_tools(trim_str($ma)).' (master)'}}</option>
+                                            <option data-image="{{ get_dropdown_image(trim_str($ma)) }}" value="{{$ma}}">{{get_tools(trim_str($ma)).' (master)'}}</option>
                                         @endforeach
                                         @foreach($slaveTools as $s)
-                                        <option value="{{$s}}">{{get_tools(trim_str($s)).' (slave)'}}</option>
-                                    @endforeach
-                                    </select>
-                                    @error('file_type')
-                                        <p class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </p>
-                                    @enderror
+                                            <option data-image="{{ get_dropdown_image(trim_str($s)) }}" value="{{$s}}">{{get_tools(trim_str($s)).' (slave)'}}</option>
+                                        @endforeach
+                                      </select>
+                                   
                                 </div>
+                                @error('master_tools')
+                                <p class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </p>
+                            @enderror
                             </div>
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
@@ -673,7 +881,6 @@
                                         @isset($f['request_file'])
                                             <span class="red-olsx-text">Filename :</span>
                                         @endisset
-                                        
                                         <span>
                                             @isset($f['request_file'])
                                                 {{ $f['request_file'] }}
@@ -781,6 +988,7 @@
                                                                 </div>
                                                             @endif
                                                         <p style="font-size: 16px;">Upload and watch the datalogs</p>
+                                                        
                                                         
                                                         <div class="row mt-5">
                                                             <div class="input-field col s12">
@@ -930,6 +1138,99 @@
 
 @section('pagespecificscripts')
 <script type="text/javascript">
+
+(function( $ ){
+  $.fn.mySelectDropdown = function(options) {    
+    return this.each(function() {  
+      var $this = $(this);
+      
+      $this.each(function () {
+        var dropdown = $("<div />").addClass("f-dropdown selectDropdown");
+        
+        if($(this).is(':disabled')) 
+          dropdown.addClass('disabled');
+
+        $(this).wrap(dropdown);
+
+        var label = $("<span />").append($("<span />")
+          .text($(this).attr("placeholder"))).insertAfter($(this));
+        var list = $("<ul />");
+
+        $(this)
+          .find("option")
+          .each(function () {
+            var image = $(this).data('image');
+            if(image) {
+              list.append($("<li />").append(
+                $("<a />").attr('data-val',$(this).val())
+                .html(
+                  $("<span />").append($(this).text())
+                ).append('<img src="'+image+'">')
+              ));
+            } else if($(this).val() != '') {
+              list.append($("<li />").append(
+                $("<a />").attr('data-val',$(this).val())
+                .html(
+                  $("<span />").append($(this).text())
+                )
+              ));
+            }
+          });
+
+        list.insertAfter($(this));
+
+        if ($(this).find("option:selected").length > 0 && $(this).find("option:selected").val() != '') {
+          list.find('li a[data-val="' + $(this).find("option:selected").val() + '"]').parent().addClass("active");
+          $(this).parent().addClass("filled");
+          label.html(list.find("li.active a").html());
+        }
+      });
+
+      if(!$(this).is(':disabled')) {
+        $(this).parent().on("click", "ul li a", function (e) {
+          e.preventDefault();
+          var dropdown = $(this).parent().parent().parent();
+          var active = $(this).parent().hasClass("active");
+          var label = active
+            ? $('<span />').text(dropdown.find("select").attr("placeholder"))
+            : $(this).html();
+
+          dropdown.find("option").prop("selected", false);
+          dropdown.find("ul li").removeClass("active");
+
+          dropdown.toggleClass("filled", !active);
+          dropdown.children("span").html(label);
+
+          if (!active) {
+            dropdown
+              .find('option[value="' + $(this).attr('data-val') + '"]')
+              .prop("selected", true);
+            $(this).parent().addClass("active");
+          }
+
+          dropdown.removeClass("open");
+        });
+
+        $this.parent().on("click", "> span", function (e) {
+          var self = $(this).parent();
+          self.toggleClass("open");
+        });
+
+        $(document).on("click touchstart", function (e) {
+          var dropdown = $this.parent();
+          if (dropdown !== e.target && !dropdown.has(e.target).length) {
+            dropdown.removeClass("open");
+          }
+        });
+      }
+    });
+  };
+})( jQuery );
+
+$('select.f-dropdown').mySelectDropdown();
+// $('select.ecu_file_select').mySelectDropdown();
+// $('select.gearbox_file_select').mySelectDropdown();
+
     $( document ).ready(function(event) {
 
         $('.feedback li').click(function(e){
@@ -937,7 +1238,7 @@
             $(this).addClass('active');
             let type = $(this).data('type');
             let id = $(this).data('id');
-            let file_id = $(this).data('file_id');
+            let file_id = $(this).data('type');
 
             console.log('type:'+type)
             console.log('id:'+id)
@@ -953,6 +1254,27 @@
         $('html,body').animate({
             scrollTop: $("#content").offset().top},
             'slow');
+    });
+
+    $('.file_type').click(function(e){
+        if ($(this).is(':checked')) {
+            let file_type = $(this).val();
+
+            if(file_type == 'ECU'){
+                console.log($('#ecu_file_select').next().next());
+                $('#ecu_file_select').next().next().css("display", "block");
+                $('#gearbox_file_select').next().next().css("display", "none");
+                // $('#ecu_file_select').removeClass('hide');
+                // $('#gearbox_file_select').addClass('hide');
+            }
+            else if(file_type == 'TCU') {
+                // $('#ecu_file_select').addClass('hide');
+                // $('#gearbox_file_select').removeClass('hide');
+
+                $('#gearbox_file_select').next().next().css("display", "block");
+                $('#ecu_file_select').next().next().css("display", "none");
+            }
+        }
     });
 
     $("span.file_type_area").click(function() { 
