@@ -383,6 +383,8 @@
   border: 1px solid #ccc;
   background: #fff;
   transition: color 0.2s ease, border-color 0.2s ease;
+  border-radius: 6px;
+    box-shadow: 0 8px 20px 0 rgb(73 76 83 / 20%);
 }
 
 .f-dropdown ul li a span {
@@ -393,7 +395,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 12px;
-  font-size: 20px;
+  font-size: 12px;
 }
 .f-dropdown > span img {
   width: 30px;
@@ -750,7 +752,21 @@ body {
                                 </p>
                             @enderror
                             </div>
-                            <div class="input-field col s12">
+                            <div class="file-field input-field col s12">
+                                <div class="btn">
+                                    <span><i class="fa fa-paperclip"></i></span>
+                                    <input type="file" name="request_file" class="" id="request_file">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" name="attachment" type="text" placeholder="File">
+                                </div>
+                                @error('request_file')
+                                    <p class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </p>
+                                @enderror
+                            </div>
+                            {{-- <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
                                     <input type="file" name="request_file" id="request_file">
                                 </div>
@@ -759,7 +775,7 @@ body {
                                     <strong>{{ $message }}</strong>
                                 </p>
                             @enderror
-                            </div>
+                            </div> --}}
                         </div>
                         </div>
                         <div class="tab-footer text-center">
@@ -784,14 +800,30 @@ body {
                         <div class="row mt-5">
                             <div class="input-field col s12">
                                 <textarea id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="Internal note for Engineers."></textarea>
-                                <div class="select-wrapper form-control">
+                                
+                                <div class="file-field input-field col s12">
+                                    <div class="btn">
+                                        <span><i class="fa fa-paperclip"></i></span>
+                                        <input type="file" name="engineers_attachement" class="" id="engineers_attachement">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" name="attachment" type="text" placeholder="File">
+                                    </div>
+                                    @error('engineers_attachement')
+                                        <p class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </p>
+                                    @enderror
+                                </div>
+                                
+                                {{-- <div class="select-wrapper form-control">
                                     <input type="file" name="engineers_attachement" id="engineer_attachement">
                                 </div>
                                 @error('engineers_attachement')
                                     <p class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </p>
-                                @enderror
+                                @enderror --}}
                             </div>
                         </div>
                         </div>
