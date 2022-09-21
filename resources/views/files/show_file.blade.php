@@ -388,7 +388,7 @@
 }
 
 .f-dropdown ul li a span {
-    font-size: 12px;
+    font-size: 16px;
 }
 .f-dropdown > span > span {
   white-space: nowrap;
