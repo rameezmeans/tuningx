@@ -35,6 +35,7 @@ Route::post('/request-file', [App\Http\Controllers\FileController::class, 'reque
 Route::post('/file-engineers-notes', [App\Http\Controllers\FileController::class, 'fileEngineersNotes'])->name('file-engineers-notes');
 Route::post('/file-events-notes', [App\Http\Controllers\FileController::class, 'fileEventsNotes'])->name('file-events-notes');
 Route::post('/file-url', [App\Http\Controllers\FileController::class, 'fileURL'])->name('file-url');
+Route::post('/file_feedback', [App\Http\Controllers\FileController::class, 'fileFeedback'])->name('file-feedback');
 
 
 Route::post('/upload-file', [App\Http\Controllers\FileController::class, 'uploadFile'])->name('upload-file');

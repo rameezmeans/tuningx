@@ -32,6 +32,7 @@
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     @vite(['resources/js/app.js'])
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     @yield('pagespecificstyles')
 </head>
@@ -39,5 +40,30 @@
     @yield('content')
     @yield('pagespecificscripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <style>
+        .footer {
+          position: fixed;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          background-color: #28a745!important;
+          color: white;
+          text-align: center;
+          display: inline;
+          z-index: 9999;
+        }
+
+        .close {
+            background: transparent;
+            margin-left: 20px;
+            border: 1px solid white;
+            cursor: pointer;
+        }
+        </style>
+        @if(Session::has('success'))
+            <div class="footer">
+            <p>{{ Session::get('success') }} <button class="close">x</button></p>
+            </div>
+        @endif
 </body>
 </html>

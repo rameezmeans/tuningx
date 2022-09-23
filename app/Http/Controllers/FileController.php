@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EngineerFileNote;
 use App\Models\File;
+use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
 use App\Models\FileUrl;
 use App\Models\RequestFile;
@@ -137,7 +138,16 @@ class FileController extends Controller
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
         $slaveTools = explode(',',  Auth::user()->slave_tools );
-        $unsortedTimelineObjects = $file->files->toArray();
+        $withoutTypeArray = $file->files->toArray();
+        $unsortedTimelineObjects = [];
+
+        foreach($withoutTypeArray as $r) {
+            $fileReq = RequestFile::findOrFail($r['id']);
+            if($fileReq->file_feedback){
+                $r['type'] = $fileReq->file_feedback->type;
+            }
+            $unsortedTimelineObjects []= $r;
+        } 
 
         $createdTimes = [];
 
@@ -264,5 +274,23 @@ class FileController extends Controller
         $file->file_id = $request->file_id;
         $file->save();
         return redirect()->back()->with('success', 'URL successfully Added!');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function fileFeedback(Request $request)
+    {
+
+        FileFeedback::where('request_file_id','=', $request->request_file_id)->delete();
+
+        $requestFile = new FileFeedback();
+        $requestFile->file_id = $request->file_id;
+        $requestFile->request_file_id = $request->request_file_id;
+        $requestFile->type = $request->type;
+        $requestFile->save();
+        return response()->json($request->all());
     }
 }

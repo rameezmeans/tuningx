@@ -613,7 +613,7 @@ body {
                     <h1>Individual history</h1>
                                         </div>
                 <div class="col s5 m4 l4 center">
-                    <a class="btn btn-red waves-effect waves-light btn-vehicle-id" id="back-vehicle-id" href="/en/client/file-history"><span class="hide-on-med-and-down">Back to history</span>
+                    <a class="btn btn-red waves-effect waves-light btn-vehicle-id" id="back-vehicle-id" href="{{ route('file-history') }}"><span class="hide-on-med-and-down">Back to history</span>
                         <i class="fa fa-arrow-left"></i>
                     </a>
                 </div>
@@ -662,12 +662,6 @@ body {
                 <div id="London" class="tabcontent timeline-actions z-depth-1">
                     <form method="POST" action="{{ route('request-file') }}" enctype="multipart/form-data">
                     <div class="tab-content">
-                        @if ($message = Session::get('success'))
-                            <div style="background: #28a745!important; padding: 10px;">
-                                <span style="margin:0; color:white;">{{ $message }}</span>
-                                <i class="fa fa-close close-message" style="float:right; margin-top:2px; color:white;"></i>
-                            </div>
-                        @endif
                     <label style="font-size: 16px;">Send a new file request</label>
                     
                         @csrf
@@ -759,7 +753,7 @@ body {
                                     <input type="file" name="request_file" class="" id="request_file">
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path validate" name="attachment" type="text" placeholder="File">
+                                    <input class="file-path validate" name="attachment_request_file" id="attachment_request_file" type="text" placeholder="File">
                                 </div>
                                 @error('request_file')
                                     <p class="invalid-feedback" role="alert">
@@ -780,7 +774,7 @@ body {
                         </div>
                         </div>
                         <div class="tab-footer text-center">
-                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Next</button>
+                            <button class="btn btn-red waves-effect waves-light submit-new-request" id="submit-file-request" type="submit" disabled><i class="fa fa-hand-o-right"></i>Next</button>
                         </div>
                     </form>
                 </div>
@@ -791,12 +785,6 @@ body {
                         @csrf
                         <input type="hidden" name="file_id" value="{{$file->id}}">
                         <div class="tab-content">
-                            @if ($message = Session::get('success'))
-                                <div style="background: #28a745!important; padding: 10px;">
-                                    <span style="margin:0; color:white;">{{ $message }}</span>
-                                    <i class="fa fa-close close-message" style="float:right; margin-top:2px; color:white;"></i>
-                                </div>
-                            @endif
                         <label style="font-size: 16px;">Ask for engineer's support</label>
                         <div class="row mt-5">
                             <div class="input-field col s12">
@@ -808,7 +796,7 @@ body {
                                         <input type="file" name="engineers_attachement" class="" id="engineers_attachement">
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input class="file-path validate" name="attachment" type="text" placeholder="File">
+                                        <input class="file-path validate" name="engineers_attachement_field" id="engineers_attachement_field" type="text" placeholder="File">
                                     </div>
                                     @error('engineers_attachement')
                                         <p class="invalid-feedback" role="alert">
@@ -839,12 +827,6 @@ body {
                         @csrf
                         <input type="hidden" name="file_id" value="{{$file->id}}">
                         <div class="tab-content">
-                            @if ($message = Session::get('success'))
-                                <div style="background: #28a745!important; padding: 10px;">
-                                    <span style="margin:0; color:white;">{{ $message }}</span>
-                                    <i class="fa fa-close close-message" style="float:right; margin-top:2px; color:white;"></i>
-                                </div>
-                            @endif
                         <p style="font-size: 16px;">Add internal note to vehicle's timeline</p>
                         <br>
                         <small class="blue-olsx-text"><i class="fa fa-warning"></i> You are the only one to see this information, engineers are not notified. This is not a support
@@ -858,10 +840,10 @@ body {
                                 <div class="file-field input-field col s12">
                                     <div class="btn">
                                         <span><i class="fa fa-paperclip"></i></span>
-                                        <input type="file" name="engineers_attachement" class="" id="engineers_attachement">
+                                        <input type="file" name="events_attachement" class="" id="events_attachement">
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input class="file-path validate" name="attachment" type="text" placeholder="File">
+                                        <input class="file-path validate" name="events_attachement_field" id="events_attachement_field" type="text" placeholder="File">
                                     </div>
                                     @error('engineers_attachement')
                                         <p class="invalid-feedback" role="alert">
@@ -1021,7 +1003,7 @@ body {
                                                 <!-- Tab content -->
                                                 <div id="London1{{$f['id']}}" class="tabcontent{{$f['id']}}" style=" margin: 30px 0px;">
                                                     <ul class="feedback">
-                                                        <li class="angry" data-type="angry" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                        <li class="angry @if( isset($f['type']) && $f['type'] == 'angry' ) active @endif" data-type="angry" data-file_id="{{$file->id}}" data-request_file_id="{{$f['id']}}">
                                                             <div>
                                                                 <svg class="eye left">
                                                                     <use xlink:href="#eye">
@@ -1034,7 +1016,7 @@ body {
                                                                 </svg>
                                                             </div>
                                                         </li>
-                                                        <li class="sad" data-type="sad" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                        <li class="sad @if( isset($f['type']) && $f['type'] == 'sad' ) active @endif" data-type="sad" data-file_id="{{$file->id}}" data-request_file_id="{{$f['id']}}">
                                                             <div>
                                                                 <svg class="eye left">
                                                                     <use xlink:href="#eye">
@@ -1047,10 +1029,10 @@ body {
                                                                 </svg>
                                                             </div>
                                                         </li>
-                                                        <li class="ok" data-type="ok" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                        <li class="ok @if( isset($f['type']) && $f['type'] == 'ok' ) active @endif" data-type="ok" data-file_id="{{$file->id}}" data-request_file_id="{{$f['id']}}">
                                                             <div></div>
                                                         </li>
-                                                        <li class="good active" data-type="good" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                        <li class="good @if( isset($f['type']) && $f['type'] == 'good' ) active @endif @if( !isset($f['type']) ) active @endif" data-type="good" data-file_id="{{$file->id}}" data-request_file_id="{{$f['id']}}">
                                                             <div>
                                                                 <svg class="eye left">
                                                                     <use xlink:href="#eye">
@@ -1063,7 +1045,7 @@ body {
                                                                 </svg>
                                                             </div>
                                                         </li>
-                                                        <li class="happy" data-type="happy" data-id="{{$file->id}}" data-file_id="{{$f['id']}}">
+                                                        <li class="happy @if( isset($f['type']) && $f['type'] == 'happy' ) active @endif" data-type="happy" data-file_id="{{$file->id}}" data-request_file_id="{{$f['id']}}">
                                                             <div>
                                                                 <svg class="eye left">
                                                                     <use xlink:href="#eye">
@@ -1091,25 +1073,17 @@ body {
                                                         @csrf
                                                         <input type="hidden" name="file_id" value="{{$file->id}}">
                                                         <div class="tab-content">
-                                                            @if ($message = Session::get('success'))
-                                                                <div style="background: #28a745!important; padding: 10px;">
-                                                                    <span style="margin:0; color:white;">{{ $message }}</span>
-                                                                    <i class="fa fa-close close-message" style="float:right; margin-top:2px; color:white;"></i>
-                                                                </div>
-                                                            @endif
                                                         <p style="font-size: 16px;">Upload and watch the datalogs</p>
-                                                        
-                                                        
                                                         <div class="row mt-5">
                                                             <div class="input-field col s12">
                                                                 <textarea id="file_url" name="file_url" class="materialize-textarea" placeholder="URL"></textarea>
                                                                 <div class="file-field input-field col s12">
                                                                     <div class="btn">
                                                                         <span><i class="fa fa-paperclip"></i></span>
-                                                                        <input type="file" name="file_url_attachment" class="" id="file_url_attachment">
+                                                                        <input type="file" name="file_url_attachment" id="file_url_attachment">
                                                                     </div>
                                                                     <div class="file-path-wrapper">
-                                                                        <input class="file-path validate" name="attachment" type="text" placeholder="File">
+                                                                        <input class="file-path validate" name="file_url_attachment_field"  id="file_url_attachment_field" type="text" placeholder="File">
                                                                     </div>
                                                                     @error('file_url_attachment')
                                                                         <p class="invalid-feedback" role="alert">
@@ -1357,16 +1331,28 @@ $('select.f-dropdown').mySelectDropdown();
 
     $( document ).ready(function(event) {
 
-        $('.feedback li').click(function(e){
-            $('.feedback li').removeClass('active');
-            $(this).addClass('active');
-            let type = $(this).data('type');
-            let id = $(this).data('id');
-            let file_id = $(this).data('type');
+        $(document).on( "click", ".close" , function() {
+          $(this).parent().parent().css('visibility','hidden');
+        });
 
-            console.log('type:'+type)
-            console.log('id:'+id)
-            console.log('file_id:'+file_id)
+        $(document).on("change", "#request_file", function (e) {
+            $("#submit-file-request").removeAttr("disabled");
+            $("#attachment_request_file").val($(this).val());
+        });
+
+        $(document).on("change", "#file_url_attachment", function (e) {
+            $("#file_url_attachment_field").val($(this).val());
+        });
+        $(document).on("change", "#engineers_attachement", function (e) {
+            $("#engineers_attachement_field").val($(this).val());
+        });
+        $(document).on("change", "#events_attachement", function (e) {
+            $("#events_attachement_field").val($(this).val());
+        });
+
+        $(document).on("change", "#request_file", function (e) {
+            $("#submit-file-request").removeAttr("disabled");
+            $("#attachment_request_file").val($(this).val());
         });
 
         $('.close-message').click(function() {
@@ -1399,6 +1385,33 @@ $('select.f-dropdown').mySelectDropdown();
                 $('#ecu_file_select').next().next().css("display", "none");
             }
         }
+    });
+
+
+    $(document).on('click', '.feedback li', function(){
+
+        // console.log('here we are again.');
+
+        $('.feedback li').removeClass('active');
+            $(this).addClass('active');
+            let type = $(this).data('type');
+            let file_id = $(this).data('file_id');
+            let request_file_id = $(this).data('request_file_id');
+            
+            $.ajax({
+                url: "/file_feedback",
+                type: "POST",
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    'file_id': file_id,
+                    'type': type,
+                    'request_file_id': request_file_id
+                },
+                success: function(d) {
+                   swal('Your feedback is recored!');
+                }
+            });
+
     });
 
     $("span.file_type_area").click(function() { 

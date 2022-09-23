@@ -12,4 +12,8 @@ class RequestFile extends Model
         'request_file', 'file_type', 'ecu_file_select', 'gearbox_file_select', 'master_tools', 'file_id'
     ];
     use HasFactory;
+
+    function file_feedback(){
+        return $this->hasOne(FileFeedback::class, 'request_file_id', 'id');
+    }
 }
