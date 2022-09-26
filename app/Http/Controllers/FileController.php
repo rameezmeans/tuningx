@@ -107,7 +107,7 @@ class FileController extends Controller
      */
     public function fileHistory()
     {
-        $files = File::all();
+        $files = File::orderBy('created_at','desc')->get();
         return view('files.file_history', [ 'files' => $files ]);
     }
 

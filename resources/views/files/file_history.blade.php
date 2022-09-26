@@ -59,7 +59,7 @@
             return false;
         });
 
-        $('table').DataTable();
+        $('table').DataTable({"ordering": false,});
     });
 
 </script>
