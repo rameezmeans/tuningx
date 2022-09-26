@@ -1140,7 +1140,7 @@
                                         {{ $vehicle->Name }}                                                    
                                     </span>
                                         <span class="car-name">
-                                            {{ $vehicle->engine }} {{$vehicle->BHP_standard}} {{ $vehicle->TORQUE_standard }}
+                                            {{ $file->engine }} {{ $vehicle->TORQUE_standard }}
                                         </span>
                                     </td>
                                 </tr>
