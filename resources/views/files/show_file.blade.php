@@ -1140,7 +1140,7 @@
                                         {{ $vehicle->Name }}                                                    
                                     </span>
                                         <span class="car-name">
-                                            218/318/518 CDI (3.0) {{$vehicle->BHP_standard}} {{ $vehicle->TORQUE_standard }}
+                                            {{ $vehicle->engine }} {{$vehicle->BHP_standard}} {{ $vehicle->TORQUE_standard }}
                                         </span>
                                     </td>
                                 </tr>

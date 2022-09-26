@@ -84,6 +84,7 @@ class FileController extends Controller
             'model' => 'required|max:255',
             'version' => 'required|max:255',
             'model' => 'required|max:255',
+            'engine' => 'required|max:255',
             'ecu' => 'required|max:255',
             'gear_box' => 'max:255',
         ]);
@@ -117,7 +118,6 @@ class FileController extends Controller
      */
     public function requestFile(Request $request)
     {
-
         $requestFile = $request->validate([
             'file_id' => 'required',
             'request_file' => 'required|max:255',
