@@ -202,16 +202,16 @@
 
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
-                                <select name="gear_box" class="select-dropdown" disabled>
+                                <select name="gear_box" class="select-dropdown">
                                     <option value="gear_box" @if(!old('gear_box')) selected @endif disabled>Gears Box</option>
-                                    <option value="auto_gear_box" @if(!old('gear_box')) @endif disabled>Automatic Gears Box</option>
-                                    <option value="manual_gear_box" @if(!old('gear_box')) selected @endif disabled>Manual Gears Box</option>
+                                    <option value="auto_gear_box" @if(!old('gear_box')) @endif>Automatic Gears Box</option>
+                                    <option value="manual_gear_box" @if(!old('gear_box')) selected @endif>Manual Gears Box</option>
                                    
                                   </select>
                                 </div>
                             </div>
 
-                            <div class="row cgv wow fadeIn" data-wow-delay="2s" style="visibility: visible; animation-delay: 2s;">
+                            <div class="row">
                                 <div class="col s12">
                                     <h2>General terms and conditions </h2>
                                 </div>
@@ -240,7 +240,7 @@
                                                                             <p id="create_vehicle_form_checkbox-error-custom" class="input-field" style="display: none;">
                                         <span class="invalid">You must accept the different conditions above to be able to submit your request.</span>
                                     </p>
-                                </div>
+                                </div> 
 
                             </div>
                             
@@ -248,7 +248,7 @@
 
                             <div class="row">
                                 <div class="input-field col s12 center">
-                                    <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red">Send File</button>
+                                    <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red" disabled>Send File</button>
                                 </div>
                             </div>
 
@@ -265,6 +265,25 @@
 @section('pagespecificscripts')
 
 <script type="text/javascript">
+
+var boxcounter;
+$(function() {
+    let boxcounter = 0;
+    $(".cgv-checkbox").click(function() {
+        if(this.checked) {
+            console.log('checked');
+            boxcounter++;
+            if(boxcounter == 3){
+                $("#register_form_Register").removeAttr("disabled");
+            }
+        } else {
+            boxcounter--;
+            if(boxcounter < 3){
+                $("#register_form_Register").attr("disabled", "disabled");
+            }
+        }
+    });
+});
 
 function disable_dropdowns(){
 
