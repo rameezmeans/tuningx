@@ -361,33 +361,39 @@ class FileController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function getEngines(Request $request)
+    {
+        $model = $request->model;
+        $brand = $request->brand;
+        $version = $request->version;
+
+        $engines = Vehicle::select('engine')->distinct()
+        ->where('Make', '=', $brand)
+        ->where('Model', '=', $model)
+        ->where('Generation', '=', $version)
+        ->get();
+
+        return response()->json( [ 'engines' => $engines ] );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function getECUs(Request $request)
     {
         $model = $request->model;
         $brand = $request->brand;
         $version = $request->version;
+        $engine = $request->engine;
        
         $ecus = Vehicle::select('Engine_ECU')->distinct()
         ->where('Make', '=', $brand)
         ->where('Model', '=', $model)
         ->where('Generation', '=', $version)
+        ->where('Engine', '=', $engine)
         ->get();
-
-        $gearBox = Vehicle::select('Gearbox_ECU')->distinct()
-        ->where('Make', '=', $brand)
-        ->where('Model', '=', $model)
-        ->where('Generation', '=', $version)
-        ->get();
-
-        $gearboxArray = [];
-
-        if($gearBox){
-            foreach($gearBox as $g){
-                if($g->Gearbox_ECU){
-                    $gearboxArray []= $g->Gearbox_ECU;
-                }
-            }
-        }
 
         $ecusArray = [];
 
@@ -413,7 +419,7 @@ class FileController extends Controller
 
         $ecusArray = array_values(array_unique($ecusArray));
         
-        return response()->json( [ 'ecus' => $ecusArray, 'gearBox' => $gearboxArray ] );
+        return response()->json( [ 'ecus' => $ecusArray ]);
     }
 
 }

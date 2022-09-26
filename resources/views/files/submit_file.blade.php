@@ -193,6 +193,14 @@
 
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
+                                <select name="engine" id="engine" class="select-dropdown" disabled>
+                                    <option value="engine" @if(!old('engine')) selected @endif disabled>Engine</option>
+                                  </select>
+                                </div>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <div class="select-wrapper form-control">
                                 <select name="ecu" id="ecu" class="select-dropdown" disabled>
                                     <option value="ecu" @if(!old('ecu')) selected @endif disabled>ECU</option>
                                     
@@ -397,21 +405,55 @@ $( document ).ready(function(event) {
     });
 
     $(document).on('change', '#version', function(e){
-
         // disable_dropdowns();
-
-        $('#ecu').children().remove();
-        $('#ecu').append('<option selected id="ecu">ECU</option>');
-        $('#gear_box').children().remove();
+        $('#engine').children().remove();
+        $('#engine').append('<option selected value"engine" disabled>Engine</option>');
+        
 
         // $('#model').attr('disabled', 'disabled');
         // $('#version').attr('disabled', 'disabled');
-        $('#ecu').attr('disabled', 'disabled');
-        $('#gear_box').attr('disabled', 'disabled');
+        $('#engine').attr('disabled', 'disabled');
+        
 
         let version = $(this).val();
         let brand = $('#brand').val();
         let model = $('#model').val();
+
+        $.ajax({
+                url: "/get_engines",
+                type: "POST",
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    'model': model,
+                    'brand': brand,
+                    'version': version,
+                },
+                success: function(items) {
+                   $('#engine').removeAttr('disabled');
+
+                   console.log(items.engines);
+                   
+                   $.each(items.engines, function (i, item) {
+                        $('#engine').append($('<option>', { 
+                            value: item.engine,
+                            text : item.engine 
+                        }));
+                    });
+                }
+            });
+    });
+
+    $(document).on('change', '#engine', function(e){
+        // disable_dropdowns();
+        $('#ecu').children().remove();
+        $('#ecu').append('<option selected value="ecu" disabled>ECU</option>');
+        // $('#model').attr('disabled', 'disabled');
+        // $('#version').attr('disabled', 'disabled');
+        $('#ecu').attr('disabled', 'disabled');
+        let engine = $(this).val();
+        let brand = $('#brand').val();
+        let model = $('#model').val();
+        let version = $('#version').val();
 
         $.ajax({
                 url: "/get_ecus",
@@ -421,6 +463,7 @@ $( document ).ready(function(event) {
                     'model': model,
                     'brand': brand,
                     'version': version,
+                    'engine': engine,
                 },
                 success: function(items) {
                    $('#ecu').removeAttr('disabled');
@@ -431,14 +474,6 @@ $( document ).ready(function(event) {
                             text : item 
                         }));
                     });
-
-                    $.each(items.gearBox, function (i, item) {
-                        $('#gear_box').append($('<option>', { 
-                            value: item,
-                            text : item 
-                        }));
-                    });
-
                 }
             });
     });

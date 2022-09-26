@@ -38,6 +38,7 @@ Route::post('/file-url', [App\Http\Controllers\FileController::class, 'fileURL']
 Route::post('/file_feedback', [App\Http\Controllers\FileController::class, 'fileFeedback'])->name('file-feedback');
 Route::post('/get_models', [App\Http\Controllers\FileController::class, 'getModels'])->name('get-models');
 Route::post('/get_versions', [App\Http\Controllers\FileController::class, 'getVersions'])->name('get-versions');
+Route::post('/get_engines', [App\Http\Controllers\FileController::class, 'getEngines'])->name('get-engines');
 Route::post('/get_ecus', [App\Http\Controllers\FileController::class, 'getECUs'])->name('get-ecus');
 
 
