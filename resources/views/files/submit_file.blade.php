@@ -202,11 +202,46 @@
 
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
-                                <select name="gear_box" id="gear_box" class="select-dropdown" disabled>
+                                <select name="gear_box" class="select-dropdown" disabled>
                                     <option value="gear_box" @if(!old('gear_box')) selected @endif disabled>Gears Box</option>
+                                    <option value="auto_gear_box" @if(!old('gear_box')) @endif disabled>Automatic Gears Box</option>
+                                    <option value="manual_gear_box" @if(!old('gear_box')) selected @endif disabled>Manual Gears Box</option>
                                    
                                   </select>
                                 </div>
+                            </div>
+
+                            <div class="row cgv wow fadeIn" data-wow-delay="2s" style="visibility: visible; animation-delay: 2s;">
+                                <div class="col s12">
+                                    <h2>General terms and conditions </h2>
+                                </div>
+                                <div class="col s12">
+                                    <p>
+                                        <input type="checkbox" class="cgv-checkbox" id="cgv">
+                                        <label for="cgv">
+                                            
+                I understand and agree to <a class="modal-trigger" href="#modal" style="z-index: 1003;"><strong>the terms and conditions of sales</strong></a>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <input type="checkbox" class="cgv-checkbox" id="professional">
+                                        <label for="professional">
+                                            Hereby, I declare that I am a professional
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <input type="checkbox" class="cgv-checkbox" id="track">
+                                        <label for="track">
+                                            I acknowledge that I am fully aware that the tuned software are dedicated to vehicles intended
+                exclusively for use on race track
+            
+                                        </label>
+                                    </p>
+                                                                            <p id="create_vehicle_form_checkbox-error-custom" class="input-field" style="display: none;">
+                                        <span class="invalid">You must accept the different conditions above to be able to submit your request.</span>
+                                    </p>
+                                </div>
+
                             </div>
                             
                             </div>
