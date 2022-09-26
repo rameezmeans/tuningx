@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('ecu_file_select')->nullable();
             $table->string('gearbox_file_select')->nullable();
             $table->string('master_tools');
+            $table->string('tool_type');
             $table->foreignId('file_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

@@ -9,6 +9,7 @@ use App\Models\FileInternalEvent;
 use App\Models\FileUrl;
 use App\Models\RequestFile;
 use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,7 +35,16 @@ class FileController extends Controller
        
         $masterTools = explode(',',Auth::user()->master_tools);
         $slaveTools = explode(',',Auth::user()->slave_tools);
-        return view('files.submit_file', ['masterTools' => $masterTools, 'slaveTools' => $slaveTools]);
+        
+        $brandsObjects = Vehicle::select('make')->distinct()->get();
+
+        $brands = [];
+        foreach($brandsObjects as $b){
+            if($b->make != '')
+            $brands []= $b->make;
+        }
+
+        return view('files.submit_file', ['brands' => $brands,'masterTools' => $masterTools, 'slaveTools' => $slaveTools]);
     }
 
     /**
@@ -74,9 +84,11 @@ class FileController extends Controller
             'model' => 'required|max:255',
             'version' => 'required|max:255',
             'model' => 'required|max:255',
-            'tools' => 'required|max:255',
-            'gear_box' => 'required|max:255',
+            'ecu' => 'required|max:255',
+            'gear_box' => 'max:255',
         ]);
+
+        $file['tools'] = "tools value";
 
         $flag = File::create($file);
 
@@ -120,7 +132,7 @@ class FileController extends Controller
         $file->move(public_path('uploads'),$fileName);
 
         $requestFile['request_file'] = $fileName;
-        $requestFile['master_tools'] = implode(',', $requestFile['master_tools'] );
+        $requestFile['master_tools'] = $requestFile['master_tools'];
         
         $requestFile = RequestFile::create($requestFile);
 
@@ -135,6 +147,12 @@ class FileController extends Controller
     public function showFile($id)
     {
         $file = File::findOrFail($id);
+
+        $vehicle = Vehicle::where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->where('Generation', '=', $file->version)
+        ->first();
+
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
         $slaveTools = explode(',',  Auth::user()->slave_tools );
@@ -172,7 +190,7 @@ class FileController extends Controller
 
         array_multisort($createdTimes, SORT_DESC, $unsortedTimelineObjects);
         
-        return view('files.show_file', [ 'attachedFiles' => $unsortedTimelineObjects,'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools ]);
+        return view('files.show_file', [ 'attachedFiles' => $unsortedTimelineObjects,'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools, 'vehicle' => $vehicle ]);
     }
 
     /**
@@ -291,6 +309,99 @@ class FileController extends Controller
         $requestFile->request_file_id = $request->request_file_id;
         $requestFile->type = $request->type;
         $requestFile->save();
+
         return response()->json($request->all());
     }
+
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getModels(Request $request)
+    {
+        $brand = $request->brand;
+        $models = Vehicle::select('model')->distinct()->where('make', '=', $brand)->get();
+        return response()->json( [ 'models' => $models ] );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getVersions(Request $request)
+    {
+        $model = $request->model;
+        $brand = $request->brand;
+
+        $versions = Vehicle::select('generation')->distinct()
+        ->where('Make', '=', $brand)
+        ->where('Model', '=', $model)
+        ->get();
+
+        return response()->json( [ 'versions' => $versions ] );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getECUs(Request $request)
+    {
+        $model = $request->model;
+        $brand = $request->brand;
+        $version = $request->version;
+       
+        $ecus = Vehicle::select('Engine_ECU')->distinct()
+        ->where('Make', '=', $brand)
+        ->where('Model', '=', $model)
+        ->where('Generation', '=', $version)
+        ->get();
+
+        $gearBox = Vehicle::select('Gearbox_ECU')->distinct()
+        ->where('Make', '=', $brand)
+        ->where('Model', '=', $model)
+        ->where('Generation', '=', $version)
+        ->get();
+
+        $gearboxArray = [];
+
+        if($gearBox){
+            foreach($gearBox as $g){
+                if($g->Gearbox_ECU){
+                    $gearboxArray []= $g->Gearbox_ECU;
+                }
+            }
+        }
+
+        $ecusArray = [];
+
+        foreach($ecus as $e){
+            if(str_contains($e->Engine_ECU, ' / ')){
+                
+                $pos = strpos($e->Engine_ECU, ' / ');
+                $second_str = substr($e->Engine_ECU, $pos);
+                $first_str = substr($e->Engine_ECU,0, $pos);
+                $second_str = substr($second_str, 3);
+
+                if($first_str != '')
+                    $ecusArray []= $first_str;  
+                if($second_str != '')              
+                    $ecusArray []= $second_str;                
+                
+            }
+            else{
+                if($e->Engine_ECU != '')    
+                    $ecusArray []= $e->Engine_ECU;
+            }
+        }
+
+        $ecusArray = array_values(array_unique($ecusArray));
+        
+        return response()->json( [ 'ecus' => $ecusArray, 'gearBox' => $gearboxArray ] );
+    }
+
 }

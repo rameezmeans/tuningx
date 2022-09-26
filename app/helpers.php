@@ -1,4 +1,40 @@
-<?php 
+<?php
+
+use App\Models\Vehicle;
+
+
+if(!function_exists('get_option_from_request_file_dropdown')){
+
+    function get_option_from_request_file_dropdown( $str ){
+
+        if($str == 'new_upload'){
+            return "New upload";
+        }
+        if($str == 'tuning_evolution'){
+            return "Tuning Evolution - I want to make a new tuning request.";
+        }
+        if($str == 'back_to_tuned'){
+            return "Back to tuned - The car has been updated by the dealer, please renew the tuning.";
+        }
+        if($str == 'back_to_stock'){
+            return "Back to stock - Send me back the original version.";
+        }
+        if($str == 'back_to_stock_with_virtual_read'){
+            return "Back to stock with virtual read - Its a virtual read, can you send me this file back to flash the car in stock mode?";
+        }
+        if($str == 'problem_RMA'){
+            return "Problem - RMA - I've an issue with this file, can you check?";
+        }
+        
+    }
+}
+
+if(!function_exists('get_image_from_brand')){
+
+    function get_image_from_brand( $brand ){
+        return Vehicle::where('make', '=', $brand)->first()->Brand_image_URL;
+    }
+}
 
 if(!function_exists('trim_str')){
 

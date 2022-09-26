@@ -21,9 +21,9 @@
 
     <script src="https://phpcoder.tech/multiselect/js/jquery.multiselect.js"></script>
     <link rel="stylesheet" href="https://phpcoder.tech/multiselect/css/jquery.multiselect.css">
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     @vite(['resources/js/app.js'])

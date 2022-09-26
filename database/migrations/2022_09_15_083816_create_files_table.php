@@ -30,7 +30,8 @@ return new class extends Migration
             $table->string('model');
             $table->string('version');
             $table->string('tools');
-            $table->string('gear_box');
+            $table->string('ecu');
+            $table->string('gear_box')->nullable();
             
             $table->timestamps();
         });

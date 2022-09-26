@@ -932,7 +932,7 @@ body {
                                             </p>
                                             <div class="chip-stage">
                                                 <img src="https://www.shiftech.eu/media/olsx/tunings/icons/06b67cee92e4fea2919e83d6fa2a8edd.svg" alt="">
-                                            Stock (no remap - only options)
+                                                @if($f['ecu_file_select']) {{ get_option_from_request_file_dropdown( $f['ecu_file_select'] ) }} @else {{ get_option_from_request_file_dropdown($f['gearbox_file_select']) }} @endif
                                             </div>  
 
                                             <div class="chip-stage">
@@ -951,28 +951,28 @@ body {
                                     <p class="push-bit">
                                         <span class="red-olsx-text">Reading tool : </span>
                                         <span class="chip-stage">
-                                            <img src="https://www.shiftech.eu/media/olsx/tools/4283215581bc46c7f5a4687a35c45e31.png" class="tool-logo-small"> SLAVE                 </span>
+                                            <img src="{{ get_dropdown_image($f['master_tools']) }}" class="tool-logo-small">SLAVE</span>
                                                     </p>
 
                                                     <div class="divider">
                                                     </div>
 
                                                     <p class="push-bit">
-                                                        <span class="red-olsx-text">Brand Group: </span> <img src="https://storage.googleapis.com/olsx_images/Intellitune_Brands_Group/mercedes.png" alt="Mercedes group" class="feedback-logo">
+                                                        <span class="red-olsx-text">Brand Group: </span> <img src="{{ $vehicle->Brand_image_URL }}" alt="Mercedes group" class="feedback-logo">
                                                     </p>
 
                                                     <p class="push-bit">
                                                         <span class="red-olsx-text">ECU: </span>
-                                                                        <img src="https://storage.googleapis.com/olsx_images/Intellitune_Manufacturers/bosch.svg" alt="Bosch" class="feedback-logo m-r-xs">
-                                                                        EDC16CP31_CR40
+                                                                        {{-- <img src="https://storage.googleapis.com/olsx_images/Intellitune_Manufacturers/bosch.svg" alt="Bosch" class="feedback-logo m-r-xs"> --}}
+                                                                        {{ $file->ecu }}
                                                     </p>
 
                                                     <p class="push-bit">
-                                                        <span class="red-olsx-text">Engine Code: </span> OM642DE30
+                                                        <span class="red-olsx-text">Engine Code: </span> {{$vehicle->Engine_number }}
                                                     </p>
 
                                                     <p class="push-bit">
-                                                        <span class="red-olsx-text">Engine name: </span> 280-320CDI
+                                                        <span class="red-olsx-text">Engine name: </span>  {{$vehicle->Engine }}
                                                     </p>
 
                                                     <p class="push-bit">
@@ -984,7 +984,7 @@ body {
                                                         </p>
 
                                                         <p class="push-bit">
-                                                            <span class="red-olsx-text">Torque: </span> 440-510 Nm
+                                                            <span class="red-olsx-text">Torque: </span> {{ $vehicle->TORQUE_standard }}-{{ $vehicle->TORQUE_tuned }}
                                                         </p>
 
                                                         <p class="push-bit">
@@ -1132,14 +1132,14 @@ body {
                             <table>
                                 <tbody><tr>
                                     <td>
-                                        <img src="https://www.shiftech.eu/media/manufacturers/5f98ae3c7c4f9f03b4033f72a4d20dd6.png" alt=" logo" class="logo-id">
+                                        <img src="{{ $vehicle->Brand_image_URL }}" alt=" logo" class="logo-id">
                                     </td>
                                     <td>
                                     <span class="car-info">
-                                        {{ $file->file_attached }}                                                    
+                                        {{ $vehicle->Name }}                                                    
                                     </span>
                                         <span class="car-name">
-                                            218/318/518 CDI (3.0) 184hp 400Nm
+                                            218/318/518 CDI (3.0) {{$vehicle->BHP_standard}} {{ $vehicle->TORQUE_standard }}
                                         </span>
                                     </td>
                                 </tr>
@@ -1163,7 +1163,7 @@ body {
                             </p>
                             <p>Fuel
                                 <span class="label">
-                                    Diesel
+                                   {{ $vehicle->Type_of_fuel }}
                                 </span>
                             </p>
                             <p>

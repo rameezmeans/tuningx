@@ -25,11 +25,11 @@
                             <tr class="redirect-click" href="#" data-redirect="{{route('file', $file->id)}}">
                                 <td class="clickable-row">
                                     
-                                    <img alt="" class="img-circle-car-history" src="https://www.shiftech.eu/media/resized/100x100/manufacturers/5f98ae3c7c4f9f03b4033f72a4d20dd6.png">
+                                    <img alt="" class="img-circle-car-history" src="{{ get_image_from_brand($file->brand) }}">
                               
-                                    <span class="brand-name">Mercedes</span>
+                                    <span class="brand-name">{{$file->brand}}</span>
                                 </td>
-                                <td class="clickable-row">{{$file->file_attached}}</td>
+                                <td class="clickable-row">{{$file->brand}}</td>
                                 <td class="clickable-row">
                                     <span class="label label-green">Received<i class="fa fa-check"></i></span></a>
                                 </td>
