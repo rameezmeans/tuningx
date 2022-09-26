@@ -131,8 +131,20 @@ class FileController extends Controller
         $fileName = $file->getClientOriginalName();
         $file->move(public_path('uploads'),$fileName);
 
+        $pos = strpos($requestFile['master_tools'], '.');
+        $second_str = substr($requestFile['master_tools'], $pos);
+        $first_str = substr($requestFile['master_tools'],0, $pos);
+        $second_str = substr($second_str, 1);
+        
+
+        if($first_str != '')
+            $ecusArray []= $first_str;  
+        if($second_str != '')              
+            $ecusArray []= $second_str; 
+
         $requestFile['request_file'] = $fileName;
-        $requestFile['master_tools'] = $requestFile['master_tools'];
+        $requestFile['master_tools'] = $first_str;
+        $requestFile['tool_type'] = $second_str;
         
         $requestFile = RequestFile::create($requestFile);
 

@@ -552,21 +552,6 @@
   max-width: 250px;
 }
 
-/* label {
-  width: 100%;
-  display: block;
-  font-weight: bold;
-  margin-bottom: 10px;
-  text-align: center;
-} */
-
-body {
-  /* font-family: Arial, sans-serif;
-  font-size: 14px;
-  padding: 80px 10px;
-  background: #e3f3ff; */
-}
-
 </style>
 
 @endsection
@@ -602,7 +587,23 @@ body {
                 </div>
             </a>
             <div class="parallax">
-                <img src="https://www.shiftech.eu/media/models/engines/a0975f1f42b671fa18e562c980682ca7.jpg" style="display: block; /*transform: translate3d(-50%, 659px, 0px);*/">
+                @php
+                $curl = curl_init($vehicle->Engine_URL);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+                $page = curl_exec($curl);
+                if(!empty($curl)) { //if any html is actually returned
+
+                    $pokemon_doc = new DOMDocument;
+                    libxml_use_internal_errors(true);
+                    $pokemon_doc->loadHTML($page);
+                    libxml_clear_errors();
+                    $pokemon_xpath = new DOMXPath($pokemon_doc);
+                    $coverImage = $pokemon_xpath->evaluate('string(//*[@class="VisualTop__adaptive"]/@data-path)');
+                }
+    
+                @endphp
+                <img src="{{$coverImage}}" style="display: block; /*transform: translate3d(-50%, 659px, 0px);*/">
             </div>
         </div>
     </section>
@@ -665,7 +666,7 @@ body {
                     <label style="font-size: 16px;">Send a new file request</label>
                     
                         @csrf
-                        <input type="hidden" id="file_type" name="file_type" value="">
+                        <input type="hidden" id="tool_type" name="tool_type" value="">
                         <input type="hidden" name="file_id" value="{{$file->id}}">
                         <div class="row mt-5">
 
@@ -730,13 +731,13 @@ body {
                             {{-- </div> --}}
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
-                                    <select class="f-control f-dropdown" name="master_tools" placeholder="Select your reading tool">
+                                    <select class="f-control f-dropdown" name="master_tools" id="master_tools" placeholder="Select your reading tool">
                                         <option value=""> </option>
                                         @foreach($masterTools as $ma)
-                                            <option data-image="{{ get_dropdown_image(trim_str($ma)) }}" value="{{$ma}}">{{get_tools(trim_str($ma)).' (master)'}}</option>
+                                            <option data-image="{{ get_dropdown_image(trim_str($ma)) }}" value="{{$ma.'.master'}}">{{get_tools(trim_str($ma)).' (master)'}}</option>
                                         @endforeach
                                         @foreach($slaveTools as $s)
-                                            <option data-image="{{ get_dropdown_image(trim_str($s)) }}" value="{{$s}}">{{get_tools(trim_str($s)).' (slave)'}}</option>
+                                            <option data-image="{{ get_dropdown_image(trim_str($s)) }}" value="{{$s.'.slave'}}" data-tool_type='Slave'>{{get_tools(trim_str($s)).' (slave)'}}</option>
                                         @endforeach
                                       </select>
                                    
@@ -951,7 +952,7 @@ body {
                                     <p class="push-bit">
                                         <span class="red-olsx-text">Reading tool : </span>
                                         <span class="chip-stage">
-                                            <img src="{{ get_dropdown_image($f['master_tools']) }}" class="tool-logo-small">SLAVE</span>
+                                            <img src="{{ get_dropdown_image($f['master_tools']) }}" class="tool-logo-small">{{  strtoupper($f['tool_type']) }}</span>
                                                     </p>
 
                                                     <div class="divider">
@@ -1338,6 +1339,11 @@ $('select.f-dropdown').mySelectDropdown();
         $(document).on("change", "#request_file", function (e) {
             $("#submit-file-request").removeAttr("disabled");
             $("#attachment_request_file").val($(this).val());
+        });
+
+        $(document).on("change", "#master_tools", function (e) {
+            console.log($(this).data('tool_type'));
+            $("#tool_type").val($(this).data('tool_type'));
         });
 
         $(document).on("change", "#file_url_attachment", function (e) {
