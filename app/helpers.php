@@ -281,8 +281,11 @@ if(!function_exists('code_to_country')){
 
 function code_to_country( $code ){
 
-    $code = strtoupper($code);
+    if($code == ''){
+        return '';
+    }
 
+    $code = strtoupper($code);
     $countryList = array(
         'AF' => 'Afghanistan',
         'AX' => 'Aland Islands',

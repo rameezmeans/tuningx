@@ -39,7 +39,7 @@
                     <i class="fa-solid fa-user"></i>
                     <span>Account</span>
                     <span class="neutral badge">
-                        0 <small>credits</small>
+                        {{ Auth::user()->credits->sum('credits') }} <small>credits</small>
                     </span>
                 </a>
             </li>
@@ -96,7 +96,7 @@
             </li>
                     
                     <li class="">
-                <a href="/en/client/shop-product"><i class="fa-solid fa-cart-shopping"></i><span>Shop</span></a>
+                <a href="{{ route('shop-product'); }}"><i class="fa-solid fa-cart-shopping"></i><span>Shop</span></a>
             </li>
             <li class="">
                 <a href="/en/client/invoices"><i class="fa-solid fa-file-invoice"></i><span>Invoices</span></a>

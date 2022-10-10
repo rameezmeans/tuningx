@@ -224,7 +224,7 @@
 <script type="text/javascript">
 
 $( document ).ready(function(event) {
-   $('#addLangBtn').click(function(e){
+    $(document).on('click','#addLangBtn', function(e){
         // e.preventdefault;
        console.log('btn clicked');
        $('.modal-overlay').css({display: "block"});
@@ -250,8 +250,9 @@ $( document ).ready(function(event) {
       
    });
 
-   $('#language_create_form_Cancel').click(function(e){
+   $(document).on('click','#language_create_form_Cancel', function(e){
     if($('.modal-overlay').css('display') == 'block'){
+        console.log('closed');
         $('.modal-overlay').css("display", "none");
      }
    });
