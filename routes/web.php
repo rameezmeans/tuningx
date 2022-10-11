@@ -44,7 +44,7 @@ Route::post('/make_payment', [App\Http\Controllers\PaymentController::class, 'ma
 Route::post('/add_to_cart', [App\Http\Controllers\PaymentController::class, 'addToCart'])->name('add-to-cart');
 Route::post('/add_to_cart', [App\Http\Controllers\PaymentController::class, 'addToCart'])->name('add-to-cart');
 
-Route::get('/cart', [App\Http\Controllers\PaymentController::class, 'getCart'])->name('get-cart');
+// Route::get('/cart', [App\Http\Controllers\PaymentController::class, 'getCart'])->name('get-cart');
 Route::get('/clear_cart', [App\Http\Controllers\PaymentController::class, 'clearCart'])->name('clear-cart');
 
 Route::post('/cart_quantity', [App\Http\Controllers\PaymentController::class, 'getCartQuantity'])->name('get-cart');
