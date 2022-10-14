@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Credit;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\FileFeedback;
@@ -12,6 +13,7 @@ use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Ui\Presets\React;
 
 class FileController extends Controller
 {
@@ -85,16 +87,19 @@ class FileController extends Controller
             'version' => 'required|max:255',
             'model' => 'required|max:255',
             'engine' => 'required|max:255',
-            'ecu' => 'required|max:255',
+            'ecu' => 'max:255',
             'gear_box' => 'max:255',
         ]);
 
         $file['tools'] = "tools value";
+        $file['credits'] = 0;
 
-        $flag = File::create($file);
+        $newFile = File::create($file);
 
-        if($flag){
-            return redirect()->route('file-history',['success', 'File successfully Added!'])->withInput();;
+        if($newFile){
+
+            return redirect()->route('stages', ['file_id' => $newFile->id]);
+            // return redirect()->route('file-history',['success', 'File successfully Added!']);
         }
 
         return redirect()->back()->withInput();
@@ -105,9 +110,70 @@ class FileController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function postStages(Request $request)
+    {
+        $credits = $request->total_credits_to_submit;
+        $file = File::findOrFail($request->file_id); 
+
+        $file->stages = $request->tuning;
+        $file->options = implode(',', $request->option );
+
+        $file->save();
+
+        return view( 'files.pay_credits', [ 'file' => $file, 'credits' => $credits ] );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function addCredits(Request $request)
+    {
+
+        $credits = $request->credits;
+
+        $creditsInAccount = Auth::user()->credits->sum('credits');
+
+        if($creditsInAccount >= $request->credits){
+
+            $credit = new Credit();
+            $credit->file_id = $request->file_id;
+            $credit->credits = -$credits;
+            $credit->price_payed = 0;
+            $credit->user_id = Auth::user()->id;
+            $credit->save();
+
+            $file = File::findOrFail($request->file_id); 
+
+            $file->credits = $credits;
+            $file->is_credited = true;
+
+            $file->save();
+        }
+        
+        return redirect()->route('file-history',['success', 'File successfully Added!']);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function stages(Request $request)
+    {
+        $file = File::findOrFail($request->file_id);
+        return view( 'files.set_stages', ['file' => $file] );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function fileHistory()
     {
-        $files = File::orderBy('created_at','desc')->get();
+        $files = File::orderBy('created_at','desc')->where('is_credited', '=', 1)->get();
         return view('files.file_history', [ 'files' => $files ]);
     }
 

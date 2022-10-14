@@ -234,9 +234,9 @@ $( document ).ready(function(event) {
             // $('.modal').css("display", "block");
     });
 
-    $(document).on('click','#remove-item', function(e){
+    // $(document).on('click','#remove-item', function(e){
 
-    });
+    // });
 
     $(document).on('click','#showModalCheckout', function(e){
         get_update_show_cart();

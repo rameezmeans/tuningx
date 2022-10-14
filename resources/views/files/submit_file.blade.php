@@ -256,7 +256,7 @@
 
                             <div class="row">
                                 <div class="input-field col s12 center">
-                                    <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red" disabled>Send File</button>
+                                    <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red" disabled>Next</button>
                                 </div>
                             </div>
 

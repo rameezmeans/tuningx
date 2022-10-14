@@ -27,6 +27,8 @@ Route::post('/change-password', [App\Http\Controllers\AccountController::class, 
 
 Route::get('/file-upload', [App\Http\Controllers\FileController::class, 'index'])->name('file-upload');
 
+Route::get('/stages', [App\Http\Controllers\FileController::class, 'stages'])->name('stages');
+
 Route::post('/edit-milage', [App\Http\Controllers\FileController::class, 'EditMilage'])->name('edit-milage');
 Route::post('/add-customer-note', [App\Http\Controllers\FileController::class, 'addCustomerNote'])->name('add-customer-note');
 
@@ -42,7 +44,8 @@ Route::post('/get_engines', [App\Http\Controllers\FileController::class, 'getEng
 Route::post('/get_ecus', [App\Http\Controllers\FileController::class, 'getECUs'])->name('get-ecus');
 Route::post('/make_payment', [App\Http\Controllers\PaymentController::class, 'makePayment'])->name('make-payment');
 Route::post('/add_to_cart', [App\Http\Controllers\PaymentController::class, 'addToCart'])->name('add-to-cart');
-Route::post('/add_to_cart', [App\Http\Controllers\PaymentController::class, 'addToCart'])->name('add-to-cart');
+Route::post('/post_stages', [App\Http\Controllers\FileController::class, 'postStages'])->name('post-stages');
+Route::post('/add_credits_to_file', [App\Http\Controllers\FileController::class, 'addCredits'])->name('add-credits-to-file');
 
 // Route::get('/cart', [App\Http\Controllers\PaymentController::class, 'getCart'])->name('get-cart');
 Route::get('/clear_cart', [App\Http\Controllers\PaymentController::class, 'clearCart'])->name('clear-cart');

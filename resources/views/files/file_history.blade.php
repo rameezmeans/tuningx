@@ -31,9 +31,9 @@
                                 </td>
                                 <td class="clickable-row">{{$file->brand}}</td>
                                 <td class="clickable-row">
-                                    <span class="label label-green">Received<i class="fa fa-check"></i></span></a>
+                                    <span class="label label-green">{{$file->status}}<i class="fa fa-check"></i></span></a>
                                 </td>
-                                <td class="clickable-row"><span class="label label-black">9</span></td>
+                                <td class="clickable-row"><span class="label label-black">{{$file->credits}}</span></td>
                                 <td class="clickable-row"><input class="vehicle-id-input" id="125091" value="{{$file->vin_number}}" readonly="" onclick="copyVin(125091)"></td>
                                 <td class="clickable-row">{{$file->name}}</td>
                                 <td class="clickable-row">{{$file->license_plate}}</td>
