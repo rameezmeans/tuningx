@@ -77,6 +77,7 @@ class PaymentController extends Controller
         $credit->user_id = Auth::user()->id;
         $credit->stripe_id = $payment->id;
         $credit->price_payed = $request->total;
+        $credit->invoice_id = 'INV-'.mt_rand(1000,9999);
         $credit->save();
 
         \Cart::remove(101);

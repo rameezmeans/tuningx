@@ -62,7 +62,7 @@
         <div class="container">
             <div class="file-service-process">
                 <div class="col s12 l4 m3">
-                    <div class="target wow fadeInDownBig pinned" style="visibility: visible; top: 100px;">
+                    <div class="target wow fadeInDownBig pinned" style="visibility: visible; top: 40px;">
                         <div class="brand-middle-panel hide-on-med-and-down">
                             <img src="{{ get_image_from_brand($file->brand) }}" alt="logo">
                         <div class="car-loader" id="car-loader" style="display: none;"></div>

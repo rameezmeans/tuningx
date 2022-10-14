@@ -141,6 +141,7 @@ class FileController extends Controller
             $credit->file_id = $request->file_id;
             $credit->credits = -$credits;
             $credit->price_payed = 0;
+            
             $credit->user_id = Auth::user()->id;
             $credit->save();
 
