@@ -34,16 +34,24 @@
     @yield('pagespecificstyles')
 </head>
 <body class="client-module">
-    @if ($message = Session::get('success'))
-        <div class="chip alert-message alert-green"><span><i class="fa fa-info-circle"></i>{{ $message }}</span></div>
+    
+    @if (request()->has('success'))
+        <div class="chip alert-message alert-green"><span><i class="fa fa-info-circle"></i>{{ request()->get('success') }}<button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
     @endif
 
-    @if ($message = Session::get('error'))
-    <div class="chip alert-message alert-red"><span><i class="fa fa-info-circle"></i>{{ $message }}</span></div>
+    @if (request()->has('error'))
+    <div class="chip alert-message alert-red"><span><i class="fa fa-info-circle"></i>{{  Session::get('error') }}</span><button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
 @endif        
             @yield('content')
 
     @yield('pagespecificscripts')
+    <script type="text/javascript">
+        $(document).ready(function(e){
+            $(document).on('click','.close-message', function(ev){
+                $(this).parent().parent().hide();
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

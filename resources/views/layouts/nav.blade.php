@@ -99,7 +99,7 @@
                 <a href="{{ route('shop-product'); }}"><i class="fa-solid fa-cart-shopping"></i><span>Shop</span></a>
             </li>
             <li class="">
-                <a href="/en/client/invoices"><i class="fa-solid fa-file-invoice"></i><span>Invoices</span></a>
+                <a href="{{route('invoices'); }}"><i class="fa-solid fa-file-invoice"></i><span>Invoices</span></a>
             </li>
             
                 </ul>

@@ -9,4 +9,8 @@ class Credit extends Model
 {
     use HasFactory;
     protected $fillable = ['credits','price_payed', 'stripe_id', 'user_id'];
+
+    public function file(){
+        return $this->belongsTo(File::class);
+    }
 }

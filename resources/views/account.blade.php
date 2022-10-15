@@ -65,7 +65,7 @@
             <button class="tablinks" onclick="openCity(event, 'Profile')" id="defaultOpen">Profile</button>
             <button class="tablinks" onclick="openCity(event, 'Contact')">Contact</button>
             <button class="tablinks" onclick="openCity(event, 'Tools')">Tools</button>
-            <button class="tablinks" onclick="openCity(event, 'Workstation')">Workstation</button>
+            {{-- <button class="tablinks" onclick="openCity(event, 'Workstation')">Workstation</button> --}}
             <button class="tablinks" onclick="openCity(event, 'Password')">Password</button>
             <button class="tablinks" onclick="openCity(event, 'CreditLog')">Credit Log</button>
         </div>
@@ -134,12 +134,12 @@
                                     <td>{{$language->language}}</td>
                                     <td>{{$language->mastery}} <i class="fa fa-star"></i></td>
                                     <td>
-                                        <a href="" data-id="1120" data-language="EL" data-mastery-level="5" class="btn-white tooltipped edit-language" data-position="bottom" data-tooltip="Edit language" data-tooltip-id="2d6946f8-2c10-751b-27a0-a6bcad59f55d">
+                                        <a href="{{ route('edit-language', $language->id); }}" class="btn-white tooltipped edit-language">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a href="" data-id="1120" class="btn-white tooltipped delete-language" data-position="bottom" data-tooltip="Delete language" data-tooltip-id="0e15e089-5504-e3bb-1c34-e9c559cce630">
+                                        <button type="button" data-id="{{$language->id}}" class="btn-white tooltipped delete-language">
                                             <i class="fa fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>  
                             @endforeach                                
@@ -154,11 +154,11 @@
                 <h4 class="m-b-lg">Tools</h4>
             </div>
         </div>
-        <div id="Workstation" class="tabcontent">
+        {{-- <div id="Workstation" class="tabcontent">
             <div class="form-pad">
                 <h4 class="m-b-lg">Add Workstation</h4>
             </div>
-        </div>
+        </div> --}}
         <div id="Password" class="tabcontent">
             <form name="" method="post" action="{{ route('change-password') }}">
                 @csrf
@@ -178,10 +178,80 @@
             </form>
         </div>
         <div id="CreditLog" class="tabcontent">
-            <div class="form-pad">
-                <h4 class="m-b-lg">Credit Logs</h4>
+            
+                <div class="container">
+                    <div class="row m-t-lg">
+                        {{-- <div class="col s12">
+                            <input type="checkbox" class="cgv-checkbox" id="postiveCreditLog" name="postiveCreditLog" checked="checked" data-com.bitwarden.browser.user-edited="yes">
+                            <label for="postiveCreditLog">
+                                Display positive transactions
+                            </label>
+                            <br>
+                            <input type="checkbox" class="cgv-checkbox" id="negativeCreditLog" name="negativeCreditLog" checked="checked" data-com.bitwarden.browser.user-edited="yes">
+                            <label for="negativeCreditLog">
+                                Display negative transactions
+                            </label>
+                        </div> --}}
+                        <table id="credit-log-table" class="admin-history file-history responsive-table highlight">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Date</th>
+                                <th></th>
+                                <th>Credits</th>
+                                <th>Total credits</th>
+                                <th></th>
+                                <th>Vehicle</th>
+                                <th>Invoice Ref.</th>
+                                <th>Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody> 
+                                @php $total = 0; @endphp
+                                @foreach($credits as $credit) 
+                                    @php $total += $credit->credits; @endphp                                                                                                                
+                                    <tr @if($credit->file_id) class="redirect-click  @if($credit->credits < 0) minus @else plus @endif" href="#" data-redirect="{{route('file', $credit->file_id)}}" @else class="@if($credit->credits < 0) minus @else plus @endif" @endif>
+                                        <td></td>
+                                        <td>{{$credit->created_at->format('Y-m-d')}}</td>
+                                        <td><strong>
+                                            User
+                                        </strong></td>
+                                        <td>
+                                            @if($credit->credits < 0)
+                                                <label class="label label-credit-admin red">{{$credit->credits}}</label>
+                                            @else
+                                                <label class="label label-credit-admin green">{{$credit->credits}}</label>
+                                            @endif
+                                        </td>
+                                        <td> 
+                                            @if($credit->credits > 0)
+                                                <label class="label label-credit-admin grey">{{$total}}</label>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($credit->credits < 0)
+                                                <img alt="" class="img-circle-car-history" height="30px" src="{{ get_image_from_brand($credit->file->brand) }}">
+                                            @endif
+                                        </td>
+                                        <td class="clickable-row" data-href="/en/client/file-history/MTQ2NjE4OjE2NjU4MjYyNDU">
+                                            @if($credit->credits < 0)
+                                                {{$credit->file->brand}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($credit->credits > 0)
+                                                {{ $credit->invoice_id }}
+                                            @endif    
+                                        </td>            
+                                        <td>@if($credit->credits > 0)  {{ $credit->price_payed.'€' }} @endif</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 </main>
@@ -224,8 +294,50 @@
 <script type="text/javascript">
 
 $( document ).ready(function(event) {
+
+    $( document ).ready(function(event) {
+        $('.redirect-click').click(function() {
+            window.location.href = $(this).data('redirect');
+            return false;
+        });
+
+        $('table').DataTable({"ordering": false,});
+    });
+
+    $(document).on('click','.delete-language', function(e){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+            if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/delete_language",
+                        type: "POST",
+                        data: {
+                            id: $(this).data('id')
+                        },
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your row has been deleted.",
+                                type: "success",
+                                timer: 3000
+                            });
+
+                            location.reload();
+                        }
+                    });            
+                }
+            });
+        });
+
     $(document).on('click','#addLangBtn', function(e){
-        // e.preventdefault;
        console.log('btn clicked');
        $('.modal-overlay').css({display: "block"});
    });
@@ -247,7 +359,6 @@ $( document ).ready(function(event) {
 
         $('#language_create_form_masteryLevel').val(level);
        
-      
    });
 
    $(document).on('click','#language_create_form_Cancel', function(e){
@@ -256,24 +367,6 @@ $( document ).ready(function(event) {
         $('.modal-overlay').css("display", "none");
      }
    });
-
-//    $('body').click(function (event) 
-// {
-//    if(!$(event.target).closest('#modalCreateLanguage').length && !$(event.target).is('#modalCreateLanguage')) {
-//      $("#modalCreateLanguage").hide();
-//      if($('.modal-overlay').css('display') == 'block'){
-//         // $('.modal-overlay').css("display", "none");
-//      }
-//    }     
-// });
-
-// $('#addLangBtn').click(function(e){
-//         e.preventdefault;
-//        console.log('btn clicked');
-//        $('.modal-overlay').css({display: "block"});
-//    });
-
-
 });
 
 function openCity(evt, cityName) {

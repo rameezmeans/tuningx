@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Credit;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +28,8 @@ class AccountController extends Controller
     public function index()
     {
         $languages = Language::where('user_id', Auth::user()->id)->get();
-        
-        return view('account', ['languages' => $languages]);
+        $credits = Credit::orderBy('created_at', 'asc')->get();
+        return view('account', [ 'languages' => $languages, 'credits' => $credits ]);
     }
 
 

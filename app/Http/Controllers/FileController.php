@@ -116,7 +116,9 @@ class FileController extends Controller
         $file = File::findOrFail($request->file_id); 
 
         $file->stages = $request->tuning;
-        $file->options = implode(',', $request->option );
+        if( $request->option && sizeof($request->option) >0 ){
+         $file->options = implode(',', $request->option );
+        }
 
         $file->save();
 
@@ -153,7 +155,7 @@ class FileController extends Controller
             $file->save();
         }
         
-        return redirect()->route('file-history',['success', 'File successfully Added!']);
+        return redirect()->route('file-history',['success' => 'File successfully Added!']);
     }
 
     /**

@@ -30,7 +30,44 @@ class LanguageController extends Controller
         unset($language['_token']);
         Language::create($language);
 
-        return back()->with('success', 'Language successfully Added!');
+        return redirect()->route('account',['success'=>'Language successfully Added!']);  
         
+    }
+
+    /**
+     * Edit the language.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function editLanguage(Request $request)
+    {
+        $language = Language::findOrFail($request->id);
+        return view('edit-language', ['language' => $language]);
+        // return redirect()->route('languages',['success', 'Language successfully Edited!']);    
+    }
+
+    /**
+     * Update the language.
+     *
+     * @return route redirect
+     */
+    public function updateLanguage(Request $request)
+    {
+        $language = Language::findOrFail($request->id);
+        $language->mastery = $request->mastery;
+        $language->save();
+        
+        return redirect()->route('account',['success'=>'Language successfully Edited!']);    
+    }
+
+    /**
+     * delete the language.
+     *
+     * @return route redirect
+     */
+    public function deleteLanguage(Request $request)
+    {
+        $language = Language::findOrFail($request->id);
+        $language->delete();   
     }
 }

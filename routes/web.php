@@ -23,6 +23,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/account', [App\Http\Controllers\AccountController::class, 'index'])->name('account');
 
 Route::post('/create-language', [App\Http\Controllers\LanguageController::class, 'createLanguage'])->name('create-language');
+Route::get('/edit-language/{id}', [App\Http\Controllers\LanguageController::class, 'editLanguage'])->name('edit-language');
+Route::post('/update-language', [App\Http\Controllers\LanguageController::class, 'updateLanguage'])->name('update-language');
+Route::post('/delete_language', [App\Http\Controllers\LanguageController::class, 'deleteLanguage'])->name('delete-language');
 Route::post('/change-password', [App\Http\Controllers\AccountController::class, 'changePassword'])->name('change-password');
 
 Route::get('/file-upload', [App\Http\Controllers\FileController::class, 'index'])->name('file-upload');
@@ -52,6 +55,8 @@ Route::get('/clear_cart', [App\Http\Controllers\PaymentController::class, 'clear
 
 Route::post('/cart_quantity', [App\Http\Controllers\PaymentController::class, 'getCartQuantity'])->name('get-cart');
 Route::get('/shop-product', [App\Http\Controllers\ShoppingController::class, 'shopProduct'])->name('shop-product');
+
+Route::get('/invoices', [App\Http\Controllers\InvoicesController::class, 'index'])->name('invoices');
 
 
 
