@@ -1,9 +1,22 @@
 <html>
 <head>
+<style>
 
+td {
+  text-align: center;
+  border: 1px grey solid;
+}
+
+th {
+  text-align: center;
+  border: 1px grey solid;
+  background: lightblue;
+}
+
+</style>
 </head>
 <body>
-<div id="ct" class="">
+<div id="ct" style="padding: 20px;">
     <div class="invoice-00001">
         <div class="content-section">
             <div class="inv--head-section inv--detail-section">
@@ -14,7 +27,7 @@
                            <h3 style="    margin-left: 0;" class="in-heading align-self-center">EcuTech Greece</h3>
                         </div>
                     </div>
-                    <div class="col-sm-6 text-sm-right">
+                    <div class="col-sm-6 text-sm-right" style="float: right;">
                         <p class="inv-list-number"><span class="inv-title">Invoice : </span> <span class="inv-number">ECUTECH-00001</span></p>
                     </div>
                     <div class="col-sm-6 align-self-center  ">
@@ -23,14 +36,14 @@
                         <p class="inv-email-address">files@ecutech.gr</p>
                         <p class="inv-email-address">+302382700100</p>
                     </div>
-                    <div class="col-sm-6 align-self-center mt-3 text-sm-right">
+                    <div class="col-sm-6 align-self-center mt-3 text-sm-right" style="float: right;">
                         <p class="inv-created-date"><span class="inv-title">Invoice Date : </span> <span class="inv-date">23 Jun 2022</span></p>
                         <p class="inv-due-date"><span class="inv-title">Due Date : </span> <span class="inv-date">23 Jun 2022</span></p>
                     </div>
                 </div>
             </div>
 
-            <div class="inv--detail-section inv--customer-detail-section">
+            <div class="inv--detail-section inv--customer-detail-section" style="margin-top: 100px; border-top: 1px gray solid;">
 
                 <div class="row">
 
@@ -52,7 +65,7 @@
 
             <div class="inv--product-table-section">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" style="width: 100%;">
                         <thead class="">
                         <tr>
                             <th scope="col"> Row</th>
@@ -64,11 +77,11 @@
                         </thead>
                         <tbody>
                                                                                             <tr>
-                                <td>0</td>
-                                <td>test</td>
+                                <td>1</td>
+                                <td>{{$invoice->invoice_id}}</td>
                                 <td class="text-right">1</td>
-                                <td class="text-right">€5</td>
-                                <td class="text-right">€5,00</td>
+                                <td class="text-right">€{{$invoice->price_payed}}</td>
+                                <td class="text-right">€{{$invoice->price_payed}}</td>
                             </tr>
                                                                                         </tbody>
                     </table>
@@ -82,25 +95,14 @@
                     </div>
                     <div class="col-sm-7 col-12 order-sm-1 order-0">
                         <div class="text-sm-right">
-                            <div class="row">
-                                <div class="col-sm-8 col-7">
-                                    <p class="">Subtotal : </p>
-                                </div>
-                                <div class="col-sm-4 col-5">
-                                    <p class="">€5,00</p>
-                                </div>
-                                <div class="col-sm-8 col-7">
-                                    <p class="">Tax amount : </p>
-                                </div>
-                                <div class="col-sm-4 col-5">
-                                    <p class="">
-                                        €0,00                                                                            </p>
-                                </div>
-                                                                                                        <div class="col-sm-8 col-7 grand-total-title">
-                                    <h4 class="">Grand Total : </h4>
-                                </div>
-                                <div class="col-sm-4 col-5 grand-total-amount">
-                                    <h4 class="">€5,00 </h4>
+                            <div class="row" style="float: right">
+                                <div>
+                                    
+                                        <p class="">Subtotal : €{{$invoice->price_payed}}</p>
+                                        <p class="">Tax amount :  €0,00  </p>
+                                        <span class="col-sm-8 col-7 grand-total-title">
+                                            <span style="font-size:20px;">Grand Total</span><span class="" > : €{{$invoice->price_payed}}</span>
+                                        </span> 
                                 </div>
                             </div>
                         </div>
@@ -109,7 +111,7 @@
 
             </div>
 
-            <div class="inv--note">
+            <div class="inv--note" style="margin-top: 150px; border-top: 1px grey solid;">
 
                 <div class="row mt-4">
                     <div class="col-sm-12 col-12 order-sm-0 order-1">

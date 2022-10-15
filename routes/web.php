@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\InvoicesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,9 @@ Route::post('/change-password', [App\Http\Controllers\AccountController::class, 
 
 
 Route::get('/show_pdf', [App\Http\Controllers\InvoicesController::class, 'showPDF'])->name('show-pdf');
+// Route::get('/make_pdf', [App\Http\Controllers\InvoicesController::class, 'makePDF'])->name('make-pdf');
+
+Route::get('pdfview',array('as'=>'pdfview','uses'=>'App\Http\Controllers\InvoicesController@makePDF'));
 
 Route::get('/file-upload', [App\Http\Controllers\FileController::class, 'index'])->name('file-upload');
 

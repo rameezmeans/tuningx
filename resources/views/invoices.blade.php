@@ -30,7 +30,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="http://resellers.ecutech.tech/API/ZOHO/GetInvoice/261618000003716001/INV-1608" target="_blank" data-position="bottom" data-tooltip="Download">
+                                    <a href="{{ route('pdfview',['id'=>$invoice->id]) }}" target="_blank" data-position="bottom" data-tooltip="Download">
                                         <i class="fa fa-download"></i>
                                         <strong> Download</strong>
                                     </a>
