@@ -27,4 +27,15 @@ class InvoicesController extends Controller
         $invoices = Credit::whereNotNull('invoice_id')->get();
         return view('invoices', ['invoices' => $invoices]);
     }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showPDF()
+    {
+        // $invoices = Credit::whereNotNull('invoice_id')->get();
+        return view('files.pdf');
+    }
 }
