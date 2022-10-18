@@ -959,7 +959,7 @@
                                                     </div>
 
                                                     <p class="push-bit">
-                                                        <span class="red-olsx-text">Brand Group: </span> <img src="{{ $vehicle->Brand_image_URL }}" alt="Mercedes group" class="feedback-logo">
+                                                        <span class="red-olsx-text">Brand Group: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="Mercedes group" class="feedback-logo">
                                                     </p>
 
                                                     <p class="push-bit">
@@ -1133,14 +1133,14 @@
                             <table>
                                 <tbody><tr>
                                     <td>
-                                        <img src="{{ $vehicle->Brand_image_URL }}" alt=" logo" class="logo-id">
+                                        <img src="{{ $file->vehicle()->Brand_image_URL }}" alt=" logo" class="logo-id">
                                     </td>
                                     <td>
                                     <span class="car-info">
-                                        {{ $vehicle->Name }}                                                    
+                                        {{ $file->vehicle()->Name }}                                                    
                                     </span>
                                         <span class="car-name">
-                                            {{ $file->engine }} {{ $vehicle->TORQUE_standard }}
+                                            {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
                                         </span>
                                     </td>
                                 </tr>

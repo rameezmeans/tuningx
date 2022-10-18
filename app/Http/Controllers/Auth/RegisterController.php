@@ -76,9 +76,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        // dd($data);
-
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -92,8 +90,8 @@ class RegisterController extends Controller
             'company_name' => $data['company_name'],
             'company_id' => $data['company_id'],
             'slave_tools_flag' => $data['slave_tools_flag'],
-            'master_tools' => implode(', ', $data['master_tools']),
-            'slave_tools' =>  implode(', ', $data['slave_tools']),
+            'master_tools' => implode(',', $data['master_tools']),
+            'slave_tools' =>  implode(',', $data['slave_tools']),
             'password' => Hash::make($data['password']),
         ]);
     }

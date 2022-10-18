@@ -29,7 +29,9 @@
                               
                                     <span class="brand-name">{{$file->brand}}</span>
                                 </td>
-                                <td class="clickable-row">{{$file->brand}}</td>
+                                <td class="clickable-row">
+                                    {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
+                                </td>
                                 <td class="clickable-row">
                                     <span class="label label-green">{{$file->status}}<i class="fa fa-check"></i></span></a>
                                 </td>

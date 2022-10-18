@@ -272,6 +272,15 @@
 <script type="text/javascript">
 
 $( document ).ready(function(event) {
+   
+    $(document).on('change','#qty-input', function(e){
+        let qty = $(this).val();
+        $('#subTotal').text(qty*10);
+        $('#vatSubTotal').text(qty*2.4);
+        $('#total').text(qty*12.4);
+        // $('.modal').css("display", "block");
+    });
+
     $(document).on('click','#show-cart', function(e){
                 let required_credits = parseInt( $('#required-credits').text() );
                 $('#qty-input').val(required_credits);

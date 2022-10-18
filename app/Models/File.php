@@ -30,4 +30,9 @@ class File extends Model
     public function file_urls(){
         return $this->hasMany(FileUrl::class);
     }
+
+    public function vehicle(){
+        return Vehicle::where('Make', '=', $this->brand)
+        ->first();
+    }
 }

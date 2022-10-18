@@ -1801,6 +1801,7 @@ input[type='radio']:checked:before {
 
 <script type="text/javascript">
     $(document).ready(function(){
+        
         let value = 0;
         let checkbox_credits_count = 0;
         let stages_str = "";

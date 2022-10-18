@@ -225,9 +225,10 @@
 <script type="text/javascript">
 
 $( document ).ready(function(event) {
-
+    
     $(document).on('change','#qty-input', function(e){
             let qty = $(this).val();
+            console.log(qty);
             $('#subTotal').text(qty*10);
             $('#vatSubTotal').text(qty*2.4);
             $('#total').text(qty*12.4);
@@ -266,7 +267,7 @@ $( document ).ready(function(event) {
                 if (result.isConfirmed) {
                     get_update_show_cart();
                 } else if (result.isDenied) {
-                    
+                    location.reload();
                 }
             });
             }

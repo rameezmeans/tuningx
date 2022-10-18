@@ -40,9 +40,10 @@
     @endif
 
     @if (request()->has('error'))
-    <div class="chip alert-message alert-red"><span><i class="fa fa-info-circle"></i>{{  Session::get('error') }}</span><button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
-@endif        
-            @yield('content')
+        <div class="chip alert-message alert-red"><span><i class="fa fa-info-circle"></i>{{ request()->get('error') }}<button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
+    @endif        
+    
+    @yield('content')
 
     @yield('pagespecificscripts')
     <script type="text/javascript">

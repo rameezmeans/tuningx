@@ -28,6 +28,7 @@ Route::get('/edit-language/{id}', [App\Http\Controllers\LanguageController::clas
 Route::post('/update-language', [App\Http\Controllers\LanguageController::class, 'updateLanguage'])->name('update-language');
 Route::post('/delete_language', [App\Http\Controllers\LanguageController::class, 'deleteLanguage'])->name('delete-language');
 Route::post('/change-password', [App\Http\Controllers\AccountController::class, 'changePassword'])->name('change-password');
+Route::post('/update_tools', [App\Http\Controllers\AccountController::class, 'updateTools'])->name('update-tools');
 
 
 Route::get('/show_pdf', [App\Http\Controllers\InvoicesController::class, 'showPDF'])->name('show-pdf');

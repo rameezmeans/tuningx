@@ -228,11 +228,13 @@ class FileController extends Controller
     public function showFile($id)
     {
         $file = File::findOrFail($id);
-
+        
         $vehicle = Vehicle::where('Make', '=', $file->brand)
         ->where('Model', '=', $file->model)
         ->where('Generation', '=', $file->version)
         ->first();
+
+        // dd($vehicle);
 
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
