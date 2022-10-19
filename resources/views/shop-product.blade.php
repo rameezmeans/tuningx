@@ -274,6 +274,10 @@ $( document ).ready(function(event) {
         }); 
     });
 
+    function roundToTwo(value) {
+        return(Math.round(value * 100) / 100);
+    }
+
     function get_update_show_cart(){
 
         $.ajax({
@@ -283,9 +287,9 @@ $( document ).ready(function(event) {
             data: {},
             success: function(qty) {
                 $('#qty-input').val(qty);
-                $('#subTotal').text(qty*10);
-                $('#vatSubTotal').text(qty*2.4);
-                $('#total').text(qty*12.4);
+                $('#subTotal').text(roundToTwo(qty*10));
+                $('#vatSubTotal').text(roundToTwo(qty*2.4));
+                $('#total').text(roundToTwo(qty*12.4));
                 $('.modal').css("display", "block");
             }
         });

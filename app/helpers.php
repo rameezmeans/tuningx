@@ -29,10 +29,51 @@ if(!function_exists('get_option_from_request_file_dropdown')){
     }
 }
 
+if(!function_exists('get_logo_for_stages_and_options')){
+
+    function get_logo_for_stages_and_options( $str ){
+        if($str == 'Stage 0'){
+            return 'https://www.shiftech.eu/media/olsx/tunings/icons/06b67cee92e4fea2919e83d6fa2a8edd.svg';
+        }
+        if($str == 'Stage 1'){
+            return 'https://www.shiftech.eu/media/olsx/tunings/icons/75b290550edec54fa250eb44672ada4d.svg';
+        }
+        if($str == 'Stage 1+'){
+            return 'https://www.shiftech.eu/media/olsx/tunings/icons/a8fd42aecf0daae0758527131d736ed8.svg';
+        }
+        if($str == 'Stage 2'){
+            return 'https://www.shiftech.eu/media/olsx/tunings/icons/92351f1b0cf15d331005c5f5f3b82d6d.svg';
+        }
+        if($str == 'Stage 3'){
+            return 'https://www.shiftech.eu/media/olsx/tunings/icons/452901b12de422ee5b311909266e488a.svg';
+        }
+
+
+        if($str == 'Vmax OFF'){
+            return 'https://www.shiftech.eu/media/olsx/options/icons/4099130c4d41ff950d633ebb7a4fa285.svg';
+        }
+        if($str == 'https://www.shiftech.eu/media/olsx/options/icons/ab7844111598d94030fd3abd43106173.svg'){
+            return 'DTC OFF';
+        }
+        if($str == 'DPF OFF'){
+            return 'https://www.shiftech.eu/media/olsx/options/icons/20f24f635d2597c65d620d977d5fd185.svg';
+        }
+        if($str == 'EGR OFF'){
+            return 'https://www.shiftech.eu/media/olsx/options/icons/29c2dd7e1e2cf29fd7d5038d47022958.svg';
+        }
+        if($str == 'SCR (ADblue OFF)'){
+            return 'https://www.shiftech.eu/media/olsx/options/icons/71118229b3d881ca8398b4c7dc67a605.svg';
+        }
+        if($str == 'Vmax 30'){
+            return 'https://www.shiftech.eu/media/olsx/options/icons/d2cd60c4c8f373bf6170aef323dad41a.svg';
+        }
+    }
+}
+
 if(!function_exists('get_image_from_brand')){
 
     function get_image_from_brand( $brand ){
-        return Vehicle::where('make', '=', $brand)->first()->Brand_image_URL;
+        return Vehicle::where('make', '=', $brand)->whereNotNull('Brand_image_URL')->first()->Brand_image_URL;
     }
 }
 
@@ -66,10 +107,6 @@ if(!function_exists('get_dropdown_image')){
 
         if($str == 'Bytehooter'){
             return 'https://www.shiftech.eu/media/olsx/tools/cabfbee8e94d14a9b853bb58bb3f2c55.png';
-        }
-
-        if($str == 'CMD'){
-            return 'https://www.shiftech.eu/media/olsx/tools/86b526dcd28044abe85768b4281bc650.png';
         }
 
         if($str == 'CMD'){

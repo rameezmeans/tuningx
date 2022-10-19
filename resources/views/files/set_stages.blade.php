@@ -109,7 +109,7 @@ input[type='radio']:checked:before {
                                                 <strong class="stage-price"><span class="price">3</span> Credits</strong>
                                             </div>
                                             <div class="col s4 m3 l3 center">
-                                                <input name="tuning" class="with-gap" type="radio" id="tuning-12" value="12" data-name="Stage 0" data-price="3" data-code="stage0" data-options="vmax,dtc,dpf,egr,adblue,vmax30">
+                                                <input name="tuning" class="with-gap" type="radio" id="tuning-12" value="Stage 0" data-name="Stage 0" data-price="3" data-code="stage0" data-options="vmax,dtc,dpf,egr,adblue,vmax30">
                                                 <label for="tuning-12"></label>
                                             </div>
                                         </div>
@@ -1742,7 +1742,7 @@ input[type='radio']:checked:before {
                     <div class="col s12 l4 m3">
                         <div class="target wow fadeInDownBig pinned" style="visibility: visible; top: 65px;">
                             <div class="brand-middle-panel hide-on-med-and-down">
-                                <img src="{{ get_image_from_brand($file->brand) }}" alt="logo">
+                                <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="logo">
                             <div class="car-loader" id="car-loader" style="display: none;"></div>
                             </div>
                             <div class="stage-pricing" data-stageevo="0">

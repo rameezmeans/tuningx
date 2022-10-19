@@ -64,7 +64,7 @@
                 <div class="col s12 l4 m3">
                     <div class="target wow fadeInDownBig pinned" style="visibility: visible; top: 40px;">
                         <div class="brand-middle-panel hide-on-med-and-down">
-                            <img src="{{ get_image_from_brand($file->brand) }}" alt="logo">
+                            <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="logo">
                         <div class="car-loader" id="car-loader" style="display: none;"></div>
                         </div>
                         <div class="stage-pricing" data-stageevo="0">
@@ -102,27 +102,43 @@
                             <div class="divider-light"></div>
                             <div class="totals"><p class="red-olsx-text">Credits Required <small><span id="total-credits">{{$credits}}</span> credits</small></p></div>
                             <div class="totals"><p class="red-olsx-text">Account Credits<small><span id="account-credits">{{ Auth::user()->credits->sum('credits') }}</span> credits</small></p></div>
-                            <div class="totals"><p class="red-olsx-text">Credits needed<small><span id="required-credits">{{ $credits - Auth::user()->credits->sum('credits') }}</span> credits</small></p></div>
+                            @if(Auth::user()->credits->sum('credits') > $credits)
+                                <div class="totals"><p class="red-olsx-text">Credits Remained<small><span id="required-credits1">{{ Auth::user()->credits->sum('credits') - $credits  }}</span> credits</small></p></div>
+                            @else
+                                <div class="totals"><p class="red-olsx-text">Credits To Buy<small><span id="to-buy-credits">@if(Auth::user()->credits->sum('credits') > $credits){{ Auth::user()->credits->sum('credits') - $credits  }}@else {{ $credits -  Auth::user()->credits->sum('credits') }} @endif</span> credits</small></p></div>
+                            @endif
                         </div>
                         <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit">
                         <div class="center">
-                            @if( $credits - Auth::user()->credits->sum('credits') == 0 )
+                            @if( Auth::user()->credits->sum('credits') > $credits )
                             <form method="POST" action="{{ route('add-credits-to-file'); }}">
                                 @csrf
                                 <input type="hidden" name="credits" value={{ $credits }}>
                                 <input type="hidden" name="file_id" value={{ $file->id }}>
-                                <button class="btn-floating btn-large waves-effect waves-light btn-red btn-middle-panel" type="submit">
-                                    <i class="fa fa-arrow-right"></i>
+                                <button class="btn-large btn-red " type="submit">
+                                    Submit File
                                 </button>
                             </form>
+                            @else 
+                                @if( $credits - Auth::user()->credits->sum('credits') == 0 )
+                                    <form method="POST" action="{{ route('add-credits-to-file'); }}">
+                                        @csrf
+                                        <input type="hidden" name="credits" value={{ $credits }}>
+                                        <input type="hidden" name="file_id" value={{ $file->id }}>
+                                        <button class="btn-large btn-red " type="submit">
+                                            Submit File
+                                        </button>
+                                    </form>
+                                @endif
                             @endif
                         </div>
-                        @if( $credits - Auth::user()->credits->sum('credits') > 0 )
+                        @if( Auth::user()->credits->sum('credits') < $credits )
+                        
                         <div class="col s12 m6 l4 xl3">
                         <div class="card">
                             <div class="card-image reseller-bg" style="background-image: url('https://resellers.ecutech.tech/assets/img/ecutech/logo_white.png')">
                                 <div class="card-title">
-                                    <span class="number">{{$credits - Auth::user()->credits->sum('credits')}}</span>
+                                    <span class="number" id="credits-buying">{{$credits - Auth::user()->credits->sum('credits')}}</span>
                                     <span class="description">Tuning credit (reseller)</span>
                                 </div>
                             </div>
@@ -137,6 +153,7 @@
                             </div>
                         </div>
                     </div>
+                   
                     @endif
                     </div>
                 </div>
@@ -271,18 +288,22 @@
 
 <script type="text/javascript">
 
+function roundToTwo(value) {
+    return(Math.round(value * 100) / 100);
+}
+
 $( document ).ready(function(event) {
    
     $(document).on('change','#qty-input', function(e){
         let qty = $(this).val();
-        $('#subTotal').text(qty*10);
-        $('#vatSubTotal').text(qty*2.4);
-        $('#total').text(qty*12.4);
+        $('#subTotal').text(roundToTwo(qty*10));
+        $('#vatSubTotal').text(roundToTwo(qty*2.4));
+        $('#total').text(roundToTwo(qty*12.4));
         // $('.modal').css("display", "block");
     });
 
     $(document).on('click','#show-cart', function(e){
-                let required_credits = parseInt( $('#required-credits').text() );
+                let required_credits = parseInt( $('#credits-buying').text() );
                 $('#qty-input').val(required_credits);
                 $('#subTotal').text(required_credits*10);
                 $('#vatSubTotal').text(required_credits*2.4);

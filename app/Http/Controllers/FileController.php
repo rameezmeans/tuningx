@@ -244,9 +244,9 @@ class FileController extends Controller
 
         foreach($withoutTypeArray as $r) {
             $fileReq = RequestFile::findOrFail($r['id']);
-            if($fileReq->file_feedback){
-                $r['type'] = $fileReq->file_feedback->type;
-            }
+            // if($fileReq->file_feedback){
+            //     $r['type'] = $fileReq->file_feedback->type;
+            // }
             $unsortedTimelineObjects []= $r;
         } 
 

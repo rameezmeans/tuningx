@@ -13,7 +13,7 @@ class File extends Model
     'file_type', 'name', 'email', 
     'phone', 'model_year', 'license_plate', 
     'vin_number', 'brand', 'model','version', 
-    'tools', 'gear_box', 'ecu', 'engine', 'credits', 'status', 'is_credited'];
+    'tools', 'gear_box', 'ecu', 'engine', 'credits', 'status', 'is_credited', 'stages', 'options'];
 
     public function files(){
         return $this->hasMany(RequestFile::class); 
@@ -32,7 +32,15 @@ class File extends Model
     }
 
     public function vehicle(){
-        return Vehicle::where('Make', '=', $this->brand)
+        return Vehicle::where('Make', '=', $this->brand)->whereNotNull('Brand_image_url')
         ->first();
+    }
+
+    public function stages(){
+        return $this->stages;
+    }
+
+    public function options(){
+        return explode(',',$this->options);
     }
 }
