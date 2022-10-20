@@ -4,7 +4,9 @@
 
 
 <style>
-
+.select2-search__field{
+    height: 2rem !important;
+}
     .select2 {
         width: 100% !important;
     }
@@ -271,7 +273,7 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>Date</th>
+                                <th style="width: 10%;">Date</th>
                                 <th></th>
                                 <th>Credits</th>
                                 <th>Total credits</th>
@@ -298,22 +300,22 @@
                                                 <label class="label label-credit-admin green">{{$credit->credits}}</label>
                                             @endif
                                         </td>
-                                        <td> 
+                                        <td style="width: 5% !important;"> 
                                             @if($credit->credits > 0)
                                                 <label class="label label-credit-admin grey">{{$total}}</label>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td style="width: 1% !important;">
                                             @if($credit->credits < 0)
                                                 <img alt="" class="img-circle-car-history" height="30px" src="{{ get_image_from_brand($credit->file->brand) }}">
                                             @endif
                                         </td>
-                                        <td>
+                                        <td style="width: 45% !important;">
                                             @if($credit->credits < 0)
                                                 {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}
                                             @endif
                                         </td>
-                                        <td>
+                                        <td style="width: 10% !important;">
                                             @if($credit->credits > 0)
                                                 {{ $credit->invoice_id }}
                                             @endif    
@@ -498,7 +500,9 @@ $( document ).ready(function(event) {
         return false;
     });
 
-    $('table').DataTable({"ordering": false,});
+    $('table').DataTable({
+        "ordering": false   
+    });
     
 
     $(document).on('click','.delete-language', function(e){
