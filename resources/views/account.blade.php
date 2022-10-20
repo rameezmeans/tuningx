@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('pagespecificstyles')
+
+
 <style>
+
+    .select2 {
+        width: 100% !important;
+    }
     /* Style the tab */
 .tab {
   /* overflow: hidden; */
@@ -159,56 +165,63 @@
                 <form method="POST" action="{{ route('update-tools'); }}">
                     @csrf
                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                    <div style="margin-bottom: 50px;">
+                    <label class="account-label">Master Tools</label>
                     <div class="input-field col s12">
                         <div class="select-wrapper form-control">
-                        <select name="master_tools[]" id="master_tools" class="select-dropdown" multiple>
-                            <option value="status" selected disabled>Select Master Tools You Use *</option>
-                            <option value="Abrites" @if(in_array('Abrites',$masterTools)) selected @endif>Abrites</option>
-                            <option value="Autotuner" @if(in_array('Autotuner',$masterTools)) selected @endif>Autotuner</option>
-                            <option value="Bflash" @if(in_array('Bflash',$masterTools)) selected @endif>Bflash</option>
-                            <option value="BitBox" @if(in_array('BitBox',$masterTools)) selected @endif>BitBox</option>
-                            <option value="Bytehooter" @if(in_array('Bytehooter',$masterTools)) selected @endif>Bytehooter</option>
-                            <option value="CMD" @if(in_array('CMD',$masterTools)) selected @endif>CMD</option>
-                            <option value="Dataman" @if(in_array('Dataman',$masterTools)) selected @endif>Dataman (eprom reader)</option>
-                            <option value="Dimsport_New_Genius" @if(in_array('Dimsport_New_Genius',$masterTools)) selected @endif>Dimsport New Genius</option>
-                            <option value="Dimsport_Trasdata" @if(in_array('Dimsport_Trasdata',$masterTools)) selected @endif>Dimsport Trasdata</option>
-                            <option value="ECUx" @if(in_array('ECUx',$masterTools)) selected @endif>ECUx</option>
-                            <option value="Femto" @if(in_array('Femto',$masterTools)) selected @endif>Femto</option>
-                            <option value="Flex" @if(in_array('Flex',$masterTools)) selected @endif>Flex (magic)</option>
-                            <option value="Galetto" @if(in_array('Galetto',$masterTools)) selected @endif>Galetto</option>
-                            <option value="HPturners" @if(in_array('HPturners',$masterTools)) selected @endif>HPturners</option>
-                            <option value="IO_Terminal" @if(in_array('IO_Terminal',$masterTools)) selected @endif>I/O Terminal</option>
-                            <option value="K_tag" @if(in_array('K_tag',$masterTools)) selected @endif>K-tag</option>
-                            <option value="Kess_V2" @if(in_array('Kess_V2',$masterTools)) selected @endif>Kess V2</option>
-                            <option value="Kess_V3" @if(in_array('Kess_V3',$masterTools)) selected @endif>Kess V3</option>
-                            <option value="Magic_MAGPro2" @if(in_array('Magic_MAGPro2',$masterTools)) selected @endif>Magic MAGPro2</option>
-                            <option value="MHD" @if(in_array('MHD',$masterTools)) selected @endif>MHD</option>
-                            <option value="MMC_flasher" @if(in_array('MMC_flasher',$masterTools)) selected @endif>MMC flasher</option>
-                            <option value="MPPS" @if(in_array('MPPS',$masterTools)) selected @endif>MPPS</option>
-                            <option value="PCM_Flash" @if(in_array('PCM_Flash',$masterTools)) selected @endif>PCM Flash</option>
-                            <option value="Powergate" @if(in_array('Powergate',$masterTools)) selected @endif>Powergate</option>
-                            <option value="Tactrix" @if(in_array('Tactrix',$masterTools)) selected @endif>Tactrix</option>
-                            <option value="TGflash" @if(in_array('TGflash',$masterTools)) selected @endif>TGflash</option>
-                        </select>
+                        <select name="master_tools[]" id="master_tools" class="select-dropdown-multi" multiple>
+                            
+                            <option value="Abrites" @if( in_array('Abrites', $masterTools)) selected @endif>Abrites</option>
+                            <option value="Autotuner" @if( in_array('Autotuner', $masterTools)) selected @endif>Autotuner</option>
+                            <option value="Bflash" @if( in_array('Bflash', $masterTools)) selected @endif>Bflash</option>
+                            <option value="BitBox" @if( in_array('BitBox', $masterTools)) selected @endif>BitBox</option>
+                            <option value="Bytehooter" @if( in_array('Bytehooter', $masterTools)) selected @endif>Bytehooter</option>
+                            <option value="CMD" @if( in_array('CMD', $masterTools)) selected @endif>CMD</option>
+                            <option value="Dataman" @if( in_array('Dataman', $masterTools)) selected @endif>Dataman (eprom reader)</option>
+                            <option value="Dimsport_New_Genius" @if( in_array('Dimsport_New_Genius', $masterTools)) selected @endif>Dimsport New Genius</option>
+                            <option value="Dimsport_Trasdata" @if( in_array('Dimsport_Trasdata', $masterTools)) selected @endif>Dimsport Trasdata</option>
+                            <option value="ECUx" @if( in_array('ECUx', $masterTools)) selected @endif>ECUx</option>
+                            <option value="Femto" @if( in_array('Femto', $masterTools)) selected @endif>Femto</option>
+                            <option value="Flex" @if( in_array('Flex', $masterTools)) selected @endif>Flex (magic)</option>
+                            <option value="Galetto" @if( in_array('Galetto', $masterTools)) selected @endif>Galetto</option>
+                            <option value="HPturners" @if( in_array('HPturners', $masterTools)) selected @endif>HPturners</option>
+                            <option value="IO_Terminal" @if( in_array('IO_Terminal', $masterTools)) selected @endif>I/O Terminal</option>
+                            <option value="K_tag" @if( in_array('K_tag', $masterTools)) selected @endif>K-tag</option>
+                            <option value="Kess_V2" @if( in_array('Kess_V2', $masterTools)) selected @endif>Kess V2</option>
+                            <option value="Kess_V3" @if( in_array('Kess_V3', $masterTools)) selected @endif>Kess V3</option>
+                            <option value="Magic_MAGPro2" @if( in_array('Magic_MAGPro2', $masterTools)) selected @endif>Magic MAGPro2</option>
+                            <option value="MHD" @if( in_array('MHD', $masterTools)) selected @endif>MHD</option>
+                            <option value="MMC_flasher" @if( in_array('MMC_flasher', $masterTools)) selected @endif>MMC flasher</option>
+                            <option value="MPPS" @if( in_array('MPPS', $masterTools)) selected @endif>MPPS</option>
+                            <option value="PCM_Flash" @if( in_array('PCM_Flash', $masterTools)) selected @endif>PCM Flash</option>
+                            <option value="Powergate" @if( in_array('Powergate', $masterTools)) selected @endif>Powergate</option>
+                            <option value="Tactrix" @if( in_array('Tactrix', $masterTools)) selected @endif>Tactrix</option>
+                            <option value="TGflash" @if( in_array('TGflash', $masterTools)) selected @endif>TGflash</option>
+                          </select>
                         </div>
+                    </div>
                     </div>
 
+                    <label class="account-label">Slave Tools</label>
                     <div class="input-field col s12">
+                       
                         <div class="select-wrapper form-control">
-                        <select name="slave_tools[]" id="slave_tools" class="select-dropdown" multiple>
-                            <option value="status" selected disabled>Select Master Tools You Use *</option>
-                            <option value="Autotuner" @if(in_array('Autotuner',$slaveTools)) selected @endif>Autotuner</option>
-                            <option value="Bflash" @if(in_array('Bflash',$slaveTools)) selected @endif>Bflash</option>
-                            <option value="CMD" @if(in_array('CMD',$slaveTools)) selected @endif>CMD</option>
-                            <option value="EVC_BDM100" @if(in_array('EVC_BDM100',$slaveTools)) selected @endif>EVC BDM100</option>
-                            <option value="Flex" @if(in_array('Flex',$slaveTools)) selected @endif>Flex (magic)</option>
-                            <option value="K_tag" @if(in_array('K_tag',$slaveTools)) selected @endif >K-tag</option>
-                            <option value="Kess_V2" @if(in_array('Kess_V2',$slaveTools)) selected @endif>Kess V2</option>
-                            <option value="Kess_V3" @if(in_array('Kess_V3',$slaveTools)) selected @endif>Kess V3</option>
-                        </select>
+                        <select name="slave_tools[]" id="slave_tools" class="select-dropdown-multi" multiple>
+
+                            <option value="Autotuner" @if( in_array('Autotuner', $slaveTools)) selected @endif>Autotuner</option>
+                            <option value="Bflash" @if( in_array('Bflash', $slaveTools)) selected @endif >Bflash</option>
+                            <option value="CMD" @if( in_array('CMD', $slaveTools)) selected @endif>CMD</option>
+                            <option value="EVC_BDM100" @if( in_array('EVC_BDM100', $slaveTools)) selected @endif>EVC BDM100</option>
+                            <option value="Flex" @if( in_array('Flex', $slaveTools)) selected @endif>Flex (magic)</option>
+                            <option value="K_tag" @if( in_array('K_tag', $slaveTools)) selected @endif>K-tag</option>
+                            <option value="Kess_V2" @if( in_array('Kess_V2', $slaveTools)) selected @endif>Kess V2</option>
+                            <option value="Kess_V3" @if( in_array('Kess_V3', $slaveTools)) selected @endif>Kess V3</option>
+                          </select>
                         </div>
                     </div>
-                    <button type="submit">Update</button>
+                </div>
+                   
+                <button type="submit" class="btn btn-red waves-effect waves-light m-sm" style="margin-left: 25px;">Update</button>
                 </form>
             </div>
         </div>
@@ -353,14 +366,21 @@
 
 $( document ).ready(function(event) {
 
-    $( document ).ready(function(event) {
-        $('.redirect-click').click(function() {
-            window.location.href = $(this).data('redirect');
-            return false;
-        });
+    $(".select-dropdown-multi").select2({
+        closeOnSelect : false,
+        placeholder : "Select Tools",
+        // allowHtml: true,
+        allowClear: true,
+        tags: true // создает новые опции на лету
+	});
 
-        $('table').DataTable({"ordering": false,});
+    $('.redirect-click').click(function() {
+        window.location.href = $(this).data('redirect');
+        return false;
     });
+
+    $('table').DataTable({"ordering": false,});
+    
 
     $(document).on('click','.delete-language', function(e){
             Swal.fire({

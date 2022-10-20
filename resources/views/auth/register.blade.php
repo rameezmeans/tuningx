@@ -1,5 +1,46 @@
 @extends('layouts.front')
 
+
+@section('pagespecificstyles')
+
+<style>
+
+/* .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: 0 !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+    border: 0 !important;
+}
+
+.select2-search__field {
+    background: #fff !important;
+    border: 1px solid transparent !important;
+    border-radius: 6px !important;
+    box-shadow: 0 8px 20px 0 rgb(73 76 83 / 20%) !important;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+
+    cursor: pointer;
+    display: block;
+    font-size: 1rem;
+    height: 3rem;
+    line-height: 3rem;
+    margin: 0 0 15px;
+    outline: none;
+    padding: 0;
+    position: relative;
+    width: 100%;
+} */
+
+.select2-search__field {
+    height: 1.8rem !important;
+}
+
+</style>
+
+@endsection
+
 @section('content')
 
 
@@ -396,12 +437,12 @@
 
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
-                                <select name="master_tools[]" id="master_tools" class="select-dropdown" multiple>
-                                    <option value="status" selected disabled>Select Master Tools You Use *</option>
+                                <select name="master_tools[]" id="master_tools" class="select-dropdown-multi" multiple>
+                                    
                                     <option value="Abrites">Abrites</option>
                                     <option value="Autotuner">Autotuner</option>
                                     <option value="Bflash">Bflash</option>
-                                    <option value="Bitbox">Bitbox</option>
+                                    <option value="BitBox">BitBox</option>
                                     <option value="Bytehooter">Bytehooter</option>
                                     <option value="CMD">CMD</option>
                                     <option value="Dataman">Dataman (eprom reader)</option>
@@ -430,8 +471,8 @@
 
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
-                                <select disabled name="slave_tools[]" id="slave_tools" class="select-dropdown" multiple>
-                                    <option value="status" selected disabled>Select Master Tools You Use *</option>
+                                <select disabled name="slave_tools[]" id="slave_tools" class="select-dropdown-multi" multiple>
+        
                                     <option value="Autotuner">Autotuner</option>
                                     <option value="Bflash">Bflash</option>
                                     <option value="CMD">CMD</option>
@@ -519,6 +560,15 @@
 @section('pagespecificscripts')
 <script type="text/javascript">
     $( document ).ready(function() {
+
+        $(".select-dropdown-multi").select2({
+			closeOnSelect : false,
+			placeholder : "Select Tools",
+			// allowHtml: true,
+			allowClear: true,
+			tags: true // создает новые опции на лету
+		});
+
         $('#slave_tools_flag').click(function() {
             if ($(this).is(':checked')) {
                 console.log('checked');

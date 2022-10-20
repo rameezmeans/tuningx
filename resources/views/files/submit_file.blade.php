@@ -13,7 +13,7 @@
                     @endif
                     <div class="col s12 master-tools  @if($errors->any()) hide @endif">
                         <h2>Reading tool</h2>
-                        <small><i class="fa fa-info-circle"></i> To edit reading tool list <a href="{{ route('account') }}" target="_blank">click here</a></small>
+                        <small><i class="fa fa-info-circle"></i> To edit reading tool list <a href="{{ route('account', ['tab' => 'tools']) }}" target="_blank">click here</a></small>
                     </div>
                     <div class="col s12 m-b-lg master-tools @if($errors->any()) hide @endif">
                         <div class="input-field tool-selection">

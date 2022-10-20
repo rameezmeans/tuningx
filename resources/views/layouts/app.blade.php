@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
 
-    <script src="https://phpcoder.tech/multiselect/js/jquery.multiselect.js"></script>
+    {{-- <script src="https://phpcoder.tech/multiselect/js/jquery.multiselect.js"></script> --}}
     <link rel="stylesheet" href="https://phpcoder.tech/multiselect/css/jquery.multiselect.css">
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 
     <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}</style>
 

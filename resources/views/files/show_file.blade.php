@@ -926,6 +926,9 @@
                                     <span class="red-olsx-text">Engine:</span> {{ $file->engine }}
                                 </p>
                                 <p class="push-bit">
+                                    <span class="red-olsx-text">ECU:</span> {{ $file->ecu }}
+                                </p>
+                                <p class="push-bit">
                                     <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
                                 </p>
                                 
