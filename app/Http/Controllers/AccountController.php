@@ -36,6 +36,17 @@ class AccountController extends Controller
     }
 
     /**
+     * get Bosch ECU page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function boschECU()
+    {
+        return view('bosch_ecu');
+    }
+
+
+    /**
      * Update Tools.
      *
      * @return \Illuminate\Contracts\Support\Renderable

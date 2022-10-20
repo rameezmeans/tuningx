@@ -54,7 +54,7 @@
                 </a>
             </li>
             <li class="">
-                <a href="/en/client/bosch-ecu" class="waves-effect">
+                <a href="{{route('bosch-ecu')}}" class="waves-effect">
                     <span class="svg-icon logo-bosch"><!--?xml version="1.0" standalone="no"?-->
     
     <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 646.000000 635.000000">

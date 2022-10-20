@@ -63,6 +63,7 @@ Route::get('/clear_cart', [App\Http\Controllers\PaymentController::class, 'clear
 
 Route::post('/cart_quantity', [App\Http\Controllers\PaymentController::class, 'getCartQuantity'])->name('get-cart');
 Route::get('/shop-product', [App\Http\Controllers\ShoppingController::class, 'shopProduct'])->name('shop-product');
+Route::get('/bosch-ecu', [App\Http\Controllers\AccountController::class, 'boschECU'])->name('bosch-ecu');
 
 Route::get('/invoices', [App\Http\Controllers\InvoicesController::class, 'index'])->name('invoices');
 
