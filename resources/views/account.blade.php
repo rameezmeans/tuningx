@@ -63,6 +63,10 @@
 @include('layouts.nav')
 
 <main>
+
+    @php  
+        // dd(request()->get('tab')); 
+    @endphp
    
     <div class="container">
         
@@ -75,7 +79,7 @@
         <div class="tab">
             <button class="tablinks" onclick="openCity(event, 'Profile')" id="defaultOpen">Profile</button>
             <button class="tablinks" onclick="openCity(event, 'Contact')">Contact</button>
-            <button class="tablinks" onclick="openCity(event, 'Tools')">Tools</button>
+            <button class="tablinks @if(request()->get('tab') == 'tools') active @endif" onclick="openCity(event, 'Tools')">Tools</button>
             {{-- <button class="tablinks" onclick="openCity(event, 'Workstation')">Workstation</button> --}}
             <button class="tablinks" onclick="openCity(event, 'Password')">Password</button>
             <button class="tablinks" onclick="openCity(event, 'CreditLog')">Credit Log</button>
@@ -160,7 +164,7 @@
             </div>
         </div>
         
-        <div id="Tools" class="tabcontent">
+        <div id="Tools" class="tabcontent" @if(request()->get('tab') == 'tools') style="display:block;" @endif>
             <div class="form-pad">
                 <form method="POST" action="{{ route('update-tools'); }}">
                     @csrf
@@ -468,7 +472,14 @@ function openCity(evt, cityName) {
   evt.currentTarget.className += " active";
 
     }
-document.getElementById("defaultOpen").click();
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const  tab = urlParams.get('tab');
+
+if(tab != 'tools'){
+    document.getElementById("defaultOpen").click();
+}
 
 </script>
 
