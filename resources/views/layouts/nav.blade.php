@@ -43,7 +43,7 @@
                     </span>
                 </a>
             </li>
-                            <li class="">
+            <li class="">
                 <a href="{{ route('file-upload') }}" class="waves-effect">
                     <i class="fa-solid fa-upload"></i><span>File Upload</span>
                 </a>
@@ -97,6 +97,9 @@
                     
                     <li class="">
                 <a href="{{ route('shop-product'); }}"><i class="fa-solid fa-cart-shopping"></i><span>Shop</span></a>
+            </li>
+            <li class="">
+                <a href="{{ route('price-list'); }}"><i class="fa fa-dollar"></i><span>Price List</span></a>
             </li>
             <li class="">
                 <a href="{{route('invoices'); }}"><i class="fa-solid fa-file-invoice"></i><span>Invoices</span></a>

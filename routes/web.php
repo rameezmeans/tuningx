@@ -61,6 +61,8 @@ Route::post('/add_credits_to_file', [App\Http\Controllers\FileController::class,
 // Route::get('/cart', [App\Http\Controllers\PaymentController::class, 'getCart'])->name('get-cart');
 Route::get('/clear_cart', [App\Http\Controllers\PaymentController::class, 'clearCart'])->name('clear-cart');
 
+Route::get('/price-list', [App\Http\Controllers\AccountController::class, 'priceList'])->name('price-list');
+
 Route::post('/cart_quantity', [App\Http\Controllers\PaymentController::class, 'getCartQuantity'])->name('get-cart');
 Route::get('/shop-product', [App\Http\Controllers\ShoppingController::class, 'shopProduct'])->name('shop-product');
 Route::get('/bosch-ecu', [App\Http\Controllers\AccountController::class, 'boschECU'])->name('bosch-ecu');

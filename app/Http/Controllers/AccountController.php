@@ -45,6 +45,17 @@ class AccountController extends Controller
         return view('bosch_ecu');
     }
 
+    /**
+     * get Price List page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function priceList()
+    {
+        return view('price_list');
+    }
+
+
 
     /**
      * Update Tools.
