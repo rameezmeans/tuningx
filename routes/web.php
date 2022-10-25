@@ -74,6 +74,3 @@ Route::get('/file-history', [App\Http\Controllers\FileController::class, 'fileHi
 Route::get('/file/{id}', [App\Http\Controllers\FileController::class, 'showFile'])->name('file');
 
 // Route::get('phpinfo', function(){ phpinfo(); });
-
-Route::get('years-graph', [App\Http\Controllers\HomeController::class, 'getYearGraph'])->name('years-graph');
-

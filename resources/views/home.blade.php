@@ -34,11 +34,11 @@
                     <div class="year-chart chart-wrapper"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                         <canvas id="year-charts" height="696" width="1902" style="display: block; height: 348px; width: 951px;" class="chartjs-render-monitor"></canvas>
                     </div>
-                    <div class="month-chart hide chart-wrapper">
-                        <canvas id="month-charts" height="0" width="0" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
+                    <div class="month-chart chart-wrapper hide">
+                        <canvas id="month-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
                     </div>
-                    <div class="week-chart hide chart-wrapper">
-                        <canvas id="week-charts" height="0" width="0" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
+                    <div class="week-chart chart-wrapper hide">
+                        <canvas id="week-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -214,25 +214,91 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
-        var xValues = ['January','Fabrury','Marck','April','May',
+
+        $(document).on('change', '.graph-select', function(e){
+            let value = $(this).val();
+
+            if(value == 'month'){
+                $('.year-chart').addClass('hide');
+                $('.month-chart').removeClass('hide');
+                $('.week-chart').addClass('hide');
+            }
+            else if(value == 'week'){
+                $('.year-chart').addClass('hide');
+                $('.month-chart').addClass('hide');
+                $('.week-chart').removeClass('hide');
+            }
+            else if(value == 'year'){   
+                $('.year-chart').removeClass('hide');
+                $('.month-chart').addClass('hide');
+                $('.week-chart').addClass('hide');
+            }
+
+        });
+
+        var xValuesYears = ['January','Fabrury','Marck','April','May',
         'June','July','August','September','October', 'November', 'December'];
 
-
-        var obj = <?php echo $countArr?>
-
-        console.log(obj);
-
-        var res = Object.values(obj);
-
-        console.log(res);
+        let yearObj = @php echo $countYear @endphp;
+        let dataYear = Object.values(yearObj);
 
         new Chart("year-charts", {
         type: "line",
         data: {
-                labels: xValues,
+                labels: xValuesYears,
                 datasets: [{
                 label: 'Files',
-                data: res,
+                data: dataYear,
+                borderColor: "grey",
+                fill: true
+                },
+            ]
+        },
+        options: {
+            legend: {display: true}
+        }
+        });
+
+        let objMonths= @php echo $datesMonth @endphp;
+        let xValuesMonths = Object.values(objMonths);
+
+        let objMonthsCount = @php echo $datesMonthCount @endphp;
+        let yMonthsCount = Object.values(objMonthsCount);
+
+        console.log(yMonthsCount);
+
+        new Chart("month-charts", {
+        type: "line",
+        data: {  
+                labels: xValuesMonths,
+                datasets: [{
+                label: 'Files',
+                data: yMonthsCount,
+                borderColor: "grey",
+                fill: true
+                },
+            ]
+        },
+        options: {
+            legend: {display: true}
+        }
+        });
+
+        let weekRangeObj = @php echo $weekRange @endphp;
+        let xValuesWeek = Object.values(weekRangeObj);
+
+        let objWeekCount = @php echo $weekCount @endphp;
+        let yWeeksCount = Object.values(objWeekCount);
+
+        // console.log(yMonthsCount);
+
+        new Chart("week-charts", {
+        type: "line",
+        data: {
+                labels: xValuesWeek,
+                datasets: [{
+                label: 'Files',
+                data: yWeeksCount,
                 borderColor: "grey",
                 fill: true
                 },
