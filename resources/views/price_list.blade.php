@@ -52,7 +52,7 @@
         position: absolute;
         z-index: 9999;
         top: 100%;
-        left: 9%;
+        left: 4.3rem;
         margin-left: -60px;
     }
 
@@ -84,7 +84,7 @@
         position: absolute;
         z-index: 9999;
         top: 100%;
-        left: 9%;
+        left: 4.3rem;
         margin-left: -60px;
     }
 
