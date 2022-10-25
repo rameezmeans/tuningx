@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
 
         $todaysFilesCount = File::where('created_at', '>=', Carbon::today())->count();
-        $yesterdaysFilesCount = File::where('created_at', '>=', Carbon::yesterday())->count();
+        $yesterdaysFilesCount = File::whereDate('created_at', Carbon::yesterday())->count();
         $previousYearsFilesCount = File::whereYear('created_at', now()->subYear()->year)->count();
         $twoYearsAgoFilesCount = File::whereYear('created_at', now()->subYears(2)->year)->count();
           
