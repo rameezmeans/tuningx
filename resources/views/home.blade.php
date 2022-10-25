@@ -186,8 +186,8 @@
                 </div>
                 <div class="divider-light"></div>
                 <div class="card-content height-table center">
-                    <h1>Mercedes</h1>
-                    <h3>Sprinter</h3>
+                    <h1>{{$twoFiles[0]->brand}}</h1>
+                    <h3>{{$twoFiles[0]->model}}</h3>
                 </div>
             </div>
         </div>
@@ -199,7 +199,7 @@
                 </div>
                 <div class="divider-light"></div>
                 <div class="card-content height-table center">
-                    <img class="responsive-img logo-brand-dashboard" src="https://www.shiftech.eu/media/manufacturers/5f98ae3c7c4f9f03b4033f72a4d20dd6.png">
+                    <img class="responsive-img logo-brand-dashboard" src="{{$twoFiles[0]->vehicle()->Brand_image_URL}}">
                 </div>
             </div>
         </div>
@@ -207,4 +207,43 @@
     <div class="row"></div>
 </div>
 </main>
+@endsection
+
+@section('pagespecificscripts')
+
+<script type="text/javascript">
+
+    $( document ).ready(function(event) {
+        var xValues = ['January','Fabrury','Marck','April','May',
+        'June','July','August','September','October', 'November', 'December'];
+
+
+        var obj = <?php echo $countArr?>
+
+        console.log(obj);
+
+        var res = Object.values(obj);
+
+        console.log(res);
+
+        new Chart("year-charts", {
+        type: "line",
+        data: {
+                labels: xValues,
+                datasets: [{
+                label: 'Files',
+                data: res,
+                borderColor: "grey",
+                fill: true
+                },
+            ]
+        },
+        options: {
+            legend: {display: true}
+        }
+        });
+    });
+
+</script>
+
 @endsection

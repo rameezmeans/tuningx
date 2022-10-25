@@ -6,6 +6,7 @@ use App\Models\Credit;
 use App\Models\File;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -54,6 +55,28 @@ class HomeController extends Controller
 
         $twoFiles = File::orderBy('created_at', 'desc')->take(2)->get();
 
+        $items = File::select('id', 'created_at')
+        ->get()
+        ->groupBy(function($date) {
+            //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
+            return Carbon::parse($date->created_at)->format('m'); // grouping by months
+        });
+
+        $count = [];
+        $countArr = [];
+        
+        foreach ($items as $key => $value) {
+            $count[(int)$key] = count($value);
+        }
+        
+        for($i = 1; $i <= 12; $i++){
+            if(!empty($count[$i])){
+                $countArr[$i] = $count[$i];    
+            }else{
+                $countArr[$i] = 0;    
+            }
+        }
+
         return view('home', [ 
             'todaysFilesCount' => $todaysFilesCount, 
             'yesterdaysFilesCount'  => $yesterdaysFilesCount, 
@@ -67,6 +90,7 @@ class HomeController extends Controller
             'thisYearsCreditsCount'  => $thisYearsCreditsCount,
             'thisYearsFilesCount'  => $thisYearsFilesCount,
             'twoFiles'  => $twoFiles,
+            'countArr'  => json_encode($countArr,JSON_NUMERIC_CHECK),
         ]);
     }
 }
