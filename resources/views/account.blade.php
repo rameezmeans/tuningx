@@ -7,9 +7,18 @@
 .select2-search__field{
     height: 2rem !important;
 }
-    .select2 {
-        width: 100% !important;
-    }
+
+.select2-results__option {
+    padding: 1rem;
+}
+
+.select2-results__option span {
+    font-size: 18px;
+}
+
+.select2 {
+    width: 100% !important;
+}
     /* Style the tab */
 .tab {
   /* overflow: hidden; */
@@ -485,7 +494,7 @@ $( document ).ready(function(event) {
 
     $(".select-dropdown-multi").select2({
         templateResult: function (idioma) {
-  	        var $span = $("<span>" + idioma.text   + "<img style='float:right; width:4%;' src='"+get_dropdown_image(idioma.id)+"'/> </span>");
+  	        var $span = $("<span>" + idioma.text   + "<img style='float:right; width:5%;' src='"+get_dropdown_image(idioma.id)+"'/> </span>");
   	        return $span;
         },
         closeOnSelect : false,
