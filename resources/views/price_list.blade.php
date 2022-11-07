@@ -104,17 +104,20 @@
                     <div class="center">
                         <h2>Tunings</h2>
                     </div>
-                        <div class="stage-price-container">
-                            <div class="slave-red chip-stage chip-stage-stage0 waves-effect waves-block waves-light z-depth-1" data-price="3">
-                                <img src="https://www.shiftech.eu/media/olsx/tunings/icons/06b67cee92e4fea2919e83d6fa2a8edd.svg" alt="Stage 0">
-                                                                        Stage 0
-                                                                    <strong class="m-l-md"> 3 credits</strong>
+                        @foreach ($stages as $stage)
+                            <div class="stage-price-container">
+                                <div class="slave-red chip-stage chip-stage-stage0 waves-effect waves-block waves-light z-depth-1" data-price="{{$stage['credits']}}">
+                                    <img src="{{'https://backend.ecutech.gr/icons/'.$stage['icon']}}" alt="{{$stage['name']}}">
+                                    {{$stage['name']}}
+                                    <strong class="m-l-md"> {{$stage['credits']}} credits</strong>
+                                    </div>
+                                    <div class="stage-price-card slave-red">
+                                        <p>{{$stage['description']}}</p>
+                                </div>
                             </div>
-                            <div class="stage-price-card slave-red">
-                                <p>Stage 0 does not provide any increase in torque or power. It is intended to be combined with options.</p>
-                            </div>
-                        </div>
-                                                <div class="stage-price-container">
+                        @endforeach
+                            
+                        {{-- <div class="stage-price-container">
                             <div class="slave-red chip-stage chip-stage-stage1 waves-effect waves-block waves-light z-depth-1" data-price="12">
                                 <img src="https://www.shiftech.eu/media/olsx/tunings/icons/75b290550edec54fa250eb44672ada4d.svg" alt="Stage 1">
                                                                         Stage 1
@@ -214,23 +217,26 @@
                 (non-virtual) reading can be analyzed. If the file is considered by our system to be original, the
                 ticket will be closed.
             </p>
-                            </div>
-                        </div>
+                            </div> --}}
+                        {{-- </div> --}}
                                         </div>
                 <div class="col s12 m6">
                     <div class="center">
                         <h2>Options</h2>
                     </div>
-                                                <div class="option-price-container">
-                            <div class="slave-red chip-option waves-effect waves-block waves-light z-depth-1" data-price="3">
-                                <img src="https://www.shiftech.eu/media/olsx/options/icons/9f54d8f89d1d4e87a127b7711a6468c7.svg" alt="Cold Start OFF">
-                                Cold Start OFF <strong class="m-l-md"> 3 credits</strong>
+                    @foreach($options as $option)
+                        <div class="option-price-container">
+                            <div class="slave-red chip-option waves-effect waves-block waves-light z-depth-1" data-price="{{$option['credits']}}">
+                                <img src="{{'https://backend.ecutech.gr/icons/'.$option['icon']}}" alt="{{$option['name']}}">
+                                {{$option['name']}}
+                                <strong class="m-l-md"> {{$option['credits']}} credits</strong>
                             </div>
                             <div class="option-price-card slave-red">
-                                <p>Disabling the cold start system.</p>
+                                <p>{{$option['description']}}</p>
                             </div>
                         </div>
-                                                <div class="option-price-container">
+                        @endforeach
+                                                {{-- <div class="option-price-container">
                             <div class="slave-red chip-option waves-effect waves-block waves-light z-depth-1" data-price="3">
                                 <img src="https://www.shiftech.eu/media/olsx/options/icons/2a61df79c383902c9659161c1742f421.svg" alt="Cylinder On Demand OFF">
                                 Cylinder On Demand OFF <strong class="m-l-md"> 3 credits</strong>
@@ -445,7 +451,7 @@
                             <div class="option-price-card slave-red">
                                 <p>This is an increase of the maximum speed limit or its suppression.</p>
                             </div>
-                        </div>
+                        </div> --}}
                                         </div>
             </div>
         </div>

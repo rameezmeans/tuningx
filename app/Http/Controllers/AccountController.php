@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Ui\Presets\React;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class AccountController extends Controller
 {
@@ -52,7 +54,12 @@ class AccountController extends Controller
      */
     public function priceList()
     {
-        return view('price_list');
+        $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
+        $stages = json_decode($responseStages->body(), true)['stages'];
+        $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
+        $options = json_decode($responseOptions->body(), true)['options'];
+        
+        return view('price_list', ['stages' => $stages, 'options' => $options]);
     }
 
 
