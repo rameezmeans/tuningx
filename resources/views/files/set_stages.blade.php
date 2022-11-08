@@ -96,35 +96,36 @@ input[type='radio']:checked:before {
                             </div>
                         </div>
                         <ul>
-                                                                <li>
-                                    <div class="stage-option">
-                                        <div class="row m-n valign-wrapper">
-                                            <div class="col s2 m2 l2 ">
-                                                <img src="https://www.shiftech.eu/media/olsx/tunings/icons/06b67cee92e4fea2919e83d6fa2a8edd.svg" alt="logo" class="responsive-img stage-logo">
-                                            </div>
-                                            <div class="col s4 m5 l5">
-                                                <span>Stock (no remap - only options)</span>
-                                            </div>
-                                            <div class="col s2 m2 l2 center">
-                                                <strong class="stage-price"><span class="price">3</span> Credits</strong>
-                                            </div>
-                                            <div class="col s4 m3 l3 center">
-                                                <input name="tuning" class="with-gap" type="radio" id="tuning-12" value="Stage 0" data-name="Stage 0" data-price="3" data-code="stage0" data-options="vmax,dtc,dpf,egr,adblue,vmax30">
-                                                <label for="tuning-12"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="stage-option-definition">
-                                                                                        <div class="row m-n">
-                                                <div class="col s12">
-                                                    <p>Stage 0 does not provide any increase in torque or power. It is intended to be combined with options.</p>
+                            @foreach($stages as $stage)
+                                <li>
+                                    
+                                        <div class="stage-option">
+                                            <div class="row m-n valign-wrapper">
+                                                <div class="col s2 m2 l2 ">
+                                                    <img src="{{'https://backend.ecutech.gr/icons/'.$stage['icon']}}" alt="logo" class="responsive-img stage-logo">
+                                                </div>
+                                                <div class="col s4 m5 l5">
+                                                    <span>{{$stage['name']}}</span>
+                                                </div>
+                                                <div class="col s2 m2 l2 center">
+                                                    <strong class="stage-price"><span class="price">{{$stage['credits']}}</span> Credits</strong>
+                                                </div>
+                                                <div class="col s4 m3 l3 center">
+                                                    <input name="tuning" class="with-gap" type="radio" id="tuning-{{$stage['id']}}" value="{{$stage['name']}}" data-name="{{$stage['name']}}" data-price="{{$stage['credits']}}" data-code="stage0" data-options="vmax,dtc,dpf,egr,adblue,vmax30">
+                                                    <label for="tuning-{{$stage['id']}}"></label>
                                                 </div>
                                             </div>
-                                        
-
-                                    </div>
-                                </li>
-                                <li>
+                                        </div>
+                                        <div class="stage-option-definition">
+                                            <div class="row m-n">
+                                                <div class="col s12">
+                                                    <p>{{$stage['description']}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                                {{-- <li>
                                     <div class="stage-option">
                                         <div class="row m-n valign-wrapper">
                                             <div class="col s2 m2 l2 ">
@@ -296,7 +297,7 @@ input[type='radio']:checked:before {
                                         
 
                                     </div>
-                                </li>
+                                </li> --}}
                                                         </ul>
 
                         <div class="options-container section scrollspy" id="options">
@@ -309,35 +310,37 @@ input[type='radio']:checked:before {
                                 </div>
                             </div>
                             <ul>
-                                                                        <li class="option-wrapper enable">
+                                @foreach($options as $option)
+                                    <li class="option-wrapper enable">
                                         <div class="stage-option">
                                             <div class="row m-n valign-wrapper">
-                                                <div class="col s2 m2 l2 ">
-                                                    <img src="https://www.shiftech.eu/media/olsx/options/icons/4099130c4d41ff950d633ebb7a4fa285.svg" alt="logo" class="responsive-img stage-logo">
+                                                    <div class="col s2 m2 l2 ">
+                                                        <img src="{{'https://backend.ecutech.gr/icons/'.$option['icon']}}" alt="logo" class="responsive-img stage-logo">
+                                                    </div>
+                                                    <div class="col s5 m5 l5 ">
+                                                        <span>{{$option['name']}}</span>
+                                                    </div>
+                                                    <div class="col s2 m2 l2 center">
+                                                        <strong class="stage-price"><span class="price">{{$option['credits']}}</span> Credits</strong>
+                                                    </div>
+                                                    <div class="col s4 m3 l3 switch center" style="display: table">
+                                                        <label class="switch-stage">
+                                                            <input type="checkbox" name="option[]" value="{{$option['name']}}" data-name="{{$option['name']}}" data-code="vmax" data-price="{{$option['credits']}}" data-default-price="{{$option['credits']}}">
+                                                            <span class="lever"></span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div class="col s5 m5 l5 ">
-                                                    <span>Vmax OFF</span>
-                                                </div>
-                                                <div class="col s2 m2 l2 center">
-                                                    <strong class="stage-price"><span class="price">3</span> Credits</strong>
-                                                </div>
-                                                <div class="col s4 m3 l3 switch center" style="display: table">
-                                                    <label class="switch-stage">
-                                                        <input type="checkbox" name="option[]" value="Vmax OFF" data-name="Vmax OFF" data-code="vmax" data-price="3" data-default-price="3">
-                                                        <span class="lever"></span>
-                                                    </label>
+                                        </div>
+                                        <div class="stage-option-definition">
+                                            <div class="row m-n">
+                                                <div class="col s12">
+                                                    <p>{{$option['description']}}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="stage-option-definition">
-                                                                                                <div class="row m-n">
-                                                    <div class="col s12">
-                                                        <p>This is an increase of the maximum speed limit or its suppression.</p>
-                                                    </div>
-                                                </div>
-                                                                                        </div>
                                     </li>
-                                                                        <li class="option-wrapper enable">
+                                @endforeach
+                                {{-- <li class="option-wrapper enable">
                                         <div class="stage-option">
                                             <div class="row m-n valign-wrapper">
                                                 <div class="col s2 m2 l2 ">
@@ -1734,9 +1737,8 @@ input[type='radio']:checked:before {
                                                     </div>
                                                 </div>
                                                                                         </div>
-                                    </li>
-                                                                </ul>
-
+                                    </li> --}}
+                        </ul>
                         </div>
                     </div>
                     <div class="col s12 l4 m3">

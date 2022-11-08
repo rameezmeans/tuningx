@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Laravel\Ui\Presets\React;
 
 class FileController extends Controller
@@ -166,7 +167,12 @@ class FileController extends Controller
     public function stages(Request $request)
     {
         $file = File::findOrFail($request->file_id);
-        return view( 'files.set_stages', ['file' => $file] );
+        $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
+        $stages = json_decode($responseStages->body(), true)['stages'];
+        $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
+        $options = json_decode($responseOptions->body(), true)['options'];
+        
+        return view( 'files.set_stages', ['file' => $file, 'stages' => $stages, 'options' => $options] );
     }
 
     /**
