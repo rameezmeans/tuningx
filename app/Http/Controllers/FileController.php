@@ -195,7 +195,7 @@ class FileController extends Controller
     {
         $requestFile = $request->validate([
             'file_id' => 'required',
-            'request_file' => 'required|max:255',
+            'request_file' => 'required',
             'file_type' => 'required|max:255',
             'master_tools' => 'required|max:255',
             'ecu_file_select' => '',
