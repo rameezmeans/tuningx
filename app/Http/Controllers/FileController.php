@@ -236,9 +236,11 @@ class FileController extends Controller
     public function showFile($id)
     {
         $file = File::where('id',$id)->where('user_id', Auth::user()->id)->first();
-            if(!$file){
-                abort(404);
-            }
+
+        if(!$file){
+            abort(404);
+        }
+
         $vehicle = Vehicle::where('Make', '=', $file->brand)
         ->where('Model', '=', $file->model)
         ->where('Generation', '=', $file->version)
@@ -254,9 +256,9 @@ class FileController extends Controller
 
         foreach($withoutTypeArray as $r) {
             $fileReq = RequestFile::findOrFail($r['id']);
-            // if($fileReq->file_feedback){
-            //     $r['type'] = $fileReq->file_feedback->type;
-            // }
+                if($fileReq->file_feedback){
+                    $r['type'] = $fileReq->file_feedback->type;
+                }
             $unsortedTimelineObjects []= $r;
         } 
 
@@ -282,6 +284,7 @@ class FileController extends Controller
         } 
 
         array_multisort($createdTimes, SORT_DESC, $unsortedTimelineObjects);
+        // dd($unsortedTimelineObjects);
         
         return view('files.show_file', [ 'attachedFiles' => $unsortedTimelineObjects,'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools, 'vehicle' => $vehicle ]);
     }
@@ -394,7 +397,6 @@ class FileController extends Controller
      */
     public function fileFeedback(Request $request)
     {
-
         FileFeedback::where('request_file_id','=', $request->request_file_id)->delete();
 
         $requestFile = new FileFeedback();

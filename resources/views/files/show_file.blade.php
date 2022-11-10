@@ -884,11 +884,13 @@
                             <p class="push-bit m-t-em">
                                 The file has been sent to engineers with the following request :
                             </p>
-
-                            <div class="chip-stage">
-                                <img src="{{ get_logo_for_stages_and_options($file->stages) }}" alt="{{$file->stages}}">
-                               {{ $file->stages }}
-                            </div> 
+                            
+                            @if($file->stages)
+                                <div class="chip-stage">
+                                    <img src="{{ get_logo_for_stages_and_options($file->stages) }}" alt="{{$file->stages}}">
+                                {{ $file->stages }}
+                                </div> 
+                            @endif
                             @if($file->options) 
                                 @foreach($file->options() as $option)
                                     <div class="chip-stage">
@@ -931,9 +933,6 @@
                                 <p class="push-bit">
                                     <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
                                 </p>
-                                
-
-
                             </div>
                         </div>
                     </li>
@@ -941,12 +940,12 @@
                         {{-- @isset($f['request_file']) --}}
                             <li class="timeline-event" id="">
                                 @isset($f['request_file'])
-                                    <div class="timeline-icon alert-blue">
+                                    <div class="timeline-icon  @if($f['engineer'] == 1) light-green @else alert-blue @endif">
                                         <i class="fa fa-download"></i>
                                     </div>
                                 @endisset
                                 @isset($f['egnineers_internal_notes'])
-                                    <div class="timeline-icon alert-blue">
+                                    <div class="timeline-icon @if($f['engineer'] == 1) light-green @else alert-blue @endif">
                                         <i class="fa fa-user"></i>
                                     </div>
                                 @endisset
@@ -955,13 +954,26 @@
                                         <i class="fa fa-user"></i>
                                     </div>
                                 @endisset
+                                @isset($f['file_url'])
+                                    <div class="timeline-icon alert-blue">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                @endisset
                                 <div class="timeline-content">
                                     <span class="push-bit">
                                         @isset($f['request_file'])
-                                            File Recieved
+                                            @if($f['engineer'] == 0)
+                                                File Sent
+                                            @else
+                                                File Recieved
+                                            @endif
                                         @endisset
                                         @isset($f['egnineers_internal_notes'])
-                                            Messge Sent
+                                            @if($f['engineer'])
+                                                Message Recieved
+                                            @else
+                                                Message Sent
+                                            @endif
                                         @endisset
 
                                         @isset($f['events_internal_notes'])
@@ -1003,79 +1015,73 @@
                                             </div>
                                         @isset($f['request_file'])
 
-                                            {{-- <p class="push-bit m-t-em">
-                                                The file has been sent to engineers with the following request :
+                                            <p class="push-bit m-t-em">
+                                                The file has been processed under these options:
+                                                
                                             </p>
-                                            <div class="chip-stage">
-                                                <img src="https://www.shiftech.eu/media/olsx/tunings/icons/06b67cee92e4fea2919e83d6fa2a8edd.svg" alt="">
-                                                @if($f['ecu_file_select']) {{ get_option_from_request_file_dropdown( $f['ecu_file_select'] ) }} @else {{ get_option_from_request_file_dropdown($f['gearbox_file_select']) }} @endif
-                                            </div>  
 
-                                            <div class="chip-stage">
-                                                <img src="https://www.shiftech.eu/media/olsx/options/icons/29c2dd7e1e2cf29fd7d5038d47022958.svg" alt="">
-                                            EGR OFF
-                                            </div>
-
-                                            <div class="chip-stage">
-                                                <img src="https://www.shiftech.eu/media/olsx/options/icons/20f24f635d2597c65d620d977d5fd185.svg" alt="">
-                                            DPF OFF
-                                            </div> --}}
-
-                                    {{-- <div class="divider">
-                                    </div> --}}
+                                            @if($file->stages)
+                                                <div class="chip-stage">
+                                                    <img src="{{ get_logo_for_stages_and_options($file->stages) }}" alt="{{$file->stages}}">
+                                                {{ $file->stages }}
+                                                </div> 
+                                            @endif
+                                            @if($file->options) 
+                                                @foreach($file->options() as $option)
+                                                    <div class="chip-stage">
+                                                        <img src="{{ get_logo_for_stages_and_options($option) }}" alt="">
+                                                    {{ $option }}
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                            
+                                    <div class="divider">
+                                    </div>
 
                                     <div class="push-bit">
-                                        {{-- <span class="red-olsx-text">Reading tool : </span>
+                                        <span class="red-olsx-text">Reading tool : </span>
                                         <span class="chip-stage">
-                                            <img src="{{ get_dropdown_image($f['master_tools']) }}" class="tool-logo-small">{{  strtoupper($f['tool_type']) }}</span>
-                                                     --}}
+                                            <img src="{{ get_dropdown_image($file->tool) }}" class="tool-logo-small">{{  strtoupper($file->tool_type) }}
+                                        </span>
+                                                    <div class="divider">
+                                                    </div>
 
-                                                    {{-- <div class="divider">
-                                                    </div> --}}
-
-                                                    {{-- <p class="push-bit">
-                                                        <span class="red-olsx-text">Brand Group: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="Mercedes group" class="feedback-logo">
-                                                    </p> --}}
-
-                                                    {{-- <p class="push-bit">
-                                                        <span class="red-olsx-text">ECU: </span>
-                                                                     
-                                                                        {{ $file->ecu }}
-                                                    </p> --}}
-
-                                                    {{-- <p class="push-bit">
-                                                        <span class="red-olsx-text">Engine Code: </span> {{$vehicle->Engine_number }}
-                                                    </p> --}}
-
-                                                    {{-- <p class="push-bit">
-                                                        <span class="red-olsx-text">Engine name: </span>  {{$vehicle->Engine }}
-                                                    </p> --}}
-
-                                                    {{-- <p class="push-bit">
-                                                        <span class="red-olsx-text">Displacement: </span> 3.0                
-                                                    </p> --}}
-
-                                                        {{-- <p class="push-bit">
-                                                            <span class="red-olsx-text">Power: </span> 190-224 hp
-                                                        </p> --}}
-
-                                                        {{-- <p class="push-bit">
-                                                            <span class="red-olsx-text">Torque: </span> {{ $vehicle->TORQUE_standard }}-{{ $vehicle->TORQUE_tuned }}
-                                                        </p> --}}
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Brand Group: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="feedback-logo">
+                                                    </p>
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Brand: </span>{{ $file->brand }}
+                                                    </p>
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Model: </span>{{ $file->model }}
+                                                    </p>
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Version:</span> {{ $file->version }}
+                                                    </p>
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Engine:</span> {{ $file->engine }}
+                                                    </p>
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">ECU:</span> {{ $file->ecu }}
+                                                    </p>
+                                                    <p class="push-bit">
+                                                        <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
+                                                    </p>
 
                                                         
+                                                    @if($f['engineer'] == 1)
+                                                    {{-- @php echo "f_type:".$f['type']; @endphp --}}
+                                                        <div class="divider">
+                                                        </div>
 
-                                                        {{-- <div class="divider">
-                                                        </div> --}}
 
-
-                                                {{-- <div class="tab" style="height: 70px;">
+                                                <div class="tab" style="height: 70px;">
                                                     <button class="tablinks-smaller defaulti tablinks{{$f['id']}}" onclick="openCity1(event, 'London1', {{$f['id']}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>Results</button>
                                                     <button class="tablinks-smaller tablinks{{$f['id']}}" onclick="openCity1(event, 'Paris1', {{$f['id']}})"><i class="fa fa-file" style="margin-right:10px;"></i>Logs</button>
-                                                </div> --}}
+                                                </div>
                                                 
                                                 <!-- Tab content -->
-                                                {{-- <div id="London1{{$f['id']}}" class="tabcontent{{$f['id']}}" style=" margin: 30px 0px;">
+                                                <div id="London1{{$f['id']}}" class="tabcontent{{$f['id']}}" style=" margin: 30px 0px;">
                                                     <ul class="feedback">
                                                         <li class="angry @if( isset($f['type']) && $f['type'] == 'angry' ) active @endif" data-type="angry" data-file_id="{{$file->id}}" data-request_file_id="{{$f['id']}}">
                                                             <div>
@@ -1140,9 +1146,9 @@
                                                         </symbol>
                                                     </svg>
                                                     
-                                                </div> --}}
+                                                </div>
                                                 
-                                                {{-- <div id="Paris1{{$f['id']}}" class="tabcontent{{$f['id']}}" style=" margin: 30px 0px;">
+                                                <div id="Paris1{{$f['id']}}" class="tabcontent{{$f['id']}}" style=" margin: 30px 0px;">
                                                     <form method="POST" action="{{ route('file-url') }}" enctype="multipart/form-data">
                                                         @csrf
                                                         <input type="hidden" name="file_id" value="{{$file->id}}">
@@ -1172,7 +1178,8 @@
                                                             <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Add To The Timeline</button>
                                                         </div>
                                                     </form>
-                                                </div> --}}
+                                                </div>
+                                                @endif
                                               @endisset
                                 </div>
                                 {{-- @isset($f['egnineers_internal_notes'])
