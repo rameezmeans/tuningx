@@ -51,10 +51,11 @@
                 </div>
                 <div ><h5 id="file-name" class="@if($errors->any()) show @else hide @endif mt-5">{{ old('file_attached').' (file attached)' }}</h5></div>
                 <div id="posting-file" class="@if($errors->any()) show @else hide @endif">
-                    <form method="post" action="{{ route('post-file') }}">
+                    <form method="POST" action="{{ route('post-file') }}">
                         <input type="hidden" name="tool" id="tool" value="{{ old('tool') }}">
                         <input type="hidden" name="tool_type" id="tool_type" value="{{ old('tool_type') }}">
                         <input type="hidden" name="file_attached" id="file_attached" value="{{ old('file_attached') }}">
+                        <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
                         {{-- <input type="hidden" name="file_type" id="file_type" value="{{ old('file_type') }}"> --}}
                         @csrf
 

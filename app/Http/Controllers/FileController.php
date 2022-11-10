@@ -14,6 +14,7 @@ use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Redirect;
 use Laravel\Ui\Presets\React;
 
 class FileController extends Controller
@@ -89,10 +90,11 @@ class FileController extends Controller
             'model' => 'required|max:255',
             'engine' => 'required|max:255',
             'ecu' => 'max:255',
+            'user_id' => 'required',
             'gear_box' => 'max:255',
         ]);
 
-        $file['tools'] = "tools value";
+        $file['tools'] = "tools value";//this is not required at all -- update it
         $file['credits'] = 0;
 
         $newFile = File::create($file);
@@ -182,7 +184,7 @@ class FileController extends Controller
      */
     public function fileHistory()
     {
-        $files = File::orderBy('created_at','desc')->where('is_credited', '=', 1)->get();
+        $files = File::orderBy('created_at','desc')->where('is_credited', '=', 1)->where('user_id', Auth::user()->id)->get();
         return view('files.file_history', [ 'files' => $files ]);
     }
 
@@ -233,8 +235,10 @@ class FileController extends Controller
      */
     public function showFile($id)
     {
-        $file = File::findOrFail($id);
-        
+        $file = File::where('id',$id)->where('user_id', Auth::user()->id)->first();
+            if(!$file){
+                abort(404);
+            }
         $vehicle = Vehicle::where('Make', '=', $file->brand)
         ->where('Model', '=', $file->model)
         ->where('Generation', '=', $file->version)

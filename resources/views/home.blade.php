@@ -185,10 +185,12 @@
                     <h1>Modèle<i class="fa fa-fire right"></i></h1>
                 </div>
                 <div class="divider-light"></div>
-                <div class="card-content height-table center">
-                    <h1>{{$twoFiles[0]->brand}}</h1>
-                    <h3>{{$twoFiles[0]->model}}</h3>
-                </div>
+                @if(!$twoFiles->isEmpty())
+                    <div class="card-content height-table center">
+                        <h1>{{$twoFiles[0]->brand}}</h1>
+                        <h3>{{$twoFiles[0]->model}}</h3>
+                    </div>
+                @endif
             </div>
         </div>
         
@@ -199,7 +201,9 @@
                 </div>
                 <div class="divider-light"></div>
                 <div class="card-content height-table center">
-                    <img class="responsive-img logo-brand-dashboard" src="{{$twoFiles[0]->vehicle()->Brand_image_URL}}">
+                    @if(!$twoFiles->isEmpty())
+                        <img class="responsive-img logo-brand-dashboard" src="{{$twoFiles[0]->vehicle()->Brand_image_URL}}">
+                    @endif
                 </div>
             </div>
         </div>

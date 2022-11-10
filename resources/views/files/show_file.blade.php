@@ -1001,7 +1001,7 @@
                                                             
                                             <div class="divider">
                                             </div>
-                                            @isset($f['request_file'])
+                                        @isset($f['request_file'])
 
                                             {{-- <p class="push-bit m-t-em">
                                                 The file has been sent to engineers with the following request :

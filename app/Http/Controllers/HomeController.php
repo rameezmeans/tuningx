@@ -99,6 +99,8 @@ class HomeController extends Controller
             $month = $date->format('m');
             $weekCount []= File::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
         }
+
+        // dd($twoFiles);
         
         return view('home', [ 
             'todaysFilesCount' => $todaysFilesCount, 
