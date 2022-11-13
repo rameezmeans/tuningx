@@ -74,4 +74,4 @@ Route::get('/file-history', [App\Http\Controllers\FileController::class, 'fileHi
 Route::get('/file/{id}', [App\Http\Controllers\FileController::class, 'showFile'])->name('file');
 
 Route::get('/download/{file}', [App\Http\Controllers\FileController::class,'download'])->name('download');
-// Route::get('phpinfo', function(){ phpinfo(); });
+Route::get('phpinfo', function(){ phpinfo(); });
