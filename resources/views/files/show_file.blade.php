@@ -674,14 +674,14 @@
                             {{-- <div class="input-field col s12" style="margin-left:5px; display:flex;"> --}}
                                 <div class="col s12 m4 file-type-buttons">
                                     <label class="file-type-label col s6">
-                                        <input type="radio" value="ECU" class="file-selection file_type" name="file_type">
+                                        <input type="radio" value="ecu_file" class="file-selection file_type" name="file_type">
                                             <img src="https://resellers.ecutech.tech/assets/img/OLSx-pictogram-file-02.svg">
                                             <span>
                                                 ECU file
                                             </span>
                                     </label>
                                     <label class="file-type-label col s6">
-                                        <input type="radio" value="TCU" class="file-selection file_type" name="file_type">
+                                        <input type="radio" value="gearbox_file" class="file-selection file_type" name="file_type">
                                         <img src="https://resellers.ecutech.tech/assets/img/OLSxGearBox.svg">
                                         <span>
                                             Gearbox file
@@ -711,7 +711,7 @@
                                 </div> --}}
                                 <div class="col s6" style="float: right !important;">
                                     <div class="select-wrapper form-control">
-                                        <select name="ecu_file_select" id="ecu_file_select" class="select-dropdown  f-dropdown hide">
+                                        <select name="request_type" id="ecu_file_select" class="select-dropdown  f-dropdown hide">
                                             <option value="status" selected disabled>Request Type </option>
                                             <option value="new_upload">New upload</option>
                                             <option value="tuning_evolution">Tuning Evolution - I want to make a new tuning request.</option>
@@ -722,7 +722,7 @@
                                         </select>
                                     </div>
                                     <div class="select-wrapper form-control">
-                                        <select name="gearbox_file_select" id="gearbox_file_select" class="select-dropdown  f-dropdown hide">
+                                        <select name="request_type" id="gearbox_file_select" class="select-dropdown  f-dropdown hide">
                                             <option value="status" selected disabled>Request Type </option>
                                             <option value="new_upload">New Upload</option>
                                         </select>
@@ -863,7 +863,7 @@
                 
                 <ul class="timeline-list">
                     <li class="timeline-event" id="">
-                        <div class="timeline-icon light-green lighten-1">
+                        <div class="timeline-icon alert-blue ">
                             <i class="fa fa-upload"></i>
                         </div>
                         <div class="timeline-content">
@@ -871,7 +871,13 @@
                                 File Sent
                             </span>
                             <ul class="actions-list">
-                            </ul>
+                                        <li>
+                                            <span class="label-credit credit-history ">
+                                                -{{$file->credits}} Credits
+                                            </span>
+                                        </li>          
+                                    </ul>
+                            
                             <small class="timeline-time-small">{{ $file->created_at->format('H:i:s d/m/Y') }}</small>
                                                 <div class="divider"></div>
                             <span>
@@ -959,6 +965,14 @@
                                         <i class="fa fa-user"></i>
                                     </div>
                                 @endisset
+                                
+                                @isset($f['request_type'])
+                                @if($f['request_type'])
+                                    <div class="timeline-icon alert-blue">
+                                        <i class="fa fa-upload"></i>
+                                    </div>
+                                @endif
+                                @endisset
                                 <div class="timeline-content">
                                     <span class="push-bit">
                                         @isset($f['request_file'])
@@ -969,10 +983,10 @@
                                             @endif
                                         @endisset
                                         @isset($f['egnineers_internal_notes'])
-                                            @if($f['engineer'])
-                                                Message Recieved
-                                            @else
+                                            @if($f['engineer'] == 0)
                                                 Message Sent
+                                            @else
+                                                Message Received
                                             @endif
                                         @endisset
 
@@ -982,37 +996,153 @@
 
                                         @isset($f['file_url'])
                                             Messge Sent
-                                    @endisset
+                                        @endisset
+                                        @isset($f['request_type'])
+                                        @if($f['request_type'])
+                                            File Sent
+                                        @endif
+                                        @endisset
+
                                     </span>
 
+                                    @isset($f['request_type'])
+                                        @if($f['request_type'])
                                     <ul class="actions-list">
+                                        <li>
+                                            <span class="label-credit credit-history ">
+                                                -{{$f['credits']}} Credits
+                                            </span>
+                                        </li>          
                                     </ul>
+
+                                    @endif
+                                    @endisset
+
                                     <small class="timeline-time-small">{{\Carbon\Carbon::parse($f['created_at'])->format('H:i:s d/m/Y')}}</small>
                                                         <div class="divider"></div>
                                         @isset($f['request_file'])
                                             <span class="red-olsx-text">Filename :</span>
                                         @endisset
+                                        @isset($f['request_type'])
+                                        @if($f['request_type'])
+                                            <span class="red-olsx-text">Filename :</span>
+                                        @endif
+                                        @endisset
+
                                         <span>
                                             @isset($f['request_file'])
                                                 {{ $f['request_file'] }}
+                                                <ul class="actions-list">
+                                                    <li>
+                                                        <a href="{{route('download', $f['request_file'])}}" class="btn"><i class="fa fa-download"></i></a>
+                                                    </li>          
+                                                </ul>
                                             @endisset
-
+                                                
                                             @isset($f['egnineers_internal_notes'])
-                                                {{ $f['egnineers_internal_notes'] }}
+                                                {{ $f['egnineers_internal_notes'] }} 
+                                                @php
+                                                    $attachement = App\Models\EngineerFileNote::where('egnineers_internal_notes', $f['egnineers_internal_notes'])->first()->engineers_attachement;
+                                                @endphp
+                                                @if($attachement)
+                                                    <div class="divider">
+                                                    </div>
+                                                    <span class="red-olsx-text">Filename :</span>
+                                                    {{$attachement}}
+                                                @endif
                                             @endisset
 
                                             @isset($f['events_internal_notes'])
                                                 {{ $f['events_internal_notes'] }}
+                                                @php
+                                                    $eventAttachement = App\Models\FileInternalEvent::where('events_internal_notes', $f['events_internal_notes'])->first()->events_attachement;
+                                                @endphp
+                                                @if($eventAttachement)
+                                                    <div class="divider">
+                                                    </div>
+                                                    <span class="red-olsx-text">Filename :</span>
+                                                    {{$eventAttachement}}
+                                                @endif
                                             @endisset
 
                                             @isset($f['file_url'])
                                             {{ $f['file_url'] }}
-                                        @endisset
+                                            @endisset
+
+                                            @isset($f['request_type'])
+                                            @if($f['request_type'])
+                                                {{$f['file_attached']}}
+                                            @endif
+                                            @endisset
 
                                         </span>
                                                             
                                             <div class="divider">
                                             </div>
+                                        @isset($f['request_type'])
+                                        @if($f['request_type'])
+                                        
+                                        <p class="push-bit m-t-em">
+                                            The file has been processed under these options:
+                                            
+                                        </p>
+
+                                        @php
+                                            $newFile = App\Models\File::findOrfail($f['id']);
+                                           
+                                        @endphp
+
+                                        @if($newFile->stages)
+                                            <div class="chip-stage">
+                                                <img src="{{ get_logo_for_stages_and_options($newFile->stages) }}" alt="{{$newFile->stages}}">
+                                            {{ $newFile->stages }}
+                                            </div> 
+                                        @endif
+                                        @if($newFile->options) 
+                                            @foreach($newFile->options() as $option)
+                                                <div class="chip-stage">
+                                                    <img src="{{ get_logo_for_stages_and_options($option) }}" alt="">
+                                                {{ $option }}
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        
+                                <div class="divider">
+                                </div>
+
+                                <div class="push-bit">
+                                    <span class="red-olsx-text">Reading tool : </span>
+                                    <span class="chip-stage">
+                                        <img src="{{ get_dropdown_image($f['tool']) }}" class="tool-logo-small">{{  strtoupper($f['tool_type']) }}
+                                    </span>
+                                                <div class="divider">
+                                                </div>
+
+                                                <p class="push-bit">
+                                                    <span class="red-olsx-text">Brand Group: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="feedback-logo">
+                                                </p>
+                                                <p class="push-bit">
+                                                    <span class="red-olsx-text">Brand: </span>{{ $file->brand }}
+                                                </p>
+                                                <p class="push-bit">
+                                                    <span class="red-olsx-text">Model: </span>{{ $file->model }}
+                                                </p>
+                                                <p class="push-bit">
+                                                    <span class="red-olsx-text">Version:</span> {{ $file->version }}
+                                                </p>
+                                                <p class="push-bit">
+                                                    <span class="red-olsx-text">Engine:</span> {{ $file->engine }}
+                                                </p>
+                                                <p class="push-bit">
+                                                    <span class="red-olsx-text">ECU:</span> {{ $file->ecu }}
+                                                </p>
+                                                <p class="push-bit">
+                                                    <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
+                                                </p>
+                                        @endif
+                                        @endisset
+
+
                                         @isset($f['request_file'])
 
                                             <p class="push-bit m-t-em">
@@ -1020,14 +1150,20 @@
                                                 
                                             </p>
 
-                                            @if($file->stages)
+                                            @php 
+
+                                            $newEngineerFile = App\Models\File::findOrfail($f['file_id']);
+                                            
+                                            @endphp
+
+                                            @if($newEngineerFile->stages)
                                                 <div class="chip-stage">
-                                                    <img src="{{ get_logo_for_stages_and_options($file->stages) }}" alt="{{$file->stages}}">
-                                                {{ $file->stages }}
+                                                    <img src="{{ get_logo_for_stages_and_options($newEngineerFile->stages) }}" alt="{{$newEngineerFile->stages}}">
+                                                {{ $newEngineerFile->stages }}
                                                 </div> 
                                             @endif
-                                            @if($file->options) 
-                                                @foreach($file->options() as $option)
+                                            @if($newEngineerFile->options) 
+                                                @foreach($newEngineerFile->options() as $option)
                                                     <div class="chip-stage">
                                                         <img src="{{ get_logo_for_stages_and_options($option) }}" alt="">
                                                     {{ $option }}
@@ -1041,7 +1177,7 @@
                                     <div class="push-bit">
                                         <span class="red-olsx-text">Reading tool : </span>
                                         <span class="chip-stage">
-                                            <img src="{{ get_dropdown_image($file->tool) }}" class="tool-logo-small">{{  strtoupper($file->tool_type) }}
+                                            <img src="{{ get_dropdown_image($newEngineerFile->tool) }}" class="tool-logo-small">{{  strtoupper($newEngineerFile->tool_type) }}
                                         </span>
                                                     <div class="divider">
                                                     </div>
@@ -1444,14 +1580,14 @@ $('select.f-dropdown').mySelectDropdown();
         if ($(this).is(':checked')) {
             let file_type = $(this).val();
 
-            if(file_type == 'ECU'){
+            if(file_type == 'ecu_file'){
                 console.log($('#ecu_file_select').next().next());
                 $('#ecu_file_select').next().next().css("display", "block");
                 $('#gearbox_file_select').next().next().css("display", "none");
                 // $('#ecu_file_select').removeClass('hide');
                 // $('#gearbox_file_select').addClass('hide');
             }
-            else if(file_type == 'TCU') {
+            else if(file_type == 'gearbox_file') {
                 // $('#ecu_file_select').addClass('hide');
                 // $('#gearbox_file_select').removeClass('hide');
 

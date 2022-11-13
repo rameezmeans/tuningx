@@ -29,6 +29,12 @@ class FileController extends Controller
         $this->middleware('auth');
     }
 
+    public function download($file_name) {
+        
+        $file_path = public_path('/uploads/'.$file_name);
+        return response()->download($file_path);
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -184,7 +190,11 @@ class FileController extends Controller
      */
     public function fileHistory()
     {
-        $files = File::orderBy('created_at','desc')->where('is_credited', '=', 1)->where('user_id', Auth::user()->id)->get();
+        $files = File::orderBy('created_at','desc')
+        ->where('is_credited', '=', 1)
+        ->whereNull('original_file_id')
+        ->where('user_id', Auth::user()->id)
+        ->get();
         return view('files.file_history', [ 'files' => $files ]);
     }
 
@@ -195,14 +205,18 @@ class FileController extends Controller
      */
     public function requestFile(Request $request)
     {
+
+        // dd($request->all());
         $requestFile = $request->validate([
             'file_id' => 'required',
             'request_file' => 'required',
             'file_type' => 'required|max:255',
             'master_tools' => 'required|max:255',
-            'ecu_file_select' => '',
-            'gearbox_file_select' => ''
+            'request_type' => 'required|max:255',
         ]);
+
+        // dd($requestFile);
+        // dd($request->all());
 
         $file = $request->file('request_file');
         $fileName = $file->getClientOriginalName();
@@ -213,19 +227,50 @@ class FileController extends Controller
         $first_str = substr($requestFile['master_tools'],0, $pos);
         $second_str = substr($second_str, 1);
         
-
         if($first_str != '')
             $ecusArray []= $first_str;  
         if($second_str != '')              
             $ecusArray []= $second_str; 
 
-        $requestFile['request_file'] = $fileName;
+        // $requestFile['request_file'] = $fileName;
         $requestFile['master_tools'] = $first_str;
         $requestFile['tool_type'] = $second_str;
-        
-        $requestFile = RequestFile::create($requestFile);
 
-        return redirect()->back()->with('success', 'File successfully Added!');
+        // dd($requestFile);
+
+        $file = File::findOrFail($requestFile['file_id'])->toArray();
+
+        // dd($file);
+
+        $newFile = $file;
+        $newFile['credits'] = 0;
+        $newFile['file_attached'] =  $fileName;
+        $newFile['request_type'] =   $requestFile['request_type'];
+        $newFile['original_file_id'] =   $requestFile['file_id'];
+        $newFile['file_type'] =   $requestFile['file_type'];
+        $newFile['tool'] =   $requestFile['master_tools'];
+        $newFile['tool_type'] =   $requestFile['tool_type'];
+        unset($newFile['id']);
+
+        // dd($newFile);
+
+        $newFileCreated = File::create($newFile);
+
+        if($newFileCreated){
+
+            return redirect()->route('stages', ['file_id' => $newFileCreated ->id]);
+            // return redirect()->route('file-history',['success', 'File successfully Added!']);
+        }
+
+
+
+        
+
+       
+        
+        // $requestFile = RequestFile::create($requestFile);
+
+        // return redirect()->back()->with('success', 'File successfully Added!');
     }
 
     /**
@@ -235,7 +280,10 @@ class FileController extends Controller
      */
     public function showFile($id)
     {
-        $file = File::where('id',$id)->where('user_id', Auth::user()->id)->first();
+        $file = File::where('id',$id)
+        ->where('user_id', Auth::user()->id)
+        ->whereNull('original_file_id')
+        ->first();
 
         if(!$file){
             abort(404);
@@ -246,13 +294,13 @@ class FileController extends Controller
         ->where('Generation', '=', $file->version)
         ->first();
 
-        // dd($vehicle);
-
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
         $slaveTools = explode(',',  Auth::user()->slave_tools );
         $withoutTypeArray = $file->files->toArray();
+
         $unsortedTimelineObjects = [];
+        $createdTimes = [];
 
         foreach($withoutTypeArray as $r) {
             $fileReq = RequestFile::findOrFail($r['id']);
@@ -260,22 +308,51 @@ class FileController extends Controller
                     $r['type'] = $fileReq->file_feedback->type;
                 }
             $unsortedTimelineObjects []= $r;
+            $createdTimes []= $r['created_at'];
         } 
 
-        $createdTimes = [];
+        $newRequestFiles = File::where('original_file_id', $id)->get();
 
-        foreach($file->files->toArray() as $t) {
-            $createdTimes []= $t['created_at'];
-        } 
+        foreach($newRequestFiles as $c) {
+            $newArray = $c->files->toArray();
+            // dd($newArray);
+            foreach($newArray as $r) {
+                $fileReq = RequestFile::findOrFail($r['id']);
+                    if($fileReq->file_feedback){
+                        $r['type'] = $fileReq->file_feedback->type;
+                    }
+                $unsortedTimelineObjects []= $r;
+                $createdTimes []= $r['created_at'];
+            } 
+        }   
+
+        // foreach($file->files->toArray() as $t) {
+        //     $createdTimes []= $t['created_at'];
+        // } 
     
         foreach($file->engineer_file_notes->toArray() as $a) {
             $unsortedTimelineObjects []= $a;
             $createdTimes []= $a['created_at'];
-        }   
+        }
+        
+        foreach($newRequestFiles as $c) {
+            $newArray = $c->engineer_file_notes->toArray();
+            // dd($newArray);
+            foreach($newArray as $r) {
+                $fileReq = EngineerFileNote::findOrFail($r['id']);
+                $unsortedTimelineObjects []= $r;
+                $createdTimes []= $r['created_at'];
+            } 
+        }  
 
         foreach($file->file_internel_events->toArray() as $b) {
             $unsortedTimelineObjects []= $b;
             $createdTimes []= $b['created_at'];
+        } 
+
+        foreach($newRequestFiles->toArray() as $c) {
+            $unsortedTimelineObjects []= $c;
+            $createdTimes []= $c['created_at'];
         } 
 
         foreach($file->file_urls->toArray() as $b) {
