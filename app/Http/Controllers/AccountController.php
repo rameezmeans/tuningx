@@ -72,8 +72,21 @@ class AccountController extends Controller
     public function updateTools(Request $request)
     {
         $user = User::findOrFail($request->user_id);
-        $user->master_tools = implode(',', $request->master_tools);
-        $user->slave_tools =  implode(',', $request->slave_tools);
+        
+        if($request->master_tools){
+            $user->master_tools = implode(',', $request->master_tools);
+        }
+        else{
+            $user->master_tools = "";
+        }
+        
+        if($request->slave_tools){
+            $user->slave_tools =  implode(',', $request->slave_tools);
+        }
+        else{
+            $user->slave_tools = "";
+        }
+        
         $user->save();
 
         return redirect()->route('account',['success' => 'Tools edited, successfully!']);
