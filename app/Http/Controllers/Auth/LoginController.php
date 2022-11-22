@@ -65,7 +65,7 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             //check user is admin or not        
-            if (Auth::user()->is_admin == false) {
+            if (Auth::user()->is_admin == false && Auth::user()->is_engineer == false) {
                 return $this->sendLoginResponse($request);
             }
             else {
