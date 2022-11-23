@@ -588,9 +588,12 @@ function code_to_country( $code ){
         'ZM' => 'Zambia',
         'ZW' => 'Zimbabwe'
     );
+    
+    return array_key_exists($code, $countryList) ? $countryList[$code] : $code;
 
-    if( !$countryList[$code] ) return $code;
-    else return $countryList[$code];
+//    if( !$countryList[$code] ) return $code;
+ // else return $countryList[$code];
+    
     }
 }
 

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Laravel\Ui\Presets\React;
+use Carbon\Carbon;
 
 class FileController extends Controller
 {
@@ -160,6 +161,7 @@ class FileController extends Controller
 
             $file->credits = $credits;
             $file->is_credited = true;
+            $file->assignment_time = Carbon::now();
 
             $file->save();
         }
