@@ -438,8 +438,12 @@
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
                                 <select name="master_tools[]" id="master_tools" class="select-dropdown-multi" multiple>
+
+                                    @foreach($masterTools as $tool)
+                                        <option value="{{$tool->label}}">{{$tool->name}}</option>
+                                    @endforeach
                                     
-                                    <option value="Abrites">Abrites</option>
+                                    {{-- <option value="Abrites">Abrites</option>
                                     <option value="Autotuner">Autotuner</option>
                                     <option value="Bflash">Bflash</option>
                                     <option value="BitBox">BitBox</option>
@@ -464,7 +468,7 @@
                                     <option value="PCM_Flash">PCM Flash</option>
                                     <option value="Powergate">Powergate</option>
                                     <option value="Tactrix">Tactrix</option>
-                                    <option value="TGflash">TGflash</option>
+                                    <option value="TGflash">TGflash</option> --}}
                                   </select>
                                 </div>
                             </div>
@@ -472,15 +476,17 @@
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
                                 <select disabled name="slave_tools[]" id="slave_tools" class="select-dropdown-multi" multiple>
-        
-                                    <option value="Autotuner">Autotuner</option>
+                                    @foreach($slaveTools as $tool)
+                                        <option value="{{$tool->label}}">{{$tool->name}}</option>
+                                    @endforeach
+                                    {{-- <option value="Autotuner">Autotuner</option>
                                     <option value="Bflash">Bflash</option>
                                     <option value="CMD">CMD</option>
                                     <option value="EVC_BDM100">EVC BDM100</option>
                                     <option value="Flex">Flex (magic)</option>
                                     <option value="K_tag">K-tag</option>
                                     <option value="Kess_V2">Kess V2</option>
-                                    <option value="Kess_V3">Kess V3</option>
+                                    <option value="Kess_V3">Kess V3</option> --}}
                                   </select>
                                 </div>
                             </div>

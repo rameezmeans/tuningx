@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\InvoicesController;
 
@@ -29,6 +30,7 @@ Route::post('/update-language', [App\Http\Controllers\LanguageController::class,
 Route::post('/delete_language', [App\Http\Controllers\LanguageController::class, 'deleteLanguage'])->name('delete-language');
 Route::post('/change-password', [App\Http\Controllers\AccountController::class, 'changePassword'])->name('change-password');
 Route::post('/update_tools', [App\Http\Controllers\AccountController::class, 'updateTools'])->name('update-tools');
+Route::post('get_tool_icons', [App\Http\Controllers\AccountController::class, 'getToolsIcons'])->name('get-tool-icons');
 
 
 Route::get('/show_pdf', [App\Http\Controllers\InvoicesController::class, 'showPDF'])->name('show-pdf');
@@ -70,9 +72,12 @@ Route::get('/bosch-ecu', [App\Http\Controllers\AccountController::class, 'boschE
 Route::get('/invoices', [App\Http\Controllers\InvoicesController::class, 'index'])->name('invoices');
 
 Route::post('/upload-file', [App\Http\Controllers\FileController::class, 'uploadFile'])->name('upload-file');
+
 Route::get('/file-history', [App\Http\Controllers\FileController::class, 'fileHistory'])->name('file-history');
 Route::get('/file/{id}', [App\Http\Controllers\FileController::class, 'showFile'])->name('file');
 
 Route::get('/download/{file}', [App\Http\Controllers\FileController::class,'download'])->name('download');
 Route::get('phpinfo', function(){ phpinfo(); });
+
+
 

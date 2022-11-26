@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Credit;
 use App\Models\Language;
+use App\Models\Tool;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Ui\Presets\React;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
+use Svg\Tag\Rect;
 
 class AccountController extends Controller
 {
@@ -34,7 +36,10 @@ class AccountController extends Controller
         $credits = Credit::orderBy('created_at', 'asc')->get();
         $masterTools = explode(',', Auth::user()->master_tools);
         $slaveTools = explode(',', Auth::user()->slave_tools);
-        return view('account', [ 'languages' => $languages, 'credits' => $credits, 'masterTools' =>  $masterTools,'slaveTools' => $slaveTools ]);
+
+        $allMasterTools = Tool::where('type', 'master')->get();
+        $allSlaveTools = Tool::where('type', 'slave')->get();
+        return view('account', [ 'allMasterTools' => $allMasterTools, 'allSlaveTools' => $allSlaveTools, 'languages' => $languages, 'credits' => $credits, 'masterTools' =>  $masterTools,'slaveTools' => $slaveTools ]);
     }
 
     /**
@@ -60,6 +65,26 @@ class AccountController extends Controller
         $options = json_decode($responseOptions->body(), true)['options'];
         
         return view('price_list', ['stages' => $stages, 'options' => $options]);
+    }
+
+    /**
+     * get tools icons
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getToolsIcons(Request $request)
+    {
+        $tools = Tool::all();
+
+        $toolsArray = [];
+
+        foreach($tools as $tool){
+           
+            $toolsArray[$tool->label] = "https://backend.ecutech.gr/icons/".$tool->icon;
+           
+        }
+
+        return response()->json($toolsArray);
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tool;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -39,6 +40,18 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        $masterTools = Tool::where('type', 'master')->get();
+        $slaveTools = Tool::where('type', 'slave')->get();
+        return view('auth.register', ['masterTools' => $masterTools, 'slaveTools' => $slaveTools]);
     }
 
     /**

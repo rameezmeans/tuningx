@@ -49,6 +49,24 @@
 
     @yield('pagespecificscripts')
     <script type="text/javascript">
+        var icons;
+        $( document ).ready(function(event) {
+
+            $.ajax({
+                url: "/get_tool_icons",
+                type: "POST",
+                async: false,
+                data: {
+                
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    icons = response;
+                }
+            });
+
+        });
+
         $(document).ready(function(e){
             $(document).on('click','.close-message', function(ev){
                 $(this).parent().parent().hide();
