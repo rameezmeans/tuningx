@@ -25,7 +25,7 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        $invoices = Credit::whereNotNull('invoice_id')->get();
+        $invoices = Credit::orderBy('created_at', 'desc')->whereNotNull('stripe_id')->get();
         return view('invoices', ['invoices' => $invoices]);
     }
 

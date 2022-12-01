@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Price;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShoppingController extends Controller
 {
@@ -23,6 +25,28 @@ class ShoppingController extends Controller
      */
     public function shopProduct()
     {
-        return view('shop-product');
+        $price = Price::where('label', 'credit_price')->first();
+
+        $customer = Auth::user();
+
+        $factor = 0;
+
+        if($customer->group->tax > 0){
+            $factor = ($customer->group->tax / 100) * $price->value;
+        }
+
+        if($customer->group->raise > 0){
+            $factor = ($customer->group->tax / 100) * $price->value;
+        }
+
+        if($customer->group->discount > 0){
+            $factor = -1*($customer->group->discount / 100) * $price->value;
+        }
+
+        // dd($factor);
+
+        // dd($customer->group);
+
+        return view('shop-product', ['price' => $price, 'factor' => $factor, 'groupName' => $customer->group->name]);
     }
 }

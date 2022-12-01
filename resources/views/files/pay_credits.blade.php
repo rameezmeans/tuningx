@@ -143,8 +143,11 @@
                                 </div>
                             </div>
                             <div class="card-content">
-                                <span class="price-title-new">{{($credits - Auth::user()->credits->sum('credits'))*10.0}} €</span>
-                                <span class="price-title-description">(VAT Excluded)</span>
+                                <input type="hidden" id="price_per_unit" value="{{$price->value}}" />
+                                <input type="hidden" id="factor" value="{{$factor}}" />
+                                {{-- <span class="price-title-new">{{$price->value}} €</span> --}}
+                                <span class="price-title-new">{{($credits - Auth::user()->credits->sum('credits'))*($price->value+$factor)}} €</span>
+                                <span class="price-title-description">(Original Price)</span>
                             </div>
                             <div class="card-action center">
                                 <button id="show-cart" class="btn btn-red waves-effect waves-light m-sm">
@@ -261,7 +264,7 @@
                                         <td>€<span id="subTotal"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><strong>VAT :</strong></td>
+                                        <td><strong>{{$groupName}} :</strong></td>
                                         <td>€<span id="vatSubTotal"></span></td>
                                     </tr>
                                     <tr>
@@ -296,18 +299,22 @@ $( document ).ready(function(event) {
    
     $(document).on('change','#qty-input', function(e){
         let qty = $(this).val();
-        $('#subTotal').text(roundToTwo(qty*10));
-        $('#vatSubTotal').text(roundToTwo(qty*2.4));
-        $('#total').text(roundToTwo(qty*12.4));
+        let price = $('#price_per_unit').val();
+        let factor = $('#factor').val();
+        $('#subTotal').text(roundToTwo(qty*price));
+            $('#vatSubTotal').text(roundToTwo(qty*factor));
+            $('#total').text(qty*(roundToTwo(price)+roundToTwo(factor)));
         // $('.modal').css("display", "block");
     });
 
     $(document).on('click','#show-cart', function(e){
                 let required_credits = parseInt( $('#credits-buying').text() );
                 $('#qty-input').val(required_credits);
-                $('#subTotal').text(required_credits*10);
-                $('#vatSubTotal').text(required_credits*2.4);
-                $('#total').text(required_credits*12.4);
+                let price = $('#price_per_unit').val();
+                let factor = $('#factor').val();
+                $('#subTotal').text(required_credits*price);
+                $('#vatSubTotal').text(required_credits*factor);
+                $('#total').text(required_credits*(roundToTwo(price)+roundToTwo(factor)));
                 $('.modal').css("display", "block");
     });
 

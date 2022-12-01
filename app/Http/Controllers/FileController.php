@@ -8,6 +8,7 @@ use App\Models\File;
 use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
 use App\Models\FileUrl;
+use App\Models\Price;
 use App\Models\RequestFile;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -130,9 +131,35 @@ class FileController extends Controller
          $file->options = implode(',', $request->option );
         }
 
+        $price = Price::where('label', 'credit_price')->first();
+
+        $customer = Auth::user();
+
+        $factor = 0;
+
+        if($customer->group->tax > 0){
+            $factor = ($customer->group->tax / 100) * $price->value;
+        }
+
+        if($customer->group->raise > 0){
+            $factor = ($customer->group->tax / 100) * $price->value;
+        }
+
+        if($customer->group->discount > 0){
+            $factor = -1*($customer->group->discount / 100) * $price->value;
+        }
+
         $file->save();
 
-        return view( 'files.pay_credits', [ 'file' => $file, 'credits' => $credits ] );
+        $groupName = $customer->group->name;
+
+        return view( 'files.pay_credits', [ 
+        'file' => $file, 
+        'credits' => $credits, 
+        'price' => $price,
+        'factor' => $factor,
+        'groupName' => $groupName
+         ] );
     }
 
     /**
@@ -153,6 +180,7 @@ class FileController extends Controller
             $credit->file_id = $request->file_id;
             $credit->credits = -$credits;
             $credit->price_payed = 0;
+            $credit->invoice_id = 'INV-'.mt_rand(1000,9999);
             
             $credit->user_id = Auth::user()->id;
             $credit->save();
