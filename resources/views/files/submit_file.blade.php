@@ -16,6 +16,7 @@
                         <small><i class="fa fa-info-circle"></i> To edit reading tool list <a href="{{ route('account', ['tab' => 'tools']) }}" target="_blank">click here</a></small>
                     </div>
                     <div class="col s12 m-b-lg master-tools @if($errors->any()) hide @endif">
+                        @if(!empty($masterTools))
                         <div class="input-field tool-selection">
                             <h3>Master</h3>
                             <div id="file_upload_form_readingToolMaster">
@@ -26,17 +27,20 @@
                                 
                             </div>
                         </div>
+                        @endif
                     </div>
                 
                     <div class="col s12 m-b-lg radios slave-tools @if($errors->any()) hide @endif">
-                        <div class="input-field tool-selection">
-                            <h3>Slave</h3>
-                            <div id="file_upload_form_readingToolSlave">
-                                @foreach ($slaveTools as $s)
-                                    <input type="radio" id="{{'slave_'.trim_str($s)}}" name="tool_selected" data-type="slave" value="{{trim_str($s)}}">
-                                    <label class="tools hide" for="{{'slave_'.trim_str($s)}}" style="background-image: url(&quot;{{ get_dropdown_image(trim_str($s)) }}&quot;);">{{get_tools(trim_str($s))}}</label>
-                                @endforeach
-                        </div>
+                        @if(!empty($slaveTools))
+                            <div class="input-field tool-selection">
+                                <h3>Slave</h3>
+                                <div id="file_upload_form_readingToolSlave">
+                                    @foreach ($slaveTools as $s)
+                                        <input type="radio" id="{{'slave_'.trim_str($s)}}" name="tool_selected" data-type="slave" value="{{trim_str($s)}}">
+                                        <label class="tools hide" for="{{'slave_'.trim_str($s)}}" style="background-image: url(&quot;{{ get_dropdown_image(trim_str($s)) }}&quot;);">{{get_tools(trim_str($s))}}</label>
+                                    @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
                 

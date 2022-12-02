@@ -950,11 +950,11 @@
                                         <i class="fa fa-download"></i>
                                     </div>
                                 @endisset
-                                @isset($f['egnineers_internal_notes'])
+                                {{-- @isset($f['egnineers_internal_notes'])
                                     <div class="timeline-icon @if($f['engineer'] == 1) light-green @else alert-blue @endif">
                                         <i class="fa fa-user"></i>
                                     </div>
-                                @endisset
+                                @endisset --}}
                                 @isset($f['events_internal_notes'])
                                     <div class="timeline-icon alert-blue">
                                         <i class="fa fa-user"></i>
@@ -982,13 +982,13 @@
                                                 File Recieved
                                             @endif
                                         @endisset
-                                        @isset($f['egnineers_internal_notes'])
+                                        {{-- @isset($f['egnineers_internal_notes'])
                                             @if($f['engineer'] == 0)
                                                 Message Sent
                                             @else
                                                 Message Received
                                             @endif
-                                        @endisset
+                                        @endisset --}}
 
                                         @isset($f['events_internal_notes'])
                                             Messge Sent
@@ -1039,7 +1039,7 @@
                                                 </ul>
                                             @endisset
                                                 
-                                            @isset($f['egnineers_internal_notes'])
+                                            {{-- @isset($f['egnineers_internal_notes'])
                                                 {{ $f['egnineers_internal_notes'] }} 
                                                 @php
                                                     $attachement = App\Models\EngineerFileNote::where('egnineers_internal_notes', $f['egnineers_internal_notes'])->first()->engineers_attachement;
@@ -1050,7 +1050,7 @@
                                                     <span class="red-olsx-text">Filename :</span>
                                                     {{$attachement}}
                                                 @endif
-                                            @endisset
+                                            @endisset --}}
 
                                             @isset($f['events_internal_notes'])
                                                 {{ $f['events_internal_notes'] }}
@@ -1324,6 +1324,29 @@
                                 @isset($f['events_internal_notes'])
                                     events_internal_notes
                                 @endisset --}}
+                            </li>
+                            <li class="timeline-event">
+                                <div class="timeline-icon-subevent">
+                                    <img src="/assets/img/default.png" alt="" class="timeline-avatar">
+                                </div>
+                                <div class="timeline-content-subevent">
+                                    <span class="push-bit">
+                                                        Message received
+                                                </span>
+                                            <div class="row m-b-none">
+                                        <div class="col s6">
+                                            <small class="timeline-time-small">2022-08-30 15:42:04</small>
+                                        </div>
+                                        <div class="col s6 right-align">
+                                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                                                <p class="push-bit">
+                                        
+                                    </p><p class="push-bit"> Sorry, I made a mistake, I would like to say "disconnect EGT" sensors  (but you can keep the EGR disconnected)</p>
+                                                <p class="push-bit"> </p>
+                                            <p></p>
+                                </div>
                             </li>
                         {{-- @endisset --}}
                     @endforeach

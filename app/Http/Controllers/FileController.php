@@ -44,9 +44,16 @@ class FileController extends Controller
      */
     public function index()
     {
-       
-        $masterTools = explode(',',Auth::user()->master_tools);
-        $slaveTools = explode(',',Auth::user()->slave_tools);
+
+        $masterTools = [];
+        $slaveTools = [];
+
+        if(Auth::user()->master_tools && Auth::user()->master_tools !== ''){
+            $masterTools = explode(',',Auth::user()->master_tools);
+        }
+        if(Auth::user()->slave_tools && Auth::user()->master_tools !== ''){
+            $slaveTools = explode(',',Auth::user()->slave_tools);
+        }
         
         $brandsObjects = Vehicle::select('make')->distinct()->get();
 
@@ -360,10 +367,10 @@ class FileController extends Controller
         //     $createdTimes []= $t['created_at'];
         // } 
     
-        foreach($file->engineer_file_notes->toArray() as $a) {
-            $unsortedTimelineObjects []= $a;
-            $createdTimes []= $a['created_at'];
-        }
+        // foreach($file->engineer_file_notes->toArray() as $a) {
+        //     $unsortedTimelineObjects []= $a;
+        //     $createdTimes []= $a['created_at'];
+        // }
         
         foreach($newRequestFiles as $c) {
             $newArray = $c->engineer_file_notes->toArray();
