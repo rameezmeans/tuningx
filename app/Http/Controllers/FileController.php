@@ -335,7 +335,7 @@ class FileController extends Controller
         $masterTools = explode(',',  Auth::user()->master_tools );
         $slaveTools = explode(',',  Auth::user()->slave_tools );
 
-        // dd($file->own_files);'
+        // dd($file->own_files);
 
         // $withoutTypeArray = $file->files->toArray();
 
