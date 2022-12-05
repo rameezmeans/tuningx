@@ -334,34 +334,36 @@ class FileController extends Controller
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
         $slaveTools = explode(',',  Auth::user()->slave_tools );
-        $withoutTypeArray = $file->files->toArray();
 
-        $unsortedTimelineObjects = [];
-        $createdTimes = [];
+        // dd($file->own_files);'
 
-        foreach($withoutTypeArray as $r) {
-            $fileReq = RequestFile::findOrFail($r['id']);
-                if($fileReq->file_feedback){
-                    $r['type'] = $fileReq->file_feedback->type;
-                }
-            $unsortedTimelineObjects []= $r;
-            $createdTimes []= $r['created_at'];
-        } 
+        // $withoutTypeArray = $file->files->toArray();
 
-        $newRequestFiles = File::where('original_file_id', $id)->get();
+        // $unsortedTimelineObjects = [];
+        // $createdTimes = [];
 
-        foreach($newRequestFiles as $c) {
-            $newArray = $c->files->toArray();
-            // dd($newArray);
-            foreach($newArray as $r) {
-                $fileReq = RequestFile::findOrFail($r['id']);
-                    if($fileReq->file_feedback){
-                        $r['type'] = $fileReq->file_feedback->type;
-                    }
-                $unsortedTimelineObjects []= $r;
-                $createdTimes []= $r['created_at'];
-            } 
-        }   
+        // foreach($withoutTypeArray as $r) {
+        //     $fileReq = RequestFile::findOrFail($r['id']);
+        //         if($fileReq->file_feedback){
+        //             $r['type'] = $fileReq->file_feedback->type;
+        //         }
+        //     $unsortedTimelineObjects []= $r;
+        //     $createdTimes []= $r['created_at'];
+        // } 
+
+        // $newRequestFiles = File::where('original_file_id', $id)->get();
+
+        // foreach($newRequestFiles as $c) {
+        //     $newArray = $c->files->toArray();
+        //     foreach($newArray as $r) {
+        //         $fileReq = RequestFile::findOrFail($r['id']);
+        //             if($fileReq->file_feedback){
+        //                 $r['type'] = $fileReq->file_feedback->type;
+        //             }
+        //         $unsortedTimelineObjects []= $r;
+        //         $createdTimes []= $r['created_at'];
+        //     } 
+        // }   
 
         // foreach($file->files->toArray() as $t) {
         //     $createdTimes []= $t['created_at'];
@@ -372,35 +374,35 @@ class FileController extends Controller
         //     $createdTimes []= $a['created_at'];
         // }
         
-        foreach($newRequestFiles as $c) {
-            $newArray = $c->engineer_file_notes->toArray();
-            // dd($newArray);
-            foreach($newArray as $r) {
-                $fileReq = EngineerFileNote::findOrFail($r['id']);
-                $unsortedTimelineObjects []= $r;
-                $createdTimes []= $r['created_at'];
-            } 
-        }  
+        // foreach($newRequestFiles as $c) {
+        //     $newArray = $c->engineer_file_notes->toArray();
+        //     // dd($newArray);
+        //     foreach($newArray as $r) {
+        //         $fileReq = EngineerFileNote::findOrFail($r['id']);
+        //         $unsortedTimelineObjects []= $r;
+        //         $createdTimes []= $r['created_at'];
+        //     } 
+        // }  
 
-        foreach($file->file_internel_events->toArray() as $b) {
-            $unsortedTimelineObjects []= $b;
-            $createdTimes []= $b['created_at'];
-        } 
+        // foreach($file->file_internel_events->toArray() as $b) {
+        //     $unsortedTimelineObjects []= $b;
+        //     $createdTimes []= $b['created_at'];
+        // } 
 
-        foreach($newRequestFiles->toArray() as $c) {
-            $unsortedTimelineObjects []= $c;
-            $createdTimes []= $c['created_at'];
-        } 
+        // foreach($newRequestFiles->toArray() as $c) {
+        //     $unsortedTimelineObjects []= $c;
+        //     $createdTimes []= $c['created_at'];
+        // } 
 
-        foreach($file->file_urls->toArray() as $b) {
-            $unsortedTimelineObjects []= $b;
-            $createdTimes []= $b['created_at'];
-        } 
+        // foreach($file->file_urls->toArray() as $b) {
+        //     $unsortedTimelineObjects []= $b;
+        //     $createdTimes []= $b['created_at'];
+        // } 
 
-        array_multisort($createdTimes, SORT_DESC, $unsortedTimelineObjects);
+        // array_multisort($createdTimes, SORT_DESC, $unsortedTimelineObjects);
         // dd($unsortedTimelineObjects);
         
-        return view('files.show_file', [ 'attachedFiles' => $unsortedTimelineObjects,'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools, 'vehicle' => $vehicle ]);
+        return view('files.show_file', [ 'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools, 'vehicle' => $vehicle ]);
     }
 
     /**

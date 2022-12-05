@@ -21,6 +21,10 @@ class File extends Model
         return $this->hasMany(RequestFile::class); 
     }
 
+    public function own_files(){
+        return $this->hasMany(File::class, 'original_file_id', 'id'); 
+    }
+
     public function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class); 
     }

@@ -942,19 +942,742 @@
                             </div>
                         </div>
                     </li>
-                    @foreach($attachedFiles as $f)
-                        {{-- @isset($f['request_file']) --}}
+                    @foreach($file->engineer_file_notes as $engineersMessage)
+                        <li class="timeline-event">
+                            <div class="timeline-icon-subevent">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="timeline-content-subevent">
+                                <span class="push-bit">
+                                                @if($engineersMessage->engineer)
+                                                    Message received
+                                                @else
+                                                    Message sent
+                                                @endif
+                                            </span>
+                                        <div class="row m-b-none">
+                                    <div class="col s6">
+                                        <small class="timeline-time-small">{{ \Carbon\Carbon::parse($engineersMessage->created_at)->format('H:i:s d/m/Y') }}</small>
+                                    </div>
+                                    <div class="col s6 right-align">
+                                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                                            <p class="push-bit">
+                                    
+                                </p><p class="push-bit">{{$engineersMessage->egnineers_internal_notes}}</p>
+                                            <p class="push-bit"> </p>
+                                        <p></p>
+                                @if($engineersMessage->engineers_attachement)
+                                    <div class="divider"></div>
+                                    <span class="red-olsx-text">Filename: </span>{{$engineersMessage->engineers_attachement}}
+                                @endif
+                            </div>
+                        </li>
+                    @endforeach
+                    @foreach($file->file_urls as $row)
+                        <li class="timeline-event">
+                            <div class="timeline-icon-subevent">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="timeline-content-subevent">
+                                <span class="push-bit">            
+                                    Message sent
+                                </span>
+                                        <div class="row m-b-none">
+                                    <div class="col s6">
+                                        <small class="timeline-time-small">{{ \Carbon\Carbon::parse($row->created_at)->format('H:i:s d/m/Y') }}</small>
+                                    </div>
+                                    <div class="col s6 right-align">
+                                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <p class="push-bit"></p>
+                                <p class="push-bit">{{$row->file_url}}</p>
+                                 <p class="push-bit"> </p>
+                                <p></p>
+                                @if($row->file_url_attachment)
+                                    <div class="divider"></div>
+                                    <span class="red-olsx-text">Filename: </span>{{$row->file_url_attachment}}
+                                @endif
+                            </div>
+                        </li>
+                    @endforeach
+
+                    @foreach($file->file_internel_events as $row)
+                        <li class="timeline-event">
+                            <div class="timeline-icon-subevent">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="timeline-content-subevent">
+                                <span class="push-bit">            
+                                    Message sent
+                                </span>
+                                        <div class="row m-b-none">
+                                    <div class="col s6">
+                                        <small class="timeline-time-small">{{ \Carbon\Carbon::parse($row->created_at)->format('H:i:s d/m/Y') }}</small>
+                                    </div>
+                                    <div class="col s6 right-align">
+                                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <p class="push-bit"></p>
+                                <p class="push-bit">{{$row->events_internal_notes}}</p>
+                                 <p class="push-bit"> </p>
+                                <p></p>
+                                @if($row->events_attachement)
+                                    <div class="divider"></div>
+                                    <span class="red-olsx-text">Filename: </span>{{$row->events_attachement}}
+                                @endif
+                            </div>
+                        </li>
+                    @endforeach
+
+                    @foreach($file->files as $row)
+                        <li class="timeline-event" id="">
+                            <div class="timeline-icon @if($row->engineer == 1) light-green @else alert-blue @endif ">
+                                <i class="fa @if($row->engineer == 1) fa-download @else fa-upload @endif"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span class="push-bit">
+                                    File Sent
+                                </span>
+                                
+                                <div class="divider"></div>
+                                    <span>
+                                <small class="timeline-time-small">{{\Carbon\Carbon::parse($row->created_at)->format('H:i:s d/m/Y')}}</small>
+                                <div class="divider"></div>
+                                <span>
+                                @if($row->engineer == 1)
+                                    
+                                        <span class="red-olsx-text">Filename :</span> 
+
+                                        {{ $row->request_file }}
+
+                                        <ul class="actions-list">
+                                            <li>
+                                                <a href="{{route('download', $row->request_file)}}" class="btn"><i class="fa fa-download"></i></a>
+                                            </li>          
+                                        </ul>
+                                    </span>
+                                    <div class="divider">
+                                    </div>
+                                @endif
+                             {{-- <div class="divider"></div>
+                                    <span> --}}
+
+                                <p class="push-bit m-t-em">
+                                    The file has been sent to engineers with the following request :
+                                </p>
+
+                                @if($file->stages)
+                                    <div class="chip-stage">
+                                        <img src="{{ get_logo_for_stages_and_options($file->stages) }}" alt="{{$file->stages}}">
+                                    {{ $file->stages }}
+                                    </div> 
+                                    
+                                @endif
+                                @if($file->options) 
+                                        <div class="divider">
+                                        </div>
+                                    @foreach($file->options() as $option)
+                                        <div class="chip-stage">
+                                            <img src="{{ get_logo_for_stages_and_options($option) }}" alt="">
+                                        {{ $option }}
+                                        </div>
+                                    @endforeach
+                                @endif
+                                
+                                <div class="divider">
+                                </div>
+                                                                {{-- <div class="chip-stage">
+                                        <img src="https://backend.ecutech.gr/icons/stage1_plus.svg" alt="Stage 1+">
+                                    Stage 1+
+                                    </div>  --}}
+                                                            
+                                
+                                
+                                <div class="push-bit">
+                                    <span class="red-olsx-text">Reading tool : </span>
+                                    <span class="chip-stage">
+                                        <img src="{{ get_dropdown_image($file->tool) }}" class="tool-logo-small">{{  strtoupper($file->tool_type) }}</span>
+                                    </span>
+
+                                    <div class="divider">
+                                    </div>
+                                    
+                                    <p></p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Brand Group: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="feedback-logo">
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Brand: </span>{{ $file->brand }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Model: </span>{{ $file->model }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Version:</span> {{ $file->version }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Engine:</span> {{ $file->engine }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">ECU:</span> {{ $file->ecu }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
+                                    </p>
+                                    
+                                        @if($row->engineer == 1)
+                                                   
+                                                <div class="divider">
+                                                </div>
+
+
+                                                <div class="tab" style="height: 70px;">
+                                                    <button class="tablinks-smaller defaulti tablinks{{$row->id}}" onclick="openCity1(event, 'London1', {{$row->id}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>Results</button>
+                                                    <button class="tablinks-smaller tablinks{{$row->id}}" onclick="openCity1(event, 'Paris1', {{$row->id}})"><i class="fa fa-file" style="margin-right:10px;"></i>Logs</button>
+                                                </div>
+                                                
+                                                <!-- Tab content -->
+                                                <div id="London1{{$row->id}}" class="tabcontent{{$row->id}}" style=" margin: 30px 0px;">
+                                                    <ul class="feedback">
+                                                        <li class="angry @if( isset($row->file_feedback->type) && $row->file_feedback->type == 'angry' ) active @endif" data-type="angry" data-file_id="{{$file->id}}" data-request_file_id="{{$row->id}}">
+                                                            <div>
+                                                                <svg class="eye left">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="eye right">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="mouth">
+                                                                    <use xlink:href="#mouth">
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                        <li class="sad @if( isset($row->file_feedback->type) && $row->file_feedback->type == 'sad' ) active @endif" data-type="sad" data-file_id="{{$file->id}}" data-request_file_id="{{$row->id}}">
+                                                            <div>
+                                                                <svg class="eye left">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="eye right">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="mouth">
+                                                                    <use xlink:href="#mouth">
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                        <li class="ok @if( isset($row->file_feedback->type) && $row->file_feedback->type == 'ok' ) active @endif" data-type="ok" data-file_id="{{$file->id}}" data-request_file_id="{{$row->id}}">
+                                                            <div></div>
+                                                        </li>
+                                                        <li class="good @if( isset($row->file_feedback->type) && $row->file_feedback->type == 'good' ) active @endif @if( !isset($row->file_feedback->type) ) active @endif" data-type="good" data-file_id="{{$file->id}}" data-request_file_id="{{$row->id}}">
+                                                            <div>
+                                                                <svg class="eye left">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="eye right">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="mouth">
+                                                                    <use xlink:href="#mouth">
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                        <li class="happy @if( isset($row->file_feedback->type) && $row->file_feedback->type == 'happy' ) active @endif" data-type="happy" data-file_id="{{$file->id}}" data-request_file_id="{{$row->id}}">
+                                                            <div>
+                                                                <svg class="eye left">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                                <svg class="eye right">
+                                                                    <use xlink:href="#eye">
+                                                                </svg>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                            
+                                                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                                        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
+                                                            <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+                                                        </symbol>
+                                                        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
+                                                            <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+                                                        </symbol>
+                                                    </svg>
+                                                    
+                                                </div>
+                                                
+                                                <div id="Paris1{{$row->id}}" class="tabcontent{{$row->id}}" style=" margin: 30px 0px;">
+                                                    <form method="POST" action="{{ route('file-url') }}" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                                                        <div class="tab-content">
+                                                        <p style="font-size: 16px;">Upload and watch the datalogs</p>
+                                                        <div class="row mt-5">
+                                                            <div class="input-field col s12">
+                                                                <textarea id="file_url" name="file_url" class="materialize-textarea" placeholder="URL"></textarea>
+                                                                <div class="file-field input-field col s12">
+                                                                    <div class="btn">
+                                                                        <span><i class="fa fa-paperclip"></i></span>
+                                                                        <input type="file" name="file_url_attachment" id="file_url_attachment">
+                                                                    </div>
+                                                                    <div class="file-path-wrapper">
+                                                                        <input class="file-path validate" name="file_url_attachment_field"  id="file_url_attachment_field" type="text" placeholder="File">
+                                                                    </div>
+                                                                    @error('file_url_attachment')
+                                                                        <p class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </p>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="tab-footer text-center">
+                                                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Add To The Timeline</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                @endif
+                                    
+                                    
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                    
+                    @foreach($file->own_files as $row)
+                        <li class="timeline-event" id="">
+                            <div class="timeline-icon alert-blue">
+                                <i class="fa fa-upload"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <span class="push-bit">
+                                    File Sent
+                                </span>
+                               
+                                    <ul class="actions-list">
+                                        <li>
+                                            <span class="label-credit credit-history ">
+                                                - {{$row->credits}} Credits
+                                            </span>
+                                        </li>          
+                                    </ul>
+                                
+                                <div class="divider"></div>
+                                    <span>
+                                <small class="timeline-time-small">{{\Carbon\Carbon::parse($row->created_at)->format('H:i:s d/m/Y')}}</small>
+                                <div class="divider"></div>
+                                <span>
+                                
+                             {{-- <div class="divider"></div>
+                                    <span> --}}
+
+                                <p class="push-bit m-t-em">
+                                    The file has been sent to engineers with the following request :
+                                </p>
+
+                                @if($row->stages)
+                                    <div class="chip-stage">
+                                        <img src="{{ get_logo_for_stages_and_options($row->stages) }}" alt="{{$row->stages}}">
+                                    {{ $row->stages }}
+                                </div> 
+                                @endif
+
+                                @if($row->options) 
+                                        <div class="divider">
+                                        </div>
+                                    @foreach($row->options() as $option)
+                                        <div class="chip-stage">
+                                            <img src="{{ get_logo_for_stages_and_options($option) }}" alt="">
+                                        {{ $option }}
+                                        </div>
+                                    @endforeach
+                                @endif
+                                
+                                <div class="divider">
+                                </div>
+
+                                <div class="push-bit">
+                                    <span class="red-olsx-text">Reading tool : </span>
+                                    <span class="chip-stage">
+                                        <img src="{{ get_dropdown_image($row->tool) }}" class="tool-logo-small">{{  strtoupper($row->tool_type) }}</span>
+                                    </span>
+
+                                    <div class="divider">
+                                    </div>
+                                    
+                                    <p></p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Brand Group: </span> <img src="{{ $row->vehicle()->Brand_image_URL }}" alt="{{$row->brand}}" class="feedback-logo">
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Brand: </span>{{ $row->brand }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Model: </span>{{ $row->model }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Version:</span> {{ $row->version }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Engine:</span> {{ $row->engine }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">ECU:</span> {{ $row->ecu }}
+                                    </p>
+                                    <p class="push-bit">
+                                        <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$row->gear_box)) }}
+                                    </p>
+
+                                    <div class="divider">
+                                    </div>
+
+                                    <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="file_id" value="{{$row->id}}">
+                                        <div class="tab-content">
+                                        <label style="font-size: 16px;">Ask for engineer's support</label>
+                                        <div class="row mt-5">
+                                            <div class="input-field col s12">
+                                                <textarea id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="Internal note for Engineers."></textarea>
+                                                
+                                                <div class="file-field input-field col s12">
+                                                    <div class="btn">
+                                                        <span><i class="fa fa-paperclip"></i></span>
+                                                        <input type="file" name="engineers_attachement" class="" id="engineers_attachement">
+                                                    </div>
+                                                    <div class="file-path-wrapper">
+                                                        <input class="file-path validate" name="engineers_attachement_field" id="engineers_attachement_field" type="text" placeholder="File">
+                                                    </div>
+                                                    @error('engineers_attachement')
+                                                        <p class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </p>
+                                                    @enderror
+                                                </div>
+                                                
+                                                {{-- <div class="select-wrapper form-control">
+                                                    <input type="file" name="engineers_attachement" id="engineer_attachement">
+                                                </div>
+                                                @error('engineers_attachement')
+                                                    <p class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </p>
+                                                @enderror --}}
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="tab-footer text-center">
+                                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Send</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </li>
+
+                        
+                        
+                        @foreach($row->engineer_file_notes as $engineersMessage)
+                            <li class="timeline-event">
+                                <div class="timeline-icon-subevent">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <div class="timeline-content-subevent">
+                                    <span class="push-bit">
+                                                    @if($engineersMessage->engineer)
+                                                        Message received
+                                                    @else
+                                                        Message sent
+                                                    @endif
+                                                </span>
+                                            <div class="row m-b-none">
+                                        <div class="col s6">
+                                            <small class="timeline-time-small">{{ \Carbon\Carbon::parse($engineersMessage->created_at)->format('H:i:s d/m/Y') }}</small>
+                                        </div>
+                                        <div class="col s6 right-align">
+                                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                                                <p class="push-bit">
+                                        
+                                    </p><p class="push-bit">{{$engineersMessage->egnineers_internal_notes}}</p>
+                                                <p class="push-bit"> </p>
+                                            <p></p>
+                                    @if($engineersMessage->engineers_attachement)
+                                        <div class="divider"></div>
+                                        <span class="red-olsx-text">Filename: </span>{{$engineersMessage->engineers_attachement}}
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+
+                        @foreach($row->file_urls as $r)
+                            <li class="timeline-event">
+                                <div class="timeline-icon-subevent">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <div class="timeline-content-subevent">
+                                    <span class="push-bit">            
+                                        Message sent
+                                    </span>
+                                            <div class="row m-b-none">
+                                        <div class="col s6">
+                                            <small class="timeline-time-small">{{ \Carbon\Carbon::parse($r->created_at)->format('H:i:s d/m/Y') }}</small>
+                                        </div>
+                                        <div class="col s6 right-align">
+                                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <p class="push-bit"></p>
+                                    <p class="push-bit">{{$r->file_url}}</p>
+                                    <p class="push-bit"> </p>
+                                    <p></p>
+                                    @if($r->file_url_attachment)
+                                        <div class="divider"></div>
+                                        <span class="red-olsx-text">Filename: </span>{{$r->file_url_attachment}}
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+                        
+                        @foreach($row->files as $internal)
                             <li class="timeline-event" id="">
+                                <div class="timeline-icon @if($internal->engineer == 1) light-green @else alert-blue @endif ">
+                                    <i class="fa @if($internal->engineer == 1) fa-download @else fa-upload @endif"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <span class="push-bit">
+                                        File Sent
+                                    </span>
+                                    
+                                    <div class="divider"></div>
+                                        <span>
+                                    <small class="timeline-time-small">{{\Carbon\Carbon::parse($internal->created_at)->format('H:i:s d/m/Y')}}</small>
+                                    <div class="divider"></div>
+                                    <span>
+                                    @if($internal->engineer == 1)
+                                        
+                                            <span class="red-olsx-text">Filename :</span> 
+
+                                            {{ $internal->request_file }}
+
+                                            <ul class="actions-list">
+                                                <li>
+                                                    <a href="{{route('download', $internal->request_file)}}" class="btn"><i class="fa fa-download"></i></a>
+                                                </li>          
+                                            </ul>
+                                        </span>
+                                        <div class="divider">
+                                        </div>
+                                    @endif
+                                {{-- <div class="divider"></div>
+                                        <span> --}}
+
+                                    <p class="push-bit m-t-em">
+                                        The file has been sent to engineers with the following request :
+                                    </p>
+
+                                    {{-- @php 
+                                        dd($internal);
+                                    @endphp --}}
+
+                                    @if($row->stages)
+
+                                        
+                                        <div class="chip-stage">
+                                            <img src="{{ get_logo_for_stages_and_options($row->stages) }}" alt="{{$internal->stages}}">
+                                        {{ $row->stages }}
+                                        </div> 
+                                        
+                                    @endif
+                                    @if($row->options) 
+                                            <div class="divider">
+                                            </div>
+                                        @foreach($row->options() as $option)
+                                            <div class="chip-stage">
+                                                <img src="{{ get_logo_for_stages_and_options($option) }}" alt="">
+                                            {{ $option }}
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                    
+                                    <div class="divider">
+                                    </div>
+                                                                    {{-- <div class="chip-stage">
+                                            <img src="https://backend.ecutech.gr/icons/stage1_plus.svg" alt="Stage 1+">
+                                        Stage 1+
+                                        </div>  --}}
+                                                                
+                                    
+                                    
+                                    <div class="push-bit">
+                                        <span class="red-olsx-text">Reading tool : </span>
+                                        <span class="chip-stage">
+                                            <img src="{{ get_dropdown_image($row->tool) }}" class="tool-logo-small">{{  strtoupper($row->tool_type) }}</span>
+                                        </span>
+
+                                        <div class="divider">
+                                        </div>
+                                        
+                                        <p></p>
+                                        <p class="push-bit">
+                                            <span class="red-olsx-text">Brand Group: </span> <img src="{{ $row->vehicle()->Brand_image_URL }}" alt="{{$row->brand}}" class="feedback-logo">
+                                        </p>
+                                        <p class="push-bit">
+                                            <span class="red-olsx-text">Brand: </span>{{ $row->brand }}
+                                        </p>
+                                        <p class="push-bit">
+                                            <span class="red-olsx-text">Model: </span>{{ $row->model }}
+                                        </p>
+                                        <p class="push-bit">
+                                            <span class="red-olsx-text">Version:</span> {{ $row->version }}
+                                        </p>
+                                        <p class="push-bit">
+                                            <span class="red-olsx-text">Engine:</span> {{ $row->engine }}
+                                        </p>
+                                        <p class="push-bit">
+                                            <span class="red-olsx-text">ECU:</span> {{ $row->ecu }}
+                                        </p>
+                                        <p class="push-bit">
+                                            <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$row->gear_box)) }}
+                                        </p>
+                                        
+                                            @if($internal->engineer == 1)
+                                                    
+                                                    <div class="divider">
+                                                    </div>
+
+
+                                                    <div class="tab" style="height: 70px;">
+                                                        <button class="tablinks-smaller defaulti tablinks{{$internal->id}}" onclick="openCity1(event, 'London1', {{$internal->id}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>Results</button>
+                                                        <button class="tablinks-smaller tablinks{{$internal->id}}" onclick="openCity1(event, 'Paris1', {{$internal->id}})"><i class="fa fa-file" style="margin-right:10px;"></i>Logs</button>
+                                                    </div>
+                                                    
+                                                    <!-- Tab content -->
+                                                    <div id="London1{{$internal->id}}" class="tabcontent{{$internal->id}}" style=" margin: 30px 0px;">
+                                                        <ul class="feedback">
+                                                            <li class="angry @if( isset($internal->file_feedback->type) && $internal->file_feedback->type == 'angry' ) active @endif" data-type="angry" data-file_id="{{$row->id}}" data-request_file_id="{{$internal->id}}">
+                                                                <div>
+                                                                    <svg class="eye left">
+                                                                        <use xlink:href="#eye">
+                                                                    </svg>
+                                                                    <svg class="eye right">
+                                                                        <use xlink:href="#eye">
+                                                                    </svg>
+                                                                    <svg class="mouth">
+                                                                        <use xlink:href="#mouth">
+                                                                    </svg>
+                                                                </div>
+                                                            </li>
+                                                            <li class="sad @if( isset($internal->file_feedback->type) && $internal->file_feedback->type == 'sad' ) active @endif" data-type="sad" data-file_id="{{$row->id}}" data-request_file_id="{{$internal->id}}">
+                                                                <div>
+                                                                    <svg class="eye left">
+                                                                        <use xlink:href="#eye">
+                                                                    </svg>
+                                                                    <svg class="eye right">
+                                                                        <use xlink:href="#eye">
+                                                                    </svg>
+                                                                    <svg class="mouth">
+                                                                        <use xlink:href="#mouth">
+                                                                    </svg>
+                                                                </div>
+                                                            </li>
+                                                            <li class="ok @if( isset($internal->file_feedback->type) && $internal->file_feedback->type == 'ok' ) active @endif" data-type="ok" data-file_id="{{$row->id}}" data-request_file_id="{{$internal->id}}">
+                                                                <div></div>
+                                                            </li>
+                                                            <li class="good @if( isset($internal->file_feedback->type) && $internal->file_feedback->type == 'good' ) active @endif @if( !isset($internal->file_feedback->type) ) active @endif" data-type="good" data-file_id="{{$file->id}}" data-request_file_id="{{$internal->id}}">
+                                                                <div>
+                                                                    <svg class="eye left">
+                                                                        <use xlink:href="#eye">
+                                                                    </svg>
+                                                                    <svg class="eye right">
+                                                                        <use xlink:href="#eye">
+                                                                    </svg>
+                                                                    <svg class="mouth">
+                                                                        <use xlink:href="#mouth">
+                                                                    </svg>
+                                                                </div>
+                                                            </li>
+                                                            <li class="happy @if( isset($internal->file_feedback->type) && $internal->file_feedback->type == 'happy' ) active @endif" data-type="happy" data-file_id="{{$row->id}}" data-request_file_id="{{$internal->id}}">
+                                                                <div>
+                                                                    <svg class="eye left">
+                                                                        <use xlink:href="#eye">
+                                                                    </svg>
+                                                                    <svg class="eye right">
+                                                                        <use xlink:href="#eye">
+                                                                    </svg>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                                
+                                                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                                            <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
+                                                                <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+                                                            </symbol>
+                                                            <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
+                                                                <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+                                                            </symbol>
+                                                        </svg>
+                                                        
+                                                    </div>
+                                                    
+                                                    <div id="Paris1{{$internal->id}}" class="tabcontent{{$internal->id}}" style=" margin: 30px 0px;">
+                                                        <form method="POST" action="{{ route('file-url') }}" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <input type="hidden" name="file_id" value="{{$row->id}}">
+                                                            <div class="tab-content">
+                                                            <p style="font-size: 16px;">Upload and watch the datalogs</p>
+                                                            <div class="row mt-5">
+                                                                <div class="input-field col s12">
+                                                                    <textarea id="file_url" name="file_url" class="materialize-textarea" placeholder="URL"></textarea>
+                                                                    <div class="file-field input-field col s12">
+                                                                        <div class="btn">
+                                                                            <span><i class="fa fa-paperclip"></i></span>
+                                                                            <input type="file" name="file_url_attachment" id="file_url_attachment">
+                                                                        </div>
+                                                                        <div class="file-path-wrapper">
+                                                                            <input class="file-path validate" name="file_url_attachment_field"  id="file_url_attachment_field" type="text" placeholder="File">
+                                                                        </div>
+                                                                        @error('file_url_attachment')
+                                                                            <p class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </p>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="tab-footer text-center">
+                                                                <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Add To The Timeline</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                            @endif
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+
+                    @endforeach
+                    
+                    {{-- @foreach($attachedFiles as $f) --}}
+                        {{-- @isset($f['request_file']) --}}
+                            {{-- <li class="timeline-event" id="">
                                 @isset($f['request_file'])
                                     <div class="timeline-icon  @if($f['engineer'] == 1) light-green @else alert-blue @endif">
                                         <i class="fa fa-download"></i>
                                     </div>
                                 @endisset
-                                {{-- @isset($f['egnineers_internal_notes'])
+                                @isset($f['egnineers_internal_notes'])
                                     <div class="timeline-icon @if($f['engineer'] == 1) light-green @else alert-blue @endif">
                                         <i class="fa fa-user"></i>
                                     </div>
-                                @endisset --}}
+                                @endisset
                                 @isset($f['events_internal_notes'])
                                     <div class="timeline-icon alert-blue">
                                         <i class="fa fa-user"></i>
@@ -982,13 +1705,13 @@
                                                 File Recieved
                                             @endif
                                         @endisset
-                                        {{-- @isset($f['egnineers_internal_notes'])
+                                        @isset($f['egnineers_internal_notes'])
                                             @if($f['engineer'] == 0)
                                                 Message Sent
                                             @else
                                                 Message Received
                                             @endif
-                                        @endisset --}}
+                                        @endisset
 
                                         @isset($f['events_internal_notes'])
                                             Messge Sent
@@ -1039,7 +1762,7 @@
                                                 </ul>
                                             @endisset
                                                 
-                                            {{-- @isset($f['egnineers_internal_notes'])
+                                            @isset($f['egnineers_internal_notes'])
                                                 {{ $f['egnineers_internal_notes'] }} 
                                                 @php
                                                     $attachement = App\Models\EngineerFileNote::where('egnineers_internal_notes', $f['egnineers_internal_notes'])->first()->engineers_attachement;
@@ -1050,7 +1773,7 @@
                                                     <span class="red-olsx-text">Filename :</span>
                                                     {{$attachement}}
                                                 @endif
-                                            @endisset --}}
+                                            @endisset
 
                                             @isset($f['events_internal_notes'])
                                                 {{ $f['events_internal_notes'] }}
@@ -1206,7 +1929,7 @@
 
                                                         
                                                     @if($f['engineer'] == 1)
-                                                    {{-- @php echo "f_type:".$f['type']; @endphp --}}
+                                                    @php echo "f_type:".$f['type']; @endphp
                                                         <div class="divider">
                                                         </div>
 
@@ -1315,41 +2038,21 @@
                                                         </div>
                                                     </form>
                                                 </div>
+
                                                 @endif
+                                                
                                               @endisset
                                 </div>
-                                {{-- @isset($f['egnineers_internal_notes'])
+                                @isset($f['egnineers_internal_notes'])
                                     egnineers_internal_notes
                                 @endisset
                                 @isset($f['events_internal_notes'])
                                     events_internal_notes
-                                @endisset --}}
-                            </li>
-                            <li class="timeline-event">
-                                <div class="timeline-icon-subevent">
-                                    <img src="/assets/img/default.png" alt="" class="timeline-avatar">
-                                </div>
-                                <div class="timeline-content-subevent">
-                                    <span class="push-bit">
-                                                        Message received
-                                                </span>
-                                            <div class="row m-b-none">
-                                        <div class="col s6">
-                                            <small class="timeline-time-small">2022-08-30 15:42:04</small>
-                                        </div>
-                                        <div class="col s6 right-align">
-                                                        </div>
-                                    </div>
-                                    <div class="divider"></div>
-                                                                <p class="push-bit">
-                                        
-                                    </p><p class="push-bit"> Sorry, I made a mistake, I would like to say "disconnect EGT" sensors  (but you can keep the EGR disconnected)</p>
-                                                <p class="push-bit"> </p>
-                                            <p></p>
-                                </div>
-                            </li>
+                                @endisset
+                            </li> --}}
+                            
                         {{-- @endisset --}}
-                    @endforeach
+                    {{-- @endforeach --}}
                 </ul>
             </div>
             </div>
