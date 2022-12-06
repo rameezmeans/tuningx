@@ -9,6 +9,14 @@
     font-size: 1.5em;
 }
 
+.bullets{
+  list-style-type: circle !important;
+}
+
+.modal{
+    top:20% !important;
+}
+
 #ecu_file_select + ul + span{
     display: none;
 }
@@ -552,6 +560,10 @@
   max-width: 250px;
 }
 
+.information {
+    display: none;
+}
+
 </style>
 
 @endsection
@@ -560,6 +572,7 @@
 @section('content')
 
 <main>
+    
     <div class="header-id-overlay hide-on-med-and-down"></div>
     <section>
         <div class="parallax-container hide-on-med-and-down">
@@ -607,6 +620,27 @@
             </div>
         </div>
     </section>
+    <div id="commentsPopup" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <img class="modal-loading" src="https://i.gifer.com/VAyR.gif" width="10%;">
+                </div>
+                <div> 
+                    <h3 class="modal-information">Important Information</h3>
+                    <div class="modal-comments">Please click on Confirm button to download the file.</div>
+                </div>
+              
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-white close-modal">Close</button>
+                <a href="#" class="btn btn-green download-path-original modal-confirm" style="margin-right: 10px;">Confirm</a>
+            </div>
+          </div>
+        </div>
+      </div>
     <div id="content">
         <div class="row header-vehicle-id z-depth-1">
             <div class="container">
@@ -1056,7 +1090,21 @@
 
                                         <ul class="actions-list">
                                             <li>
-                                                <a href="{{route('download', $row->request_file)}}" class="btn"><i class="fa fa-download"></i></a>
+                                                <button class="btn btn-download" 
+                                                data-make="{{$file->brand}}"
+                                                data-engine="{{$file->engine}}"
+                                                data-ecu="{{$file->ecu}}"
+                                                data-model="{{$file->model}}"
+                                                data-generation="{{$file->version}}"
+                                                data-options="{{$file->options}}"
+                                                data-path="{{route('download', $row->request_file)}}"
+
+                                                >
+                                                    <i class="fa fa-download"></i>
+                                                </button>
+                                                {{-- <a href="{{route('download', $row->request_file)}}" class="btn">
+                                                    <i class="fa fa-download"></i>
+                                                </a> --}}
                                             </li>          
                                         </ul>
                                     </span>
@@ -1450,7 +1498,7 @@
                                 </div>
                                 <div class="timeline-content">
                                     <span class="push-bit">
-                                        File Sent
+                                        File Received
                                     </span>
                                     
                                     <div class="divider"></div>
@@ -1466,8 +1514,28 @@
 
                                             <ul class="actions-list">
                                                 <li>
-                                                    <a href="{{route('download', $internal->request_file)}}" class="btn"><i class="fa fa-download"></i></a>
-                                                </li>          
+                                                <button
+
+                                                    data-make="{{$row->brand}}"
+                                                    data-engine="{{$row->engine}}"
+                                                    data-ecu="{{$row->ecu}}"
+                                                    data-model="{{$row->model}}"
+                                                    data-generation="{{$row->version}}"
+                                                    data-options="{{$row->options}}"
+                                                    data-path="{{route('download', $internal->request_file)}}"
+                                                    class="btn btn-download"
+
+                                                ><i class="fa fa-download"></i></button>
+                                                </li>
+                                                {{-- <li>
+                                                    <a data-make="{{$file->make}}"
+                                                        data-engine="{{$file->engine}}"
+                                                        data-ecu="{{$file->ecu}}"
+                                                        data-model="{{$file->model}}"
+                                                        data-generation="{{$file->generation}}"
+                                                        data-make="{{$file->options}}"
+                                                     href="{{route('download', $internal->request_file)}}" class="btn"><i class="fa fa-download"></i></a>
+                                                </li>           --}}
                                             </ul>
                                         </span>
                                         <div class="divider">
@@ -1506,12 +1574,6 @@
                                     
                                     <div class="divider">
                                     </div>
-                                                                    {{-- <div class="chip-stage">
-                                            <img src="https://backend.ecutech.gr/icons/stage1_plus.svg" alt="Stage 1+">
-                                        Stage 1+
-                                        </div>  --}}
-                                                                
-                                    
                                     
                                     <div class="push-bit">
                                         <span class="red-olsx-text">Reading tool : </span>
@@ -2161,7 +2223,11 @@
             </div>
         </div>
     </div>
-    </seciton>
+
+    
+    
+    
+    
 </main>
 @endsection
 
@@ -2323,6 +2389,62 @@ $('select.f-dropdown').mySelectDropdown();
         }
     });
 
+
+    $(document).on('click', '.btn-download', function(){
+            
+        $('#commentsPopup').modal('show');
+        $('.modal-content').css('visibility', 'visible');
+        // $('.download-path-original').attr("href", $(this).data('path'));
+
+        // $('.modal-comments').html('');
+        $('.modal-loading').css("display", "none");
+        $('.modal-confirm').css("display", "block");
+
+        let ecu = $(this).data('ecu');
+        let make = $(this).data('make');
+        let generation = $(this).data('generation');
+        let engine = $(this).data('engine');
+        let options = $(this).data('options');
+        let model = $(this).data('model');
+
+        $('.download-path-original').attr("href", $(this).data('path'));
+
+        $.ajax({
+                url: "/get_comments",
+                type: "POST",
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    'make': make,
+                    'model': model,
+                    'generation': generation,
+                    'ecu': ecu,
+                    'engine': engine,
+                    'options': options
+                },
+                success: function(d) {
+                    console.log(d);
+                    if(d.comments !== ''){
+                        $('.modal-comments').html(d.comments);
+                        $('.modal-loading').css("display", "none");
+                        $('.modal-confirm').css("display", "block");
+                    }
+
+                    else {
+                        $('.modal-loading').css("display", "none");
+                        $('.modal-information').css("display", "none");
+                        $('.modal-comments').css("display", "block");
+                        $('.modal-confirm').css("display", "block");
+                    }
+                    
+                }
+            });
+
+    });
+
+    $(document).on('click', '.close-modal', function(){
+            
+        $('#commentsPopup').modal('hide');
+    });
 
     $(document).on('click', '.feedback li', function(){
 

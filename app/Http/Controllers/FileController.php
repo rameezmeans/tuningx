@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Credit;
 use App\Models\EngineerFileNote;
 use App\Models\File;
@@ -299,15 +300,55 @@ class FileController extends Controller
             // return redirect()->route('file-history',['success', 'File successfully Added!']);
         }
 
-
-
-        
-
-       
-        
         // $requestFile = RequestFile::create($requestFile);
 
         // return redirect()->back()->with('success', 'File successfully Added!');
+    }
+
+    public function getComments(Request $request){
+
+
+        $commentObj = Comment::where('engine', $request->engine);
+
+        if($request->make){
+            $commentObj->where('make',$request->make);
+        }
+
+        if($request->model){
+            $commentObj->where('model', $request->model);
+        }
+
+        if($request->ecu){
+            $commentObj->where('ecu',$request->ecu);
+        }
+
+        if($request->generation){
+            $commentObj->where('generation', $request->generation);
+        }
+
+        $comments = $commentObj->get();
+
+        // dd($comments);
+
+        $optionsArray = explode(',',$request->options);
+
+        $optionComment = '';
+
+        if(!$comments->isEmpty()){
+
+            $optionComment .= '<ul class="bullets">';
+
+            foreach($comments as $comment){
+                if(in_array($comment->option,$optionsArray)){
+                    $optionComment  .= '<li>'.$comment->comments.'</li>';
+                }
+            }
+
+            $optionComment .= '</ul>';
+        }
+
+        return response()->json(['comments'=> $optionComment]);
+
     }
 
     /**
@@ -326,10 +367,15 @@ class FileController extends Controller
             abort(404);
         }
 
-        $vehicle = Vehicle::where('Make', '=', $file->brand)
-        ->where('Model', '=', $file->model)
-        ->where('Generation', '=', $file->version)
+        $vehicle = Vehicle::where('Make', $file->brand)
+        ->where('Model', $file->model)
+        ->where('Generation', $file->version)
+        ->where('Engine', $file->engine)
+        // ->where('Engine_ECU', $file->ecu)
         ->first();
+
+        // dd($file);
+        // dd($vehicle);
 
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );

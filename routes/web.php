@@ -59,6 +59,8 @@ Route::post('/make_payment', [App\Http\Controllers\PaymentController::class, 'ma
 Route::post('/add_to_cart', [App\Http\Controllers\PaymentController::class, 'addToCart'])->name('add-to-cart');
 Route::post('/post_stages', [App\Http\Controllers\FileController::class, 'postStages'])->name('post-stages');
 Route::post('/add_credits_to_file', [App\Http\Controllers\FileController::class, 'addCredits'])->name('add-credits-to-file');
+Route::post('get_comments', [App\Http\Controllers\FileController::class, 'getComments'])->name('get-comments');
+
 
 // Route::get('/cart', [App\Http\Controllers\PaymentController::class, 'getCart'])->name('get-cart');
 Route::get('/clear_cart', [App\Http\Controllers\PaymentController::class, 'clearCart'])->name('clear-cart');
