@@ -318,9 +318,9 @@ class FileController extends Controller
             $commentObj->where('model', $request->model);
         }
 
-        if($request->ecu){
-            $commentObj->where('ecu',$request->ecu);
-        }
+        // if($request->ecu){
+        //     $commentObj->where('ecu',$request->ecu);
+        // }
 
         if($request->generation){
             $commentObj->where('generation', $request->generation);
