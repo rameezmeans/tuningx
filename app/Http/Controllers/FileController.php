@@ -214,7 +214,7 @@ class FileController extends Controller
     {
         $file = File::findOrFail($request->file_id);
         $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
-        // dd($responseStages->body());
+        dd($responseStages->body());
         $stages = json_decode($responseStages->body(), true)['stages'];
         $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
         $options = json_decode($responseOptions->body(), true)['options'];
