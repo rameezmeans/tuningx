@@ -324,12 +324,12 @@
                                             @endif
                                         </td>
                                         <td style="width: 1% !important;">
-                                            @if($credit->credits < 0)
+                                            @if($credit->credits < 0 && $credit->file )
                                                 <img alt="" class="img-circle-car-history" height="30px" src="{{ get_image_from_brand($credit->file->brand) }}">
                                             @endif
                                         </td>
                                         <td style="width: 45% !important;">
-                                            @if($credit->credits < 0)
+                                            @if($credit->credits < 0  && $credit->file)
                                                 {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}
                                             @endif
                                         </td>
