@@ -1220,7 +1220,7 @@
                                                         <li class="ok @if( isset($row->file_feedback->type) && $row->file_feedback->type == 'ok' ) active @endif" data-type="ok" data-file_id="{{$file->id}}" data-request_file_id="{{$row->id}}">
                                                             <div></div>
                                                         </li>
-                                                        <li class="good @if( isset($row->file_feedback->type) && $row->file_feedback->type == 'good' ) active @endif @if( !isset($row->file_feedback->type) ) active @endif" data-type="good" data-file_id="{{$file->id}}" data-request_file_id="{{$row->id}}">
+                                                        <li class="good @if( isset($row->file_feedback->type) && $row->file_feedback->type == 'good' ) active @endif" data-type="good" data-file_id="{{$file->id}}" data-request_file_id="{{$row->id}}">
                                                             <div>
                                                                 <svg class="eye left">
                                                                     <use xlink:href="#eye">
@@ -2445,6 +2445,11 @@ $('select.f-dropdown').mySelectDropdown();
             
         $('#commentsPopup').modal('hide');
     });
+
+    $(document).on('click', '.modal-confirm', function(){
+            
+            $('#commentsPopup').modal('hide');
+        });
 
     $(document).on('click', '.feedback li', function(){
 
