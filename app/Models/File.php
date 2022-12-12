@@ -14,7 +14,7 @@ class File extends Model
     'phone', 'model_year', 'license_plate', 
     'vin_number', 'brand', 'model','version', 
     'tools', 'gear_box', 'ecu', 'engine', 'credits', 'status', 
-    'is_credited', 'stages', 'options', 'user_id','original_file_id', 
+    'is_credited', 'stages', 'options', 'user_id','original_file_id', 'checked_by',
     'request_type'];
 
     public function files(){

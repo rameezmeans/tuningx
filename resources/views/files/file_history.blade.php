@@ -23,7 +23,7 @@
                     <tbody>
                         @foreach($files as $file)
 
-                        <tr class="redirect-click" href="#" data-redirect="{{route('file', $file->id)}}">
+                        <tr class="redirect-click @if($file->checked_by == 'engineer') checked @endif" href="#" data-redirect="{{route('file', $file->id)}}">
                             <td class="clickable-row">
 
                                 <img alt="" class="img-circle-car-history" src="{{ get_image_from_brand($file->brand) }}">

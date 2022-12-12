@@ -9,7 +9,7 @@ class RequestFile extends Model
 {
 
     protected $fillable = [
-        'request_file', 'file_type', 'ecu_file_select', 'gearbox_file_select', 'master_tools', 'file_id', 'tool_type'
+        'request_file', 'file_type', 'ecu_file_select', 'gearbox_file_select', 'master_tools', 'file_id', 'tool_type', 'checked_by'
     ];
     use HasFactory;
 

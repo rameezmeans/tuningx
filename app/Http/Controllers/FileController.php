@@ -112,6 +112,7 @@ class FileController extends Controller
 
         $file['tools'] = "tools value";//this is not required at all -- update it
         $file['credits'] = 0;
+        $file['checked_by'] = 'customer';
 
         $newFile = File::create($file);
 
@@ -275,11 +276,7 @@ class FileController extends Controller
         $requestFile['master_tools'] = $first_str;
         $requestFile['tool_type'] = $second_str;
 
-        // dd($requestFile);
-
         $file = File::findOrFail($requestFile['file_id'])->toArray();
-
-        // dd($file);
 
         $newFile = $file;
         $newFile['credits'] = 0;
@@ -289,9 +286,12 @@ class FileController extends Controller
         $newFile['file_type'] =   $requestFile['file_type'];
         $newFile['tool'] =   $requestFile['master_tools'];
         $newFile['tool_type'] =   $requestFile['tool_type'];
+        $newFile['checked_by'] =  'customer';
         unset($newFile['id']);
-
-        // dd($newFile);
+        
+        $old = File::findOrFail($requestFile['file_id']);
+        $old->checked_by = 'customer';
+        $old->save();
 
         $newFileCreated = File::create($newFile);
 
@@ -505,6 +505,11 @@ class FileController extends Controller
 
         $file->file_id = $request->file_id;
         $file->save();
+        
+        $old = File::findOrFail($request->file_id);
+        $old->checked_by = 'customer';
+        $old->save();
+        
         return redirect()->back()->with('success', 'Engineer note successfully Added!');
     }
 
