@@ -372,83 +372,12 @@ class FileController extends Controller
         ->where('Model', $file->model)
         ->where('Generation', $file->version)
         ->where('Engine', $file->engine)
-        // ->where('Engine_ECU', $file->ecu)
         ->first();
-
-        // dd($file);
-        // dd($vehicle);
 
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
         $slaveTools = explode(',',  Auth::user()->slave_tools );
 
-        // dd($file->own_files);
-
-        // $withoutTypeArray = $file->files->toArray();
-
-        // $unsortedTimelineObjects = [];
-        // $createdTimes = [];
-
-        // foreach($withoutTypeArray as $r) {
-        //     $fileReq = RequestFile::findOrFail($r['id']);
-        //         if($fileReq->file_feedback){
-        //             $r['type'] = $fileReq->file_feedback->type;
-        //         }
-        //     $unsortedTimelineObjects []= $r;
-        //     $createdTimes []= $r['created_at'];
-        // } 
-
-        // $newRequestFiles = File::where('original_file_id', $id)->get();
-
-        // foreach($newRequestFiles as $c) {
-        //     $newArray = $c->files->toArray();
-        //     foreach($newArray as $r) {
-        //         $fileReq = RequestFile::findOrFail($r['id']);
-        //             if($fileReq->file_feedback){
-        //                 $r['type'] = $fileReq->file_feedback->type;
-        //             }
-        //         $unsortedTimelineObjects []= $r;
-        //         $createdTimes []= $r['created_at'];
-        //     } 
-        // }   
-
-        // foreach($file->files->toArray() as $t) {
-        //     $createdTimes []= $t['created_at'];
-        // } 
-    
-        // foreach($file->engineer_file_notes->toArray() as $a) {
-        //     $unsortedTimelineObjects []= $a;
-        //     $createdTimes []= $a['created_at'];
-        // }
-        
-        // foreach($newRequestFiles as $c) {
-        //     $newArray = $c->engineer_file_notes->toArray();
-        //     // dd($newArray);
-        //     foreach($newArray as $r) {
-        //         $fileReq = EngineerFileNote::findOrFail($r['id']);
-        //         $unsortedTimelineObjects []= $r;
-        //         $createdTimes []= $r['created_at'];
-        //     } 
-        // }  
-
-        // foreach($file->file_internel_events->toArray() as $b) {
-        //     $unsortedTimelineObjects []= $b;
-        //     $createdTimes []= $b['created_at'];
-        // } 
-
-        // foreach($newRequestFiles->toArray() as $c) {
-        //     $unsortedTimelineObjects []= $c;
-        //     $createdTimes []= $c['created_at'];
-        // } 
-
-        // foreach($file->file_urls->toArray() as $b) {
-        //     $unsortedTimelineObjects []= $b;
-        //     $createdTimes []= $b['created_at'];
-        // } 
-
-        // array_multisort($createdTimes, SORT_DESC, $unsortedTimelineObjects);
-        // dd($unsortedTimelineObjects);
-        
         return view('files.show_file', [ 'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools, 'vehicle' => $vehicle ]);
     }
 

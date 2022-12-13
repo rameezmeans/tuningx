@@ -34,7 +34,7 @@
                                 {{$file->vehicle()->Name}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
                             </td>
                             <td class="clickable-row">
-                                <span class="label @if($file->status == 'submitted') label-blue @elseif($file->status == 'accepted') label-green @else label-red @endif">{{$file->status}}<i class="fa @if( $file->status == 'accepted') fa-check @elseif($file->status == 'rejected') fa-close @endif "></i></span></a>
+                                <span class="label @if($file->status == 'submitted') label-blue @elseif($file->status == 'completed') label-green @else label-red @endif">{{$file->status}}<i class="fa @if( $file->status == 'accepted') fa-check @elseif($file->status == 'rejected') fa-close @endif "></i></span></a>
                             </td>
                             <td class="clickable-row"><span class="label label-black">{{$file->credits}}</span></td>
                             <td class="clickable-row"><input class="vehicle-id-input" id="125091" value="{{$file->vin_number}}" readonly="" onclick="copyVin(125091)"></td>
