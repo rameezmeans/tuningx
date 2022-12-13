@@ -117,9 +117,7 @@ class FileController extends Controller
         $newFile = File::create($file);
 
         if($newFile){
-
             return redirect()->route('stages', ['file_id' => $newFile->id]);
-            // return redirect()->route('file-history',['success', 'File successfully Added!']);
         }
 
         return redirect()->back()->withInput();
@@ -215,7 +213,6 @@ class FileController extends Controller
     {
         $file = File::findOrFail($request->file_id);
         $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
-        // dd($responseStages->body());
         $stages = json_decode($responseStages->body(), true)['stages'];
         $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
         $options = json_decode($responseOptions->body(), true)['options'];
@@ -245,8 +242,6 @@ class FileController extends Controller
      */
     public function requestFile(Request $request)
     {
-
-        // dd($request->all());
         $requestFile = $request->validate([
             'file_id' => 'required',
             'request_file' => 'required',
@@ -254,10 +249,7 @@ class FileController extends Controller
             'master_tools' => 'required|max:255',
             'request_type' => 'required|max:255',
         ]);
-
-        // dd($requestFile);
-        // dd($request->all());
-
+        
         $file = $request->file('request_file');
         $fileName = $file->getClientOriginalName();
         $file->move(public_path('uploads'),$fileName);
@@ -298,12 +290,8 @@ class FileController extends Controller
         if($newFileCreated){
 
             return redirect()->route('stages', ['file_id' => $newFileCreated ->id]);
-            // return redirect()->route('file-history',['success', 'File successfully Added!']);
         }
 
-        // $requestFile = RequestFile::create($requestFile);
-
-        // return redirect()->back()->with('success', 'File successfully Added!');
     }
 
     public function getComments(Request $request){
@@ -328,9 +316,7 @@ class FileController extends Controller
         }
 
         $comments = $commentObj->get();
-
-        // dd($comments);
-
+        
         $optionsArray = explode(',',$request->options);
 
         $optionComment = '';
@@ -373,6 +359,11 @@ class FileController extends Controller
         ->where('Generation', $file->version)
         ->where('Engine', $file->engine)
         ->first();
+        
+         if($file->checked_by == 'engineer'){
+            $file->checked_by = 'seen';
+            $file->save();
+        }
 
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
