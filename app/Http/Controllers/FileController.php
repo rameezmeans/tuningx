@@ -143,9 +143,10 @@ class FileController extends Controller
         $customer = Auth::user();
 
         $factor = 0;
+        $tax = 0;
 
         if($customer->group->tax > 0){
-            $factor = ($customer->group->tax / 100) * $price->value;
+            $tax = ($customer->group->tax / 100) * $price->value;
         }
 
         if($customer->group->raise > 0){
@@ -157,15 +158,14 @@ class FileController extends Controller
         }
 
         $file->save();
-
-        $groupName = $customer->group->name;
-
+        
         return view( 'files.pay_credits', [ 
         'file' => $file, 
         'credits' => $credits, 
         'price' => $price,
         'factor' => $factor,
-        'groupName' => $groupName
+        'tax' => $tax,
+        'group' =>  $customer->group
          ] );
     }
 

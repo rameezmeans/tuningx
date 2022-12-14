@@ -145,6 +145,7 @@
                             <div class="card-content">
                                 <input type="hidden" id="price_per_unit" value="{{$price->value}}" />
                                 <input type="hidden" id="factor" value="{{$factor}}" />
+                                <input type="hidden" id="tax" value="{{$tax}}" />
                                 {{-- <span class="price-title-new">{{$price->value}} €</span> --}}
                                 <span class="price-title-new">{{($credits - Auth::user()->credits->sum('credits'))*($price->value+$factor)}} €</span>
                                 <span class="price-title-description">(Original Price)</span>
@@ -217,7 +218,7 @@
                                             {{ Auth::user()->name }}<br>
                                             {{ Auth::user()->address }}<br>
                                             {{ code_to_country(Auth::user()->country) }}<br>															
-                                            VAT (24%)<br>
+                                            {{$group->name}} ({{$group->tax}}%)<br>
                                         </address>
                                     </div>
                                     <div class="col s6 ">&nbsp;</div>
@@ -264,8 +265,12 @@
                                         <td>€<span id="subTotal"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{$groupName}} :</strong></td>
+                                        <td><strong>{{$group->name}} :</strong></td>
                                         <td>€<span id="vatSubTotal"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tax :</strong></td>
+                                        <td>€<span id="taxValue"></span></td>
                                     </tr>
                                     <tr>
                                         <td><h6>Total Order :</h6></td>
@@ -298,13 +303,18 @@ function roundToTwo(value) {
 $( document ).ready(function(event) {
    
     $(document).on('change','#qty-input', function(e){
+
         let qty = $(this).val();
         let price = $('#price_per_unit').val();
         let factor = $('#factor').val();
+        let tax = $('#tax').val();
+
         $('#subTotal').text(roundToTwo(qty*price));
             $('#vatSubTotal').text(roundToTwo(qty*factor));
-            $('#total').text(qty*(roundToTwo(price)+roundToTwo(factor)));
-        // $('.modal').css("display", "block");
+            $('#vatSubTotal').text(roundToTwo(qty*factor));
+            $('#taxValue').text(qty*tax);
+            $('#total').text(qty*(roundToTwo(price)+roundToTwo(factor)+roundToTwo(tax)));
+
     });
 
     $(document).on('click','#show-cart', function(e){
@@ -312,9 +322,12 @@ $( document ).ready(function(event) {
                 $('#qty-input').val(required_credits);
                 let price = $('#price_per_unit').val();
                 let factor = $('#factor').val();
+                let tax = $('#tax').val();
+                console.log(tax);
                 $('#subTotal').text(required_credits*price);
                 $('#vatSubTotal').text(required_credits*factor);
-                $('#total').text(required_credits*(roundToTwo(price)+roundToTwo(factor)));
+                $('#taxValue').text(required_credits*tax);
+                $('#total').text(roundToTwo(required_credits*(roundToTwo(price)+roundToTwo(factor)+roundToTwo(tax))));
                 $('.modal').css("display", "block");
     });
 

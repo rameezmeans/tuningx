@@ -30,9 +30,10 @@ class ShoppingController extends Controller
         $customer = Auth::user();
 
         $factor = 0;
+        $tax = 0;
 
         if($customer->group->tax > 0){
-            $factor = ($customer->group->tax / 100) * $price->value;
+            $tax = ($customer->group->tax / 100) * $price->value;
         }
 
         if($customer->group->raise > 0){
@@ -42,11 +43,7 @@ class ShoppingController extends Controller
         if($customer->group->discount > 0){
             $factor = -1*($customer->group->discount / 100) * $price->value;
         }
-
-        // dd($factor);
-
-        // dd($customer->group);
-
-        return view('shop-product', ['price' => $price, 'factor' => $factor, 'groupName' => $customer->group->name]);
+        
+        return view('shop-product', ['price' => $price, 'tax' => $tax, 'factor' => $factor, 'group' => $customer->group]);
     }
 }
