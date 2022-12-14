@@ -146,19 +146,19 @@ class FileController extends Controller
         $tax = 0;
 
         if($customer->group->tax > 0){
-            $tax = ($customer->group->tax / 100) * $price->value;
+            $tax = (float) $customer->group->tax;
         }
 
         if($customer->group->raise > 0){
-            $factor = ($customer->group->tax / 100) * $price->value;
+            $factor = (float)  ($customer->group->raise / 100) * $price->value;
         }
 
         if($customer->group->discount > 0){
-            $factor = -1*($customer->group->discount / 100) * $price->value;
+            $factor =  -1* (float) ($customer->group->discount / 100) * $price->value;
         }
 
         $file->save();
-        
+
         return view( 'files.pay_credits', [ 
         'file' => $file, 
         'credits' => $credits, 

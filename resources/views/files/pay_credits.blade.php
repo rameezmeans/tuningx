@@ -203,7 +203,7 @@
                                               <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody><tr><td>1 Tuning credit (reseller)</td><td>12.40€</td><td><input id="qty-input" name="qty-input" class="qty-input" min="1" type="number"></td><td><button type="button" id="remove-item" class="btn btn-flat tooltipped" data-position="top" data-tooltip="Remove item"><i class="fa fa-trash"></i></button></td></tr></tbody>
+                                    <tbody><tr><td>1 Tuning credit (reseller)</td><td>{{$price->value}}€</td><td><input id="qty-input" name="qty-input" class="qty-input" min="1" type="number"></td><td><button type="button" id="remove-item" class="btn btn-flat tooltipped" data-position="top" data-tooltip="Remove item"><i class="fa fa-trash"></i></button></td></tr></tbody>
                                 </table>
                             </div>
                         </li>
@@ -265,7 +265,7 @@
                                         <td>€<span id="subTotal"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><strong>{{$group->name}} :</strong></td>
+                                        <td><strong>Adjustment :</strong></td>
                                         <td>€<span id="vatSubTotal"></span></td>
                                     </tr>
                                     <tr>
@@ -309,26 +309,41 @@ $( document ).ready(function(event) {
         let factor = $('#factor').val();
         let tax = $('#tax').val();
 
+        console.log(price);
         $('#subTotal').text(roundToTwo(qty*price));
-            $('#vatSubTotal').text(roundToTwo(qty*factor));
-            $('#vatSubTotal').text(roundToTwo(qty*factor));
-            $('#taxValue').text(qty*tax);
-            $('#total').text(qty*(roundToTwo(price)+roundToTwo(factor)+roundToTwo(tax)));
+        $('#vatSubTotal').text(roundToTwo(qty*factor));
+
+        let adjustedPrice = (qty*price) + (qty*factor);
+        let taxAmount = ( tax * adjustedPrice ) / 100;
+
+        console.log(adjustedPrice);
+
+        $('#taxValue').text(roundToTwo(taxAmount));
+        $('#total').text(roundToTwo(adjustedPrice + taxAmount));
 
     });
 
     $(document).on('click','#show-cart', function(e){
-                let required_credits = parseInt( $('#credits-buying').text() );
-                $('#qty-input').val(required_credits);
-                let price = $('#price_per_unit').val();
-                let factor = $('#factor').val();
-                let tax = $('#tax').val();
-                console.log(tax);
-                $('#subTotal').text(required_credits*price);
-                $('#vatSubTotal').text(required_credits*factor);
-                $('#taxValue').text(required_credits*tax);
-                $('#total').text(roundToTwo(required_credits*(roundToTwo(price)+roundToTwo(factor)+roundToTwo(tax))));
-                $('.modal').css("display", "block");
+        let required_credits = parseInt( $('#credits-buying').text() );
+        $('#qty-input').val(required_credits);
+        let price = $('#price_per_unit').val();
+        let factor = $('#factor').val();
+        let tax = $('#tax').val();
+        console.log(tax);
+        
+        console.log(price);
+        $('#subTotal').text(roundToTwo(required_credits*price));
+        $('#vatSubTotal').text(roundToTwo(required_credits*factor));
+
+        let adjustedPrice = (required_credits*price) + (required_credits*factor);
+        let taxAmount = ( tax * adjustedPrice ) / 100;
+
+        console.log(adjustedPrice);
+
+        $('#taxValue').text(roundToTwo(taxAmount));
+        $('#total').text(roundToTwo(adjustedPrice + taxAmount));
+
+        $('.modal').css("display", "block");
     });
 
     $(document).on('click','#remove-item', function(e){

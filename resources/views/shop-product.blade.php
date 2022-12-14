@@ -201,7 +201,7 @@
 									<td>€<span id="subTotal"></span></td>
 								</tr>
 								<tr>
-									<td><strong>{{$group->name}} :</strong></td>
+									<td><strong>Adjustment :</strong></td>
 									<td>€<span id="vatSubTotal"></span></td>
 								</tr>
                                 <tr>
@@ -234,16 +234,23 @@
 $( document ).ready(function(event) {
     
     $(document).on('change','#qty-input', function(e){
+        
             let qty = $(this).val();
             let price = $('#price_per_unit').val();
             let factor = $('#factor').val();
             let tax = $('#tax').val();
+
             console.log(price);
             $('#subTotal').text(roundToTwo(qty*price));
             $('#vatSubTotal').text(roundToTwo(qty*factor));
-            $('#taxValue').text(roundToTwo(qty*tax));
-            $('#total').text(qty*(roundToTwo(price)+roundToTwo(factor)+roundToTwo(tax)));
-            // $('.modal').css("display", "block");
+
+            let adjustedPrice = (qty*price) + (qty*factor);
+            let taxAmount = ( tax * adjustedPrice ) / 100;
+
+            console.log(adjustedPrice);
+
+            $('#taxValue').text(roundToTwo(taxAmount));
+            $('#total').text(roundToTwo(adjustedPrice + taxAmount));
     });
 
     // $(document).on('click','#remove-item', function(e){
@@ -302,11 +309,20 @@ $( document ).ready(function(event) {
                 let factor = $('#factor').val();
                 let tax = $('#tax').val();
 
-                $('#subTotal').text(roundToTwo(qty*price));
-                $('#vatSubTotal').text(roundToTwo(qty*factor));
-                $('#taxValue').text(roundToTwo(qty*tax));
-                $('#total').text(qty*(roundToTwo(price)+roundToTwo(factor)+roundToTwo(tax)));
-                $('.modal').css("display", "block");
+            console.log(price);
+            $('#subTotal').text(roundToTwo(qty*price));
+            $('#vatSubTotal').text(roundToTwo(qty*factor));
+
+            let adjustedPrice = (qty*price) + (qty*factor);
+            let taxAmount = ( tax * adjustedPrice ) / 100;
+
+            console.log(adjustedPrice);
+
+            $('#taxValue').text(roundToTwo(taxAmount));
+            $('#total').text(roundToTwo(adjustedPrice + taxAmount));
+
+            $('.modal').css("display", "block");
+
             }
         });
     }
