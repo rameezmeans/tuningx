@@ -1,8 +1,17 @@
 <?php
 
+use App\Models\NewsFeed;
 use App\Models\Tool;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Http;
+
+
+if(!function_exists('get_feeds')){
+
+    function get_feeds(){
+        return NewsFeed::where('active', 1)->get();
+    }
+}
 
 if(!function_exists('get_option_from_request_file_dropdown')){
 
