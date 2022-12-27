@@ -27,6 +27,12 @@
                     @auth
                         <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
                     @else
+                        {{-- <select name="lanugage">
+                            <option value="en"><a href="/language/en">English</a></option>
+                            <option value="gr"><a href="/language/gr">Greek</a></option>
+                        </select> --}}
+                        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/language/en">English</a>
+                        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/language/gr">Greek</a>
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
                         @if (Route::has('register'))
@@ -55,7 +61,7 @@
 
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you are new to the framework or have previous experience with Laravel, we recommend reading all of the documentation from beginning to end.
+                                    {{ __('Welcome to our Site.')}}
                                 </div>
                             </div>
                         </div>
