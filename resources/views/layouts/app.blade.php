@@ -76,8 +76,25 @@
             $(document).on('click','.close-message', function(ev){
                 $(this).parent().parent().hide();
             });
+
+            $(document).on('click','#language-btn', function(ev){
+                $('#switch-language').toggleClass('hide');
+            });
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <div id="switch-language" class="modal bottom-sheet no-print hide" style="z-index: 1005; opacity: 1; display: block; bottom: 0px;">
+        <div class="modal-content center no-print">
+            <h2>Select your language</h2>
+            <a href="/language/en" class="chip">
+                <img src="https://resellers.ecutech.tech/assets/img/flags/gb.svg" alt="England flag">
+                English
+            </a>
+            <a href="/language/gr" class="chip">
+                <img src="https://resellers.ecutech.tech/assets/img/flags/gr.svg" alt="Greece flag">
+                Ελληνικά
+            </a>
+        </div>
+    </div>
 </body>
 </html>

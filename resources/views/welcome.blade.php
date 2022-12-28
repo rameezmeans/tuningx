@@ -19,20 +19,21 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     </head>
     <body class="antialiased">
+        @php $locale = Session::get('locale'); @endphp 
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
                         <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
                     @else
-                        {{-- <select name="lanugage">
-                            <option value="en"><a href="/language/en">English</a></option>
-                            <option value="gr"><a href="/language/gr">Greek</a></option>
-                        </select> --}}
-                        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/language/en">English</a>
-                        <a class="text-sm text-gray-700 dark:text-gray-500 underline" href="/language/gr">Greek</a>
+                        <select id="language" name="lanugage" style="margin-right:20px;">
+                            <option value="en" @if($locale && $locale == 'en') selected @endif>English</option>
+                            <option value="gr" @if($locale && $locale == 'gr') selected @endif>Greek</option>
+                        </select>
+                        
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
                         @if (Route::has('register'))
@@ -135,4 +136,15 @@
             </div>
         </div>
     </body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $(document).on('change', '#language', function(e){
+                let language = $(this).val();
+                console.log(language);
+                location.href = '/language/'+language;
+            });
+
+        });
+    </script>
 </html>

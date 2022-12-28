@@ -22,7 +22,7 @@
                 <a href="{{ route('home'); }}" class="inline waves-effect tooltipped" data-tooltip="Dashboard" data-tooltip-id="ee8f5588-9e68-9616-9fd4-94ee79337d70">
                     <i class="fa fa-table-columns"></i>
                 </a>
-                <a href="#switch-language" class="modal-trigger inline waves-effect tooltipped" data-tooltip="Language" data-tooltip-id="fadf0895-13d2-6695-827b-a5139a3bd3b8" style="z-index: 1003;">
+                <a href="#" id="language-btn" class="modal-trigger inline waves-effect tooltipped" data-tooltip="Language" data-tooltip-id="fadf0895-13d2-6695-827b-a5139a3bd3b8" style="z-index: 1003;">
                     <i class="fa-solid fa-globe"></i>
                 </a>
 
@@ -37,7 +37,7 @@
             <li class="active">
                 <a href="{{ route('account'); }}" class="waves-effect">
                     <i class="fa-solid fa-user"></i>
-                    <span>Account</span>
+                    <span>{{__('Account')}}</span>
                     <span class="neutral badge">
                         {{ Auth::user()->credits->sum('credits') }} <small>credits</small>
                     </span>
