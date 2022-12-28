@@ -45,12 +45,12 @@
             </li>
             <li class="">
                 <a href="{{ route('file-upload') }}" class="waves-effect">
-                    <i class="fa-solid fa-upload"></i><span>File Upload</span>
+                    <i class="fa-solid fa-upload"></i><span>{{__('File Upload')}}</span>
                 </a>
             </li>
                     <li class="">
                 <a href="{{ route('file-history'); }}" class="waves-effect">
-                    <i class="fa-solid fa-clock-rotate-left"></i><span>File History</span>
+                    <i class="fa-solid fa-clock-rotate-left"></i><span>{{__('File History')}}</span>
                 </a>
             </li>
             <li class="">
@@ -91,18 +91,18 @@
     0 605 1045 0 1045 0 0 -605z"></path>
     </g>
     </svg>
-    </span><span>Bosch ECU Numbers</span>
+    </span><span>{{__('Bosch ECU Numbers')}}</span>
                 </a>
             </li>
                     
                     <li class="">
-                <a href="{{ route('shop-product'); }}"><i class="fa-solid fa-cart-shopping"></i><span>Shop</span></a>
+                <a href="{{ route('shop-product'); }}"><i class="fa-solid fa-cart-shopping"></i><span>{{__('Shop')}}</span></a>
             </li>
             <li class="">
-                <a href="{{ route('price-list'); }}"><i class="fa fa-dollar"></i><span>Price List</span></a>
+                <a href="{{ route('price-list'); }}"><i class="fa fa-dollar"></i><span>{{__('Price List')}}</span></a>
             </li>
             <li class="">
-                <a href="{{route('invoices'); }}"><i class="fa-solid fa-file-invoice"></i><span>Invoices</span></a>
+                <a href="{{route('invoices'); }}"><i class="fa-solid fa-file-invoice"></i><span>{{__('Invoices')}}</span></a>
             </li>
             
                 </ul>
