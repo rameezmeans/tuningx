@@ -81,66 +81,66 @@
    
     <div class="container">
         
-        <h1>Account</h1>
+        <h1>{{__('Account')}}</h1>
         @if($errors->any())
             <div style="color: #f02429; ">{{ implode('', $errors->all(':message')) }}</div>
         @endif
         <div class="account section">
             <!-- Tab links -->
         <div class="tab">
-            <button class="tablinks" onclick="openCity(event, 'Profile')" id="defaultOpen">Profile</button>
-            <button class="tablinks" onclick="openCity(event, 'Contact')">Contact</button>
-            <button class="tablinks @if(request()->get('tab') == 'tools') active @endif" onclick="openCity(event, 'Tools')">Tools</button>
+            <button class="tablinks" onclick="openCity(event, 'Profile')" id="defaultOpen">{{__('Profile')}}</button>
+            <button class="tablinks" onclick="openCity(event, 'Contact')">{{__('Contact')}}</button>
+            <button class="tablinks @if(request()->get('tab') == 'tools') active @endif" onclick="openCity(event, 'Tools')">{{__('Tools')}}</button>
             {{-- <button class="tablinks" onclick="openCity(event, 'Workstation')">Workstation</button> --}}
-            <button class="tablinks" onclick="openCity(event, 'Password')">Password</button>
-            <button class="tablinks" onclick="openCity(event, 'CreditLog')">Credit Log</button>
+            <button class="tablinks" onclick="openCity(event, 'Password')">{{__('Password')}}</button>
+            <button class="tablinks" onclick="openCity(event, 'CreditLog')">{{__('Credit Log')}}</button>
         </div>
   
         <!-- Tab content -->
         <div id="Profile" class="tabcontent">
             <div class="form-pad">
-            <h4 class="m-b-lg">Billing Information</h4>
-            <label class="account-label">Status</label>
+            <h4 class="m-b-lg">{{__('Billing Information')}}</h4>
+            <label class="account-label">{{__('Status')}}</label>
             <input type="text" readonly value="{{ ucfirst( Auth::user()->status) }}">
 
-            <label class="account-label">Country</label>
+            <label class="account-label">{{__('Country')}}</label>
             <input type="text" readonly value="{{ code_to_country( Auth::user()->country) }}">
 
-            <label class="account-label">Company Name</label>
+            <label class="account-label">{{__('Company Name')}}</label>
             <input type="text" readonly value="{{ Auth::user()->company_name }}">
 
-            <label class="account-label">Company trade register identification number</label>
+            <label class="account-label">{{__('Company trade register identification number')}}</label>
             <input type="text" readonly value="{{ Auth::user()->company_id }}">
 
-            <label class="account-label">Name:</label>
+            <label class="account-label">{{__('Name')}}</label>
             <input type="text" readonly value="{{ Auth::user()->name }}">
 
-            <label class="account-label">Address</label>
+            <label class="account-label">{{__('Address')}}</label>
             <input type="text" readonly value="{{ Auth::user()->address }}">
 
-            <label class="account-label">Zip Code</label>
+            <label class="account-label">{{__('Zip Code')}}</label>
             <input type="text" readonly value="{{ Auth::user()->zip }}">
 
-            <label class="account-label">City</label>
+            <label class="account-label">{{__('City')}}</label>
             <input type="text" readonly value="{{ Auth::user()->city }}">
 
-            <label class="account-label">Phone</label>
+            <label class="account-label">{{__('Phone')}}</label>
             <input type="text" readonly value="{{ Auth::user()->phone }}">
             </div>
         </div>
         
         <div id="Contact" class="tabcontent">
             <div class="form-pad">
-                <label class="account-label">Application Language</label>
+                <label class="account-label">{{__('Application Language')}}</label>
                 <input type="text" readonly value="{{ ucfirst( Auth::user()->language) }}">
 
-                <label class="account-label">Email</label>
+                <label class="account-label">{{__('Email')}}</label>
                 <input type="text" readonly value="{{ Auth::user()->email }}">
             </div>
 
             <div class="form-pad">
-                <h4 class="m-b-lg" style="display:inline-block;">Spoken Languages</h4>
-                <button id="addLangBtn" class="btn btn-red waves-effect waves-light m-sm create-language right" data-toggle="modal" data-target="#modalCreateLanguage">Add language</button>
+                <h4 class="m-b-lg" style="display:inline-block;">{{__('Spoken Languages')}}</h4>
+                <button id="addLangBtn" class="btn btn-red waves-effect waves-light m-sm create-language right" data-toggle="modal" data-target="#modalCreateLanguage">{{__('Add Language')}}</button>
                 <p class="red-olsx-text">Warning : languages you have selected means that you may receive messages in that language.</p>
                                                     
                 @if(count($languages) == 0)
@@ -149,9 +149,9 @@
                 <table class="table"> 
                     <thead>
                         <tr>
-                            <th data-type="html">Language</th>
-                            <th data-type="html">Mastery</th>
-                            <th data-type="html" data-filterable="false">Actions</th>
+                            <th data-type="html">{{__('Language')}}</th>
+                            <th data-type="html">{{__('Mastery')}}</th>
+                            <th data-type="html" data-filterable="false">{{__('Actions')}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -245,7 +245,7 @@
                     </div>
                 </div>
                    
-                <button type="submit" class="btn btn-red waves-effect waves-light m-sm" style="margin-left: 25px;">Update</button>
+                <button type="submit" class="btn btn-red waves-effect waves-light m-sm" style="margin-left: 25px;">{{__('Update')}}</button>
                 </form>
             </div>
         </div>
@@ -258,17 +258,17 @@
             <form name="" method="post" action="{{ route('change-password') }}">
                 @csrf
                 <div class="form-pad">
-                    <h4 class="m-b-lg">Change Password</h4>
-                    <label class="account-label">Current Password</label>
+                    <h4 class="m-b-lg">{{__('Change Password')}}</h4>
+                    <label class="account-label">{{__('Current Password')}}</label>
                     <input type="password" name="current_password">
 
-                    <label class="account-label">New Password</label>
+                    <label class="account-label">{{__('New Password')}}</label>
                     <input type="password" name="new_password">
 
-                    <label class="account-label">Confirm Password</label>
+                    <label class="account-label">{{__('Confirm Password')}}</label>
                     <input type="password" name="confirm_password">
-                    <button type="reset" id="language_create_form_Cancel"  class="waves-effect waves-light btn modal-action modal-close">Cancel</button>
-                    <button type="submit" id="language_create_form_Save"  class="btn btn-red waves-effect waves-light m-sm">Confirm</button>
+                    <button type="reset" id="language_create_form_Cancel"  class="waves-effect waves-light btn modal-action modal-close">{{__('Cancel')}}</button>
+                    <button type="submit" id="language_create_form_Save"  class="btn btn-red waves-effect waves-light m-sm">{{__('Confirm')}}</button>
                 </div>
             </form>
         </div>
@@ -291,14 +291,14 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th style="width: 10%;">Date</th>
+                                <th style="width: 10%;">{{__('Date')}}</th>
                                 <th></th>
                                 <th>Credits</th>
-                                <th>Total credits</th>
+                                <th>{{__('Total Credits')}}</th>
                                 <th></th>
-                                <th>Vehicle</th>
-                                <th>Invoice Ref.</th>
-                                <th>Amount</th>
+                                <th>{{__('Vehicle')}}</th>
+                                <th>{{__('Invoice Ref.')}}</th>
+                                <th>{{__('Amount')}}</th>
                             </tr>
                             </thead>
                             <tbody> 

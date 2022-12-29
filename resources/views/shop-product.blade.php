@@ -59,7 +59,7 @@
 				<h1>Shop</h1>
 			</div>
 			<div class="col s5 m4 l4 center">
-				<button class="btn btn-red waves-effect waves-light modal-trigger right btn-vehicle-id" href="#modalcheckout" id="showModalCheckout" style="z-index: 1009; top:20px;"><span>Cart (<span class="count-info" id="bagCount">{{ \Cart::getTotalQuantity() }}</span>)</span>
+				<button class="btn btn-red waves-effect waves-light modal-trigger right btn-vehicle-id" href="#modalcheckout" id="showModalCheckout" style="z-index: 1009; top:20px;"><span>{{__('Cart')}} (<span class="count-info" id="bagCount">{{ \Cart::getTotalQuantity() }}</span>)</span>
 					<i class="fa fa-shopping-cart right"></i>
                 </button>
 			</div>
@@ -85,11 +85,11 @@
                                 <input type="hidden" id="factor" value="{{$factor}}" />
                                 <input type="hidden" id="tax" value="{{$tax}}" />
                                 <span class="price-title-new">{{$price->value}} €</span>
-                                <span class="price-title-description">(Original Price)</span>
+                                <span class="price-title-description">({{__('Original Price')}})</span>
                             </div>
                             <div class="card-action center">
                                 <button id="addToCart" class="btn btn-red waves-effect waves-light m-sm" data-toggle="modal" data-target="#modalAddToCart">
-                                    Add to cart
+                                    {{__('Add to cart')}}
                                 </button>
                             </div>
                         </div>

@@ -4,19 +4,19 @@
 @include('layouts.nav')
 <main>
     <div class="container">
-        <h1 class="h1-olsx-history">File History</h1>
+        <h1 class="h1-olsx-history">{{__('File History')}}</h1>
         <div class="table-history-panel">
             <div class="row">
                 <table class="olsx-history file-history highlight">
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Vehicle</th>
-                            <th>Status</th>
-                            <th class="hide-on-small-and-down">Credits</th>
-                            <th class="hide-on-small-and-down">VIN</th>
-                            <th>Customer</th>
-                            <th>Plate</th>
+                            <th>{{__('Vehicle')}}</th>
+                            <th>{{__('Status')}}</th>
+                            <th class="hide-on-small-and-down">{{__('Credits')}}</th>
+                            <th class="hide-on-small-and-down">{{__('VIN')}}</th>
+                            <th>{{__('Customer')}}</th>
+                            <th>{{__('Plate')}}</th>
                             <th class="hide-on-small-and-down"></th>
                         </tr>
                     </thead>

@@ -10,11 +10,11 @@
                 <table class="invoices">
                     <thead>
                         <tr>
-                            <th>Invoice Ref.</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>{{__('Invoice Ref.')}}</th>
+                            <th>{{__('Date')}}</th>
+                            <th>{{__('Amount')}}</th>
+                            <th>{{__('Status')}}s</th>
+                            <th>{{__('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
