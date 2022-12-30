@@ -43,11 +43,11 @@
         <div class="chip alert-message @if($feed->type == 'warning') alert-blue @elseif($feed->type == 'good_news') alert-green @else alert-red @endif"><span><i class="fa fa-info-circle"></i>{{$feed->feed}}<button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
     @endforeach
     @if (request()->has('success'))
-        <div class="chip alert-message alert-green"><span><i class="fa fa-info-circle"></i>{{ request()->get('success') }}<button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
+        <div class="chip alert-message alert-green"><span><i class="fa fa-info-circle"></i>{{ __(request()->get('success')) }}<button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
     @endif
 
     @if (request()->has('error'))
-        <div class="chip alert-message alert-red"><span><i class="fa fa-info-circle"></i>{{ request()->get('error') }}<button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
+        <div class="chip alert-message alert-red"><span><i class="fa fa-info-circle"></i>{{ __(request()->get('error')) }}<button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
     @endif        
     
     @yield('content')

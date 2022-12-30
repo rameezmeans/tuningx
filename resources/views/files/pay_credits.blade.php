@@ -87,7 +87,7 @@
                                         {{ $file->brand }}
                                         
                                     </span>
-                                    <strong>You need to pay the Credits to submit the file.</strong>
+                                    <strong>{{__('You need to pay the Credits to submit the file.')}}</strong>
                             </div>
                             <div class="row">
                                 <div class="col s12 center m-t-sm">
@@ -100,12 +100,12 @@
                             </div>
                             <div class="options-resume"></div>
                             <div class="divider-light"></div>
-                            <div class="totals"><p class="red-olsx-text">Credits Required <small><span id="total-credits">{{$credits}}</span> credits</small></p></div>
-                            <div class="totals"><p class="red-olsx-text">Account Credits<small><span id="account-credits">{{ Auth::user()->credits->sum('credits') }}</span> credits</small></p></div>
+                            <div class="totals"><p class="red-olsx-text">{{__('Credits Required')}} <small><span id="total-credits">{{$credits}}</span> credits</small></p></div>
+                            <div class="totals"><p class="red-olsx-text">{{__('Account Credits')}}<small><span id="account-credits">{{ Auth::user()->credits->sum('credits') }}</span> credits</small></p></div>
                             @if(Auth::user()->credits->sum('credits') > $credits)
-                                <div class="totals"><p class="red-olsx-text">Credits Remained<small><span id="required-credits1">{{ Auth::user()->credits->sum('credits') - $credits  }}</span> credits</small></p></div>
+                                <div class="totals"><p class="red-olsx-text">{{__('Credits Remained')}}<small><span id="required-credits1">{{ Auth::user()->credits->sum('credits') - $credits  }}</span> credits</small></p></div>
                             @else
-                                <div class="totals"><p class="red-olsx-text">Credits To Buy<small><span id="to-buy-credits">@if(Auth::user()->credits->sum('credits') > $credits){{ Auth::user()->credits->sum('credits') - $credits  }}@else {{ $credits -  Auth::user()->credits->sum('credits') }} @endif</span> credits</small></p></div>
+                                <div class="totals"><p class="red-olsx-text">{{__('Credits To Buy')}}<small><span id="to-buy-credits">@if(Auth::user()->credits->sum('credits') > $credits){{ Auth::user()->credits->sum('credits') - $credits  }}@else {{ $credits -  Auth::user()->credits->sum('credits') }} @endif</span> credits</small></p></div>
                             @endif
                         </div>
                         <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit">
@@ -116,7 +116,7 @@
                                 <input type="hidden" name="credits" value={{ $credits }}>
                                 <input type="hidden" name="file_id" value={{ $file->id }}>
                                 <button class="btn-large btn-red " type="submit">
-                                    Submit File
+                                    {{__('Submit File')}}
                                 </button>
                             </form>
                             @else 
@@ -126,7 +126,7 @@
                                         <input type="hidden" name="credits" value={{ $credits }}>
                                         <input type="hidden" name="file_id" value={{ $file->id }}>
                                         <button class="btn-large btn-red " type="submit">
-                                            Submit File
+                                            {{__('Submit File')}}
                                         </button>
                                     </form>
                                 @endif
@@ -148,11 +148,11 @@
                                 <input type="hidden" id="tax" value="{{$tax}}" />
                                 {{-- <span class="price-title-new">{{$price->value}} €</span> --}}
                                 <span class="price-title-new">{{($credits - Auth::user()->credits->sum('credits'))*($price->value+$factor)}} €</span>
-                                <span class="price-title-description">(Original Price)</span>
+                                <span class="price-title-description">({{__('Original Price')}})</span>
                             </div>
                             <div class="card-action center">
                                 <button id="show-cart" class="btn btn-red waves-effect waves-light m-sm">
-                                    Buy
+                                    {{__('Buy')}}
                                 </button>
                             </div>
                         </div>
@@ -171,7 +171,7 @@
         <div class="row m-n">
             <div class="container">
                 <div class="col s11">
-                    <h4 class="shades-text text-white">Checkout</h4>
+                    <h4 class="shades-text text-white">{{__('Checkout')}}</h4>
                 </div>
                 <div class="col s1">
                     <a href="#!" class="modal-close" id="cart-close">
@@ -197,9 +197,9 @@
                                 <table class="table" id="bagItemsTable">
                                     <thead>
                                         <tr>
-                                            <th>Item</th>
-                                            <th>Unit price</th>
-                                            <th>Qty</th>
+                                            <th>{{__('Item')}}</th>
+                                            <th>{{__('Unit Price')}}</th>
+                                            <th>{{__('Qty')}}</th>
                                               <th></th>
                                         </tr>
                                     </thead>
@@ -208,11 +208,11 @@
                             </div>
                         </li>
                         <li class="active">
-                            <div class="collapsible-header"><i class="fa fa-person"></i>Billing Information</div>
+                            <div class="collapsible-header"><i class="fa fa-person"></i>{{__('Billing Information')}}</div>
                             <div class="collapsible-body collapsible-checkout " style="display: block;">
                                 <div class="row">
                                     <div class="col s6 ">
-                                        <h6>Billing Address:</h6>
+                                        <h6>{{__('Billing Address')}}:</h6>
                                         <address>
                                             <strong>{{ Auth::user()->company }}</strong><br>
                                             {{ Auth::user()->name }}<br>
@@ -226,7 +226,7 @@
                             </div>
                         </li>
                         <li class="active">
-                            <div class="collapsible-header active" onclick="didClickOnPayment(event);"><i class="fa fa-dollar"></i>Payment</div>
+                            <div class="collapsible-header active" onclick="didClickOnPayment(event);"><i class="fa fa-dollar"></i>{{__('Payment')}}</div>
                             <div class="collapsible-body collapsible-checkout " style="display: block;">
                                 <div class="row">
                                     <div class="card-payment col s12 m4">
@@ -242,10 +242,10 @@
                                                 <li><img src="https://resellers.ecutech.tech/assets/img/payments/ideal.svg" alt="Ideal"></li>
                                                 <li><img src="https://resellers.ecutech.tech/assets/img/payments/sofort.svg" alt="Klarna-Sofort"></li>
                                             </ul>
-                                            <p>When validating your payment you will automatically be redirected to the Stripe website where you will be able to pay the amount due very easily.</p>
+                                            <p>{{__('When validating your payment you will automatically be redirected to the Stripe website where you will be able to pay the amount due very easily.')}}</p>
                                         </div>
                                         <div class="card-action center">
-                                            <a class="btn btn-red" id="pay">Pay with card</a>
+                                            <a class="btn btn-red" id="pay">{{__('Pay with card')}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -256,24 +256,24 @@
                 <div class="col s12 m4">
                     <ul class="collapsible popout">
                         <li class="active">
-                            <div class="collapsible-header active"><i class="fa fa-calculator m-r-sm"></i>Your order</div>
+                            <div class="collapsible-header active"><i class="fa fa-calculator m-r-sm"></i>{{__('Your order')}}</div>
                             <div class="collapsible-body collapsible-checkout" style="display: block;">
                                 <table class="table invoice-total">
                                 <tbody>
                                     <tr>
-                                        <td><strong>Subtotal :</strong></td>
+                                        <td><strong>{{__('Subtotal')}} :</strong></td>
                                         <td>€<span id="subTotal"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Adjustment :</strong></td>
+                                        <td><strong>{{__('Adjustment')}} :</strong></td>
                                         <td>€<span id="vatSubTotal"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Tax :</strong></td>
+                                        <td><strong>{{__('Tax')}} :</strong></td>
                                         <td>€<span id="taxValue"></span></td>
                                     </tr>
                                     <tr>
-                                        <td><h6>Total Order :</h6></td>
+                                        <td><h6>{{__('Total Order')}} :</h6></td>
                                         <td><h6>€<span id="total"></span></h6></td>
                                     </tr>
                                 </tbody>
@@ -387,12 +387,12 @@ $( document ).ready(function(event) {
         console.log('pay button clicked');
 
         Swal.fire({
-        title: 'Payment Details',
+        title: '{{__('Payment Details')}}',
         html: `<input type="text" value="Test" id="cardname" class="swal2-input" placeholder="Card Name">
         <input type="text" value="4242424242424242" id="cardnumber" class="swal2-input" placeholder="Card Number">
         <div class="row-form"><input value="123" type="text" id="cvc" class="swal2-input" placeholder="CVC"><input value="12" type="text" id="expiry_month" class="swal2-input" placeholder="Expiry Month"><input value="2024" type="text" id="expiry_year" class="swal2-input" placeholder="Expiry Year"></div>`,
         
-        confirmButtonText: 'Pay',
+        confirmButtonText: '{{__('Pay')}}',
         focusConfirm: false,
         preConfirm: () => {
             const cardname = Swal.getPopup().querySelector('#cardname').value

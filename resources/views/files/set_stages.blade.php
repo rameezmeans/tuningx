@@ -105,7 +105,7 @@ input[type='radio']:checked:before {
                                                     <img src="{{'https://backend.ecutech.gr/icons/'.$stage['icon']}}" alt="logo" class="responsive-img stage-logo">
                                                 </div>
                                                 <div class="col s4 m5 l5">
-                                                    <span>{{$stage['name']}}</span>
+                                                    <span>{{__($stage['name'])}}</span>
                                                 </div>
                                                 <div class="col s2 m2 l2 center">
                                                     <strong class="stage-price"><span class="price">{{$stage['credits']}}</span> Credits</strong>
@@ -119,7 +119,7 @@ input[type='radio']:checked:before {
                                         <div class="stage-option-definition">
                                             <div class="row m-n">
                                                 <div class="col s12">
-                                                    <p>{{$stage['description']}}</p>
+                                                    <p>{{__(trim($stage['description']))}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -318,7 +318,7 @@ input[type='radio']:checked:before {
                                                         <img src="{{'https://backend.ecutech.gr/icons/'.$option['icon']}}" alt="logo" class="responsive-img stage-logo">
                                                     </div>
                                                     <div class="col s5 m5 l5 ">
-                                                        <span>{{$option['name']}}</span>
+                                                        <span>{{__($option['name'])}}</span>
                                                     </div>
                                                     <div class="col s2 m2 l2 center">
                                                         <strong class="stage-price"><span class="price">{{$option['credits']}}</span> Credits</strong>
@@ -334,7 +334,7 @@ input[type='radio']:checked:before {
                                         <div class="stage-option-definition">
                                             <div class="row m-n">
                                                 <div class="col s12">
-                                                    <p>{{$option['description']}}</p>
+                                                    <p>{{__(trim($option['description']))}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1758,22 +1758,21 @@ input[type='radio']:checked:before {
                                         Automatic
                                         <i class="fa fa-flash"></i>
                                     </span>
-                                    <strong>This request will be processed by our automatic system. Related file will be instantly
-                delivered.
+                                    <strong>{{__('This request will be processed by our automatic system. Related file will be instantly delivered.')}}
             </strong>
                                 </div>
                                 <div class="status-automatic" id="not-automatic" style="">
                                                                                 <span class="label label-black wow flash" style="visibility: visible;">
-                                            Not automatic
+                                                                                    {{__('Not automatic')}}
                                             <i class="fa fa-clock-o"></i>
                                         </span>
-                                        <strong>This request will be processed by our engineers. File tuning can take up to 60 minutes.</strong>
+                                        <strong>{{__('This request will be processed by our engineers. File tuning can take up to 60 minutes.')}}</strong>
                                                                         </div>
                                 
                                 
                                 <div class="row">
                                     <div class="col s12 center m-t-sm">
-                                        <span class="label label-green"><i class="custom-icon-check-decagram"></i> Original file</span>
+                                        <span class="label label-green"><i class="custom-icon-check-decagram"></i> {{__('Original file')}}</span>
                                     </div>
                                 </div>
                                 <div id="rows-for-credits">
@@ -1782,7 +1781,7 @@ input[type='radio']:checked:before {
                                 </div>
                                 <div class="options-resume"></div>
                                 <div class="divider-light"></div>
-                                <div class="totals"><h5 class="red-olsx-text">Total <small><span id="total-credits">0</span> credits</small></h5></div>
+                                <div class="totals"><h5 class="red-olsx-text">{{__('Total')}} <small><span id="total-credits">0</span> credits</small></h5></div>
                             </div>
                             <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit">
                             <div class="center">

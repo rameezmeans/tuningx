@@ -56,7 +56,7 @@
     <div class="container">
         <div class="row">
 			<div class="col s7 m8 l8">
-				<h1>Shop</h1>
+				<h1>{{__('Shop')}}</h1>
 			</div>
 			<div class="col s5 m4 l4 center">
 				<button class="btn btn-red waves-effect waves-light modal-trigger right btn-vehicle-id" href="#modalcheckout" id="showModalCheckout" style="z-index: 1009; top:20px;"><span>{{__('Cart')}} (<span class="count-info" id="bagCount">{{ \Cart::getTotalQuantity() }}</span>)</span>
@@ -128,14 +128,14 @@
 			<div class="col s12 m8">
 				<ul class="collapsible popout" data-collapsible="accordion">
 					<li class="active">
-						<div class="collapsible-header active" id="cartCollapsible"><i class="fa fa-shopping-cart"></i>Cart</div>
+						<div class="collapsible-header active" id="cartCollapsible"><i class="fa fa-shopping-cart"></i>{{__('Cart')}}</div>
 						<div class="collapsible-body collapsible-checkout " style="display: block;">
 							<table class="table" id="bagItemsTable">
 								<thead>
 									<tr>
-										<th>Item</th>
-										<th>Unit price</th>
-										<th>Qty</th>
+										<th>{{__('Item')}}</th>
+										<th>{{__('Unit price')}}</th>
+										<th>{{__('Qty')}}</th>
 								  		<th></th>
 									</tr>
 								</thead>
@@ -144,11 +144,11 @@
 						</div>
 					</li>
 					<li class="active">
-						<div class="collapsible-header"><i class="fa fa-person"></i>Billing Information</div>
+						<div class="collapsible-header"><i class="fa fa-person"></i>{{__('Billing Information')}}</div>
 						<div class="collapsible-body collapsible-checkout " style="display: block;">
 							<div class="row">
 								<div class="col s6 ">
-									<h6>Billing Address:</h6>
+									<h6>{{__('Billing Address')}}:</h6>
 									<address>
 										<strong>{{ Auth::user()->company }}</strong><br>
                                         {{ Auth::user()->name }}<br>
@@ -162,7 +162,7 @@
 						</div>
 					</li>
 					<li class="active">
-						<div class="collapsible-header active" onclick="didClickOnPayment(event);"><i class="fa fa-dollar"></i>Payment</div>
+						<div class="collapsible-header active" onclick="didClickOnPayment(event);"><i class="fa fa-dollar"></i>{{__('Payment')}}</div>
 						<div class="collapsible-body collapsible-checkout " style="display: block;">
 							<div class="row">
                                 <div class="card-payment col s12 m4">
@@ -178,10 +178,10 @@
                                             <li><img src="https://resellers.ecutech.tech/assets/img/payments/ideal.svg" alt="Ideal"></li>
                                             <li><img src="https://resellers.ecutech.tech/assets/img/payments/sofort.svg" alt="Klarna-Sofort"></li>
                                         </ul>
-                                        <p>When validating your payment you will automatically be redirected to the Stripe website where you will be able to pay the amount due very easily.</p>
+                                        <p>{{__('When validating your payment you will automatically be redirected to the Stripe website where you will be able to pay the amount due very easily.')}}</p>
                                     </div>
                                     <div class="card-action center">
-                                        <a class="btn btn-red" id="pay">Pay with card</a>
+                                        <a class="btn btn-red" id="pay">{{__('Pay with card')}}</a>
                                     </div>
                                 </div>
 							</div>
@@ -192,24 +192,24 @@
 			<div class="col s12 m4">
 				<ul class="collapsible popout">
 					<li class="active">
-						<div class="collapsible-header active"><i class="fa fa-calculator m-r-sm"></i>Your order</div>
+						<div class="collapsible-header active"><i class="fa fa-calculator m-r-sm"></i>{{__('Your order')}}</div>
 						<div class="collapsible-body collapsible-checkout" style="display: block;">
 							<table class="table invoice-total">
 							<tbody>
 								<tr>
-									<td><strong>Subtotal :</strong></td>
+									<td><strong>{{__('Subtotal')}} :</strong></td>
 									<td>€<span id="subTotal"></span></td>
 								</tr>
 								<tr>
-									<td><strong>Adjustment :</strong></td>
+									<td><strong>{{__('Adjustment')}} :</strong></td>
 									<td>€<span id="vatSubTotal"></span></td>
 								</tr>
                                 <tr>
-									<td><strong>Tax :</strong></td>
+									<td><strong>{{__('Tax')}} :</strong></td>
 									<td>€<span id="taxValue"></span></td>
 								</tr>
 								<tr>
-									<td><h6>Total Order :</h6></td>
+									<td><h6>{{__('Total Order')}} :</h6></td>
 									<td><h6>€<span id="total"></span></h6></td>
 								</tr>
 							</tbody>
@@ -276,10 +276,10 @@ $( document ).ready(function(event) {
                 Swal.fire({
                 icon: 'success',
                 title: '1 Tuning credit (reseller)',
-                text: 'Successfully added to Cart',
+                text: '{{__('Successfully added to Cart')}}',
                 showDenyButton: true,
-                denyButtonText: 'Continue Shopping',
-                confirmButtonText: 'Go to Cart',
+                denyButtonText: '{{__('Continue Shopping')}}',
+                confirmButtonText: '{{__('Go to Cart')}}',
                 }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
@@ -375,12 +375,12 @@ $( document ).ready(function(event) {
         console.log('pay button clicked');
 
         Swal.fire({
-        title: 'Payment Details',
+        title: '{{__('Payment Details')}}',
         html: `<input type="text" value="Test" id="cardname" class="swal2-input" placeholder="Card Name">
         <input type="text" value="4242424242424242" id="cardnumber" class="swal2-input" placeholder="Card Number">
         <div class="row-form"><input value="123" type="text" id="cvc" class="swal2-input" placeholder="CVC"><input value="12" type="text" id="expiry_month" class="swal2-input" placeholder="Expiry Month"><input value="2024" type="text" id="expiry_year" class="swal2-input" placeholder="Expiry Year"></div>`,
         
-        confirmButtonText: 'Pay',
+        confirmButtonText: '{{__('Pay')}}',
         focusConfirm: false,
         preConfirm: () => {
             const cardname = Swal.getPopup().querySelector('#cardname').value

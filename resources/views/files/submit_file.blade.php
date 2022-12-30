@@ -4,7 +4,7 @@
 @include('layouts.nav')
 <main>
     <div class="container">
-        <h1>File Upload</h1>
+        <h1>{{__('File Upload')}}</h1>
         <div class="file-service-process">
             <div class="process-panel">
                 <div class="row">
@@ -12,7 +12,7 @@
                         <p class="danger">{{ implode('', $errors->all(':message')) }}</p>
                     @endif
                     <div class="col s12 master-tools  @if($errors->any()) hide @endif">
-                        <h2>Reading tool</h2>
+                        <h2>{{__('Reading tool')}}</h2>
                         <small><i class="fa fa-info-circle"></i> To edit reading tool list <a href="{{ route('account', ['tab' => 'tools']) }}" target="_blank">click here</a></small>
                     </div>
                     <div class="col s12 m-b-lg master-tools @if($errors->any()) hide @endif">
@@ -49,7 +49,7 @@
                     <form method="POST" action="{{ route('upload-file') }}" enctype="multipart/form-data" id="uploadfile" class="dropzone">
                         @csrf
                         <div>
-                            <h5>Please Drop and file here by Click. (Zip or RAR are not allowed.)</h5>
+                            <h5>{{__('Please Drop and file here by Click. (Zip or RAR are not allowed.)')}}</h5>
                         </div>
                     </form>
                 </div>
@@ -64,9 +64,9 @@
                         @csrf
 
                         <div class="row mt-5">
-                            <h3 style="margin-left:12px;">Customer Info</h3>
+                            <h3 style="margin-left:12px;">{{__('Customer Info')}}</h3>
                             <div class="input-field col s12">
-                                <input type="text" id="name" name="name" class="@error('name') is-invalid @enderror" required="required" placeholder="Full Name " value="{{ old('name') }}">
+                                <input type="text" id="name" name="name" class="@error('name') is-invalid @enderror" required="required" placeholder="{{__('Full Name')}} " value="{{ old('name') }}">
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="input-field col s6">
-                                <input type="text" id="email" name="email" class="@error('email') is-invalid @enderror" required="required" placeholder="Email " value="{{ old('email') }}">
+                                <input type="text" id="email" name="email" class="@error('email') is-invalid @enderror" required="required" placeholder="{{__('Email')}} " value="{{ old('email') }}">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -83,7 +83,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s6">
-                                <input type="text" id="phone" name="phone" class="@error('phone') is-invalid @enderror" required="required" placeholder="Phone " value="{{ old('phone') }}">
+                                <input type="text" id="phone" name="phone" class="@error('phone') is-invalid @enderror" required="required" placeholder="{{__('Phone')}} " value="{{ old('phone') }}">
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -94,7 +94,7 @@
 
                         <div class="row mt-5">
 
-                            <h3 style="margin-left:12px;">Select File Type</h3>
+                            <h3 style="margin-left:12px;">{{__('Select File Type')}}</h3>
                             {{-- <div class="input-field col s12" style="margin-left:5px; display:flex;"> --}}
                                 <div class="col s12 m4 file-type-buttons">
                                     <label class="file-type-label col s6">
@@ -138,9 +138,9 @@
 
                             <div class="row mt-5">
 
-                            <h3 style="margin-left:12px;">Customer Vehicle Info</h3>
+                            <h3 style="margin-left:12px;">{{__('Customer Vehicle Info')}}</h3>
                             <div class="input-field col s6">
-                                <input type="text" id="model_year" name="model_year" class="@error('model_year') is-invalid @enderror" required="required" placeholder="Model " value="{{ old('model_year') }}">
+                                <input type="text" id="model_year" name="model_year" class="@error('model_year') is-invalid @enderror" required="required" placeholder="{{__('Model')}} " value="{{ old('model_year') }}">
                                 @error('model_year')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -149,7 +149,7 @@
                             </div>
 
                             <div class="input-field col s6">
-                                <input type="text" id="license_plate" name="license_plate" class="@error('email') is-invalid @enderror" required="required" placeholder="License Plate " value="{{ old('model_year') }}">
+                                <input type="text" id="license_plate" name="license_plate" class="@error('email') is-invalid @enderror" required="required" placeholder="{{__('License Plate')}} " value="{{ old('model_year') }}">
                                 @error('license_plate')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -157,7 +157,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s12">
-                                <input type="text" id="vin_number" name="vin_number" class="@error('vin_number') is-invalid @enderror" required="required" placeholder="Vin Number " value="{{ old('model_year') }}">
+                                <input type="text" id="vin_number" name="vin_number" class="@error('vin_number') is-invalid @enderror" required="required" placeholder="{{__('Vin Number')}} " value="{{ old('model_year') }}">
                                 @error('vin_number')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -169,7 +169,7 @@
                                 <div class="select-wrapper form-control">
                                 <select name="brand" id="brand" class="select-dropdown">
                                     @if(!old('brand'))
-                                        <option selected value="brand">Brand</option>
+                                        <option selected value="brand">{{__('Brand')}}</option>
                                     @endif
                                     @foreach ($brands as $b)
                                         <option @if(old('brand') == $b) selected @endif value="{{ $b }}">{{$b}}</option>
@@ -181,7 +181,7 @@
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
                                 <select name="model" id="model" class="select-dropdown" disabled>
-                                    <option value="model" @if(!old('model')) selected @endif disabled>Model</option>
+                                    <option value="model" @if(!old('model')) selected @endif disabled>{{__('Model')}}</option>
             
                                   </select>
                                 </div>
@@ -190,7 +190,7 @@
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
                                 <select name="version" id="version" class="select-dropdown" disabled>
-                                    <option value="version" @if(!old('version')) selected @endif disabled>Version</option>
+                                    <option value="version" @if(!old('version')) selected @endif disabled>{{__('Version')}}</option>
                                    
                                   </select>
                                 </div>
@@ -199,7 +199,7 @@
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
                                 <select name="engine" id="engine" class="select-dropdown" disabled>
-                                    <option value="engine" @if(!old('engine')) selected @endif disabled>Engine</option>
+                                    <option value="engine" @if(!old('engine')) selected @endif disabled>{{__('Engine')}}</option>
                                   </select>
                                 </div>
                             </div>
@@ -217,8 +217,8 @@
                                 <div class="select-wrapper form-control">
                                 <select name="gear_box" class="select-dropdown">
                                     <option value="gear_box" @if(!old('gear_box')) selected @endif disabled>Gears Box</option>
-                                    <option value="auto_gear_box" @if(!old('gear_box')) @endif>Automatic Gears Box</option>
-                                    <option value="manual_gear_box" @if(!old('gear_box')) selected @endif>Manual Gears Box</option>
+                                    <option value="auto_gear_box" @if(!old('gear_box')) @endif>{{__('Automatic Gears Box')}}</option>
+                                    <option value="manual_gear_box" @if(!old('gear_box')) selected @endif>{{__('Manual Gears Box')}}</option>
                                    
                                   </select>
                                 </div>
@@ -226,32 +226,31 @@
 
                             <div class="row">
                                 <div class="col s12">
-                                    <h2>General terms and conditions </h2>
+                                    <h2>{{__('General terms and conditions')}} </h2>
                                 </div>
                                 <div class="col s12">
                                     <p>
                                         <input type="checkbox" class="cgv-checkbox" id="cgv">
                                         <label for="cgv">
                                             
-                I understand and agree to <a class="modal-trigger" href="#modal" style="z-index: 1003;"><strong>the terms and conditions of sales</strong></a>
+                                            {{__('I understand and agree to')}} <a class="modal-trigger" href="#modal" style="z-index: 1003;"><strong>{{__('the terms and conditions of sales')}}</strong></a>
                                         </label>
                                     </p>
                                     <p>
                                         <input type="checkbox" class="cgv-checkbox" id="professional">
                                         <label for="professional">
-                                            Hereby, I declare that I am a professional
+                                            {{__('Hereby, I declare that I am a professional')}}
                                         </label>
                                     </p>
                                     <p>
                                         <input type="checkbox" class="cgv-checkbox" id="track">
                                         <label for="track">
-                                            I acknowledge that I am fully aware that the tuned software are dedicated to vehicles intended
-                exclusively for use on race track
+                                            {{__('I acknowledge that I am fully aware that the tuned software are dedicated to vehicles intended exclusively for use on race track')}}
             
                                         </label>
                                     </p>
                                                                             <p id="create_vehicle_form_checkbox-error-custom" class="input-field" style="display: none;">
-                                        <span class="invalid">You must accept the different conditions above to be able to submit your request.</span>
+                                        <span class="invalid">{{__('You must accept the different conditions above to be able to submit your request.')}}</span>
                                     </p>
                                 </div> 
 
@@ -261,7 +260,7 @@
 
                             <div class="row">
                                 <div class="input-field col s12 center">
-                                    <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red" disabled>Next</button>
+                                    <button type="submit" id="register_form_Register" class="waves-effect waves-light btn btn-red" disabled>{{__('Next')}}</button>
                                 </div>
                             </div>
 
