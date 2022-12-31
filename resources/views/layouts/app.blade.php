@@ -73,6 +73,18 @@
         });
 
         $(document).ready(function(e){
+
+            $(document).on('click','.button-collapse', function(ev){
+                if($(this).data('activates') == 'slide-menu'){
+                    $('#slide-menu').css('transform','translateX(0%)');
+                    $(this).data('activates', 'show');
+                }
+                else if($(this).data('activates') == 'show'){
+                    $('#slide-menu').css('transform','translateX(-100%)');
+                    $(this).data('activates', 'slide-menu');
+                }
+            });
+
             $(document).on('click','.close-message', function(ev){
                 $(this).parent().parent().hide();
             });

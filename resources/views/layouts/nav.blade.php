@@ -7,13 +7,13 @@
             <div class="nav-wrapper">
                 <ul class="right">
                     <li class="toogle-side-nav">
-                        <a href="#" data-activates="slide-menu" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                        <a href="#" data-activates="slide-menu" class="button-collapse"><i class="fa-solid fa-bars"></i></a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
-    <div id="slide-menu" class="side-nav fixed" data-simplebar-direction="vertical" style="transform: translateX(0%);">
+    <div id="slide-menu" class="side-nav fixed transform-menu" data-simplebar-direction="vertical" style="">
         <ul class="side-nav-main">
              <li class="logo hide-on-med-and-down center">
                                   <img src="https://resellers.ecutech.tech//assets/img/ecutech/logo_white.png" alt="logo" class="responsive-img">

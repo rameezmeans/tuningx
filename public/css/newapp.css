@@ -29566,3 +29566,7 @@ button[type="submit"].error i.error-icon {
 .hide {
     display: none !important;
 }
+
+.transform-menu{
+    transform: translateX(0%);
+}
