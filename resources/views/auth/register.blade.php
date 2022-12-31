@@ -53,8 +53,8 @@
                 
                                                                         <div class="form-body">
                     <div class="center">
-                        <h1 style="font-family: Roboto, sans-serif;">Register</h1>
-                        <span>To enjoy high quality tuning files through a user-friendly, intuitive web interface.</span>
+                        <h1 style="font-family: Roboto, sans-serif;">{{__('Register')}}</h1>
+                        <span>{{__('To enjoy high quality tuning files through a user-friendly, intuitive web interface.')}}</span>
                     </div>
                     
                     @if($errors->any())
@@ -66,7 +66,7 @@
 
                         <div class="row">
                             <div class="input-field col s12">
-                                <input type="text" id="name" name="name" class="@error('name') is-invalid @enderror" required="required" placeholder="Full Name *">
+                                <input type="text" id="name" name="name" class="@error('name') is-invalid @enderror" required="required" placeholder="{{__('Full Name')}} *">
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -74,7 +74,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s6">
-                                <input type="text" id="phone" name="phone" class="@error('phone') is-invalid @enderror" required="required" placeholder="Phone *">
+                                <input type="text" id="phone" name="phone" class="@error('phone') is-invalid @enderror" required="required" placeholder="{{__('Phone')}} *">
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -82,7 +82,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s6">
-                                <input type="text" id="email" name="email" class="@error('email') is-invalid @enderror" required="required" placeholder="Email *">
+                                <input type="text" id="email" name="email" class="@error('email') is-invalid @enderror" required="required" placeholder="{{__('Email')}} *">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -90,7 +90,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s6">
-                                <input type="password" id="password" name="password" class="@error('password') is-invalid @enderror" required="required" placeholder="Password *">
+                                <input type="password" id="password" name="password" class="@error('password') is-invalid @enderror" required="required" placeholder="{{__('Password')}} *">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -98,7 +98,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s6">
-                                <input type="password" id="password-confirm" name="password_confirmation" class="@error('password_confirmation') is-invalid @enderror" required="required" placeholder="Password Verification *">
+                                <input type="password" id="password-confirm" name="password_confirmation" class="@error('password_confirmation') is-invalid @enderror" required="required" placeholder="{{__('Password Verification')}} *">
                                 @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -110,13 +110,13 @@
                                 <div class="select-wrapper form-control">
                                 <select name="language" id="language" class="select-dropdown">
                                     <option value="english">English</option>
-                                    <option value="french">French</option>
+                                    <option value="gr">Greek</option>
                                   </select>
                                 </div>
                             </div>
 
                             <div class="input-field col s9">
-                                <input type="text" id="address" name="address" class="@error('address') is-invalid @enderror" required="required" placeholder="Address *">
+                                <input type="text" id="address" name="address" class="@error('address') is-invalid @enderror" required="required" placeholder="{{__('Address')}} *">
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -124,7 +124,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s3">
-                                <input type="text" id="zip" name="zip" class="@error('zip') is-invalid @enderror" required="required" placeholder="Zip *">
+                                <input type="text" id="zip" name="zip" class="@error('zip') is-invalid @enderror" required="required" placeholder="{{__('Zip')}} *">
                                 @error('zip')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -132,7 +132,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s12">
-                                <input type="text" id="city" name="city" class="@error('city') is-invalid @enderror" required="required" placeholder="City *">
+                                <input type="text" id="city" name="city" class="@error('city') is-invalid @enderror" required="required" placeholder="{{__('City')}} *">
                                 @error('city')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -143,7 +143,7 @@
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
                                 <select name="country" id="country" class="select-dropdown">
-                                    <option selected disabled>Select Your Country *</option>
+                                    <option selected disabled>{{__('Select Your Country')}} *</option>
                                     <option value="AF">Afghanistan</option>
                                     <option value="AX">Aland Islands</option>
                                     <option value="AL">Albania</option>
@@ -403,7 +403,7 @@
                             <div class="input-field col s12">
                                 <div class="select-wrapper form-control">
                                 <select name="status" id="status" class="select-dropdown">
-                                    <option value="status" selected disabled>Select Your Status *</option>
+                                    <option value="status" selected disabled>{{__('Select Your Status')}} *</option>
                                     <option value="company">Company</option>
                                     <option value="private">Private</option>
                                     <option value="entrepreneur_microentreprise">Auto Entrepreneur / Microentreprise</option>
@@ -412,7 +412,7 @@
                             </div>
 
                             <div class="input-field col s12">
-                                <input type="text" id="company_name" name="company_name" class="@error('company_name') is-invalid @enderror" required="required" placeholder="Legal Name of the Company *">
+                                <input type="text" id="company_name" name="company_name" class="@error('company_name') is-invalid @enderror" required="required" placeholder="{{__('Legal Name of the Company')}} *">
                                 @error('company_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -421,7 +421,7 @@
                             </div>
 
                             <div class="input-field col s12">
-                                <input type="text" id="company_id" name="company_id" class="@error('company_id') is-invalid @enderror" required="required" placeholder="Company trade registration identification number">
+                                <input type="text" id="company_id" name="company_id" class="@error('company_id') is-invalid @enderror" required="required" placeholder="{{__('Company trade registration identification number')}}">
                                 @error('company_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -431,8 +431,8 @@
 
                             <div class="input-field col s12">
                                 <input type="checkbox" id="slave_tools_flag" name="slave_tools_flag" value="slave_tools_flag">
-                                <label for="slave_tools_flag"> I have slave tools.</label><br>
-                                <p style="margin-left:0.6rem;font-size:12px;">Please select at least one reading tool.</p>
+                                <label for="slave_tools_flag"> {{__('I have slave tools.')}}</label><br>
+                                <p style="margin-left:0.6rem;font-size:12px;">{{__('Please select at least one reading tool.')}}</p>
                             </div>
 
                             <div class="input-field col s12">
@@ -546,7 +546,7 @@
 
                         <div class="row">
                             <div class="input-field col s12 center">
-                                <button type="submit" id="register_form_Register" name="register_form[Register]" class="waves-effect waves-light btn btn-red">Register</button>
+                                <button type="submit" id="register_form_Register" name="register_form[Register]" class="waves-effect waves-light btn btn-red">{{__('Register')}}</button>
                             </div>
                         </div>
 
@@ -556,7 +556,7 @@
             </div>
             <div class="row">
                 <div class="col s12 center m-t-lg">
-                    <a class="btn waves-effect waves-light btn-grey" href="/login">Already registered ? Login</a>
+                    <a class="btn waves-effect waves-light btn-grey" href="/login">{{__('Already registered')}} ? {{__('Login')}}</a>
                 </div>
             </div>
         </div>
@@ -569,7 +569,7 @@
 
         $(".select-dropdown-multi").select2({
 			closeOnSelect : false,
-			placeholder : "Select Tools",
+			placeholder : "{{__('Select Tools')}}",
 			// allowHtml: true,
 			allowClear: true,
 			tags: true // создает новые опции на лету

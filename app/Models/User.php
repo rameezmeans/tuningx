@@ -59,6 +59,10 @@ class User extends Authenticatable
         return $this->hasMany(Credit::class); 
     }
 
+    public function translation(){
+        return $this->hasOne(Translation::class);
+    }
+
     public function group(){
         return $this->belongsTo(Group::class); 
     }

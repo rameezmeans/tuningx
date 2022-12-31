@@ -14,14 +14,14 @@
                 
                                                                         <div class="form-body">
                     <div class="center">
-                        <h1 style="font-family: Roboto, sans-serif;">Hello !</h1>
-                        <span>It's nice to see you here again</span>
+                        <h1 style="font-family: Roboto, sans-serif;">{{__('Hello')}} !</h1>
+                        <span>{{__('Its nice to see you here again')}}</span>
                     </div>
                     <form action="{{ route('login') }}" name="login_form" method="post" class="login-form" role="form" id="form" novalidate="novalidate" data-bitwarden-watching="1">
                          @csrf
                         <div class="row">
                             <div class="input-field col s12">
-                                <input type="email" id="login_form_Email" name="email" required="required" class="validate valid" placeholder="Email" data-com.bitwarden.browser.user-edited="yes" aria-invalid="false">
+                                <input type="email" id="login_form_Email" name="email" required="required" class="validate valid" placeholder="{{__('Email')}}" data-com.bitwarden.browser.user-edited="yes" aria-invalid="false">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input type="password" id="login_form_Password" name="password" required="required" class="validate valid" placeholder="Password" data-com.bitwarden.browser.user-edited="yes" aria-invalid="false">
+                                <input type="password" id="login_form_Password" name="password" required="required" class="validate valid" placeholder="{{__('Password')}}" data-com.bitwarden.browser.user-edited="yes" aria-invalid="false">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -41,20 +41,20 @@
                         </div>
                                                 <div class="row">
                             <div class="input-field col s12 center">
-                            <button type="submit" id="login_form_Login" name="login_form[Login]" class="waves-effect waves-light btn btn-red">Login</button>
+                            <button type="submit" id="login_form_Login" name="login_form[Login]" class="waves-effect waves-light btn btn-red">{{__('Login')}}</button>
                             </div>
                         </div>
                     <input type="hidden" id="login_form__token" name="login_form[_token]" value="967c71b6fbb3be7de695b.FGsc3z5_d4x9ucc4467_ZAOYfnDfj-Ntn-D45H89GXU.JAJprVIPMf4P44VzluOaATPqKDyv24Er2dCJhgt6LCd9P3idfzNFvgrbrA"></form>
                     <div class="row">
                         <div class="col s12 center">
-                            <p class="margin medium-small"><a href="/en/reset">Forgot password ?</a></p>
+                            <p class="margin medium-small"><a href="/en/reset">{{__('Forgot password')}} ?</a></p>
                         </div>
                     </div>
                 </div>
             </div>
                             <div class="row">
                 <div class="col s12 center m-t-lg">
-                    <a class="btn waves-effect waves-light btn-grey" href="/register">Sign up now !</a>
+                    <a class="btn waves-effect waves-light btn-grey" href="/register">{{__('Sign up now')}} !</a>
                 </div>
             </div>
                         </div>
