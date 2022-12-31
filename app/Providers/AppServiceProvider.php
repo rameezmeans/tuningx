@@ -24,13 +24,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {   
-        // $ip = get_client_ip();
+        $ip = get_client_ip();
 
-        // $translation = Translation::where('ip', $ip)->first();
-        // if($translation){
-        //     app()->setLocale($translation->locale);
-        //     session()->put('locale', $translation->locale);
-        // }
+        $translation = Translation::where('ip', $ip)->first();
+        if($translation){
+            app()->setLocale($translation->locale);
+            session()->put('locale', $translation->locale);
+        }
 
         view()->composer('partials.language_switcher', function ($view) {
             $view->with('current_locale', app()->getLocale());
