@@ -85,8 +85,17 @@ Route::get('phpinfo', function(){ phpinfo(); });
 Route::get('language/{locale}', function ($locale) {
     
     $user = Auth::user();
+    
     if(!$user->translation){
         $translation = new Translation();
+        $translation->user_id = $user->id;
+        $translation->locale = $locale;
+        $translation->ip = get_client_ip();
+        $translation->save();
+    }
+    else{
+
+        $translation = $user->translation;
         $translation->user_id = $user->id;
         $translation->locale = $locale;
         $translation->ip = get_client_ip();

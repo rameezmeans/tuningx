@@ -29,10 +29,10 @@
                     @auth
                         <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
                     @else
-                        <select id="language" name="lanugage" style="margin-right:20px;">
+                        {{-- <select id="language" name="lanugage" style="margin-right:20px;">
                             <option value="en" @if($locale && $locale == 'en') selected @endif>English</option>
                             <option value="gr" @if($locale && $locale == 'gr') selected @endif>Greek</option>
-                        </select>
+                        </select> --}}
                         
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
