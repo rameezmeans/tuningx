@@ -718,15 +718,15 @@
                         <img class="modal-loading" src="https://i.gifer.com/VAyR.gif" width="10%;">
                     </div>
                     <div>
-                        <h3 class="modal-information">Important Information</h3>
-                        <div class="modal-comments">Please click on Confirm button to download the file.</div>
+                        <h3 class="modal-information">{{__('Important Information')}}</h3>
+                        <div class="modal-comments">{{__('Please click on Confirm button to download the file.')}}</div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-white close-modal">Close</button>
-                    <a href="#" class="btn btn-green download-path-original modal-confirm" style="margin-right: 10px;">Confirm</a>
+                    <button type="button" class="btn btn-white close-modal">{{__('Close')}}</button>
+                    <a href="#" class="btn btn-green download-path-original modal-confirm" style="margin-right: 10px;">{{__('Confirm')}}</a>
                 </div>
             </div>
         </div>
@@ -735,10 +735,10 @@
         <div class="row header-vehicle-id z-depth-1">
             <div class="container">
                 <div class="col s7 m8 l8">
-                    <h1>Individual history</h1>
+                    <h1>{{__('Individual history')}}</h1>
                 </div>
                 <div class="col s5 m4 l4 center">
-                    <a class="btn btn-red waves-effect waves-light btn-vehicle-id" id="back-vehicle-id" href="{{ route('file-history') }}"><span class="hide-on-med-and-down">Back to history</span>
+                    <a class="btn btn-red waves-effect waves-light btn-vehicle-id" id="back-vehicle-id" href="{{ route('file-history') }}"><span class="hide-on-med-and-down">{{__('Back to history')}}</span>
                         <i class="fa fa-arrow-left"></i>
                     </a>
                 </div>
@@ -755,9 +755,9 @@
                                 <div class="wow" style="visibility: visible !important;">
                                     <i class="fa fa-cloud-upload"></i>
                                     <span>
-                                        New request
+                                        {{__('New request')}}
                                     </span>
-                                    <small>Upload new read file</small>
+                                    <small>{{__('Upload new read file')}}</small>
                                 </div>
 
                             </button>
@@ -766,9 +766,9 @@
                                 <div class="wow" style="visibility: visible !important;">
                                     <i class="fa fa-headset"></i>
                                     <span>
-                                        Help
+                                        {{__('Help')}}
                                     </span>
-                                    <small>Get in touch with the engineer</small>
+                                    <small>{{__('Get in touch with the engineer')}}</small>
                                 </div>
 
                             </button>
@@ -776,9 +776,9 @@
                                 <div class="wow" style="visibility: visible !important;">
                                     <i class="fa fa-calendar"></i>
                                     <span>
-                                        Internal event
+                                        {{__('Internal event')}}
                                     </span>
-                                    <small>Add new internal event</small>
+                                    <small>{{__('Add new internal event')}}</small>
                                 </div>
                             </button>
                         </div>
@@ -787,14 +787,14 @@
                         <div id="London" class="tabcontent timeline-actions z-depth-1">
                             <form method="POST" action="{{ route('request-file') }}" enctype="multipart/form-data">
                                 <div class="tab-content">
-                                    <label style="font-size: 16px;">Send a new file request</label>
+                                    <label style="font-size: 16px;">{{__('Send a new file request')}}</label>
 
                                     @csrf
                                     <input type="hidden" id="tool_type" name="tool_type" value="">
                                     <input type="hidden" name="file_id" value="{{$file->id}}">
                                     <div class="row mt-5">
 
-                                        <h3 style="margin-left:12px;">Select File Type</h3>
+                                        <h3 style="margin-left:12px;">{{__('Select File Type')}}</h3>
                                         {{-- <div class="input-field col s12" style="margin-left:5px; display:flex;"> --}}
                                         <div class="col s12 m4 file-type-buttons">
                                             <label class="file-type-label col s6">
@@ -836,26 +836,26 @@
                                     <div class="col s6" style="float: right !important;">
                                         <div class="select-wrapper form-control">
                                             <select name="request_type" id="ecu_file_select" class="select-dropdown  f-dropdown hide">
-                                                <option value="status" selected disabled>Request Type </option>
-                                                <option value="new_upload">New upload</option>
-                                                <option value="tuning_evolution">Tuning Evolution - I want to make a new tuning request.</option>
-                                                <option value="back_to_tuned">Back to tuned - The car has been updated by the dealer, please renew the tuning.</option>
-                                                <option value="back_to_stock">Back to stock - Send me back the original version.</option>
-                                                <option value="back_to_stock_with_virtual_read">Back to stock with virtual read - Its a virtual read, can you send me this file back to flash the car in stock mode?</option>
-                                                <option value="problem_RMA">Problem - RMA - I've an issue with this file, can you check?</option>
+                                                <option value="status" selected disabled>{{__('Request Type')}} </option>
+                                                <option value="new_upload">{{__('New upload')}}</option>
+                                                <option value="tuning_evolution">{{__('Tuning Evolution - I want to make a new tuning request.')}}</option>
+                                                <option value="back_to_tuned">{{__('Back to tuned - The car has been updated by the dealer, please renew the tuning.')}}</option>
+                                                <option value="back_to_stock">{{__('Back to stock - Send me back the original version.')}}</option>
+                                                <option value="back_to_stock_with_virtual_read">{{__('Back to stock with virtual read - Its a virtual read, can you send me this file back to flash the car in stock mode?')}}</option>
+                                                <option value="problem_RMA">{{__('Problem - RMA - Ive an issue with this file, can you check?')}}</option>
                                             </select>
                                         </div>
                                         <div class="select-wrapper form-control">
                                             <select name="request_type" id="gearbox_file_select" class="select-dropdown  f-dropdown hide">
-                                                <option value="status" selected disabled>Request Type </option>
-                                                <option value="new_upload">New Upload</option>
+                                                <option value="status" selected disabled>{{__('Request Type')}} </option>
+                                                <option value="new_upload">{{__('New Upload')}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     {{-- </div> --}}
                                     <div class="input-field col s12">
                                         <div class="select-wrapper form-control">
-                                            <select class="f-control f-dropdown" name="master_tools" id="master_tools" placeholder="Select your reading tool">
+                                            <select class="f-control f-dropdown" name="master_tools" id="master_tools" placeholder="{{__('Select your reading tool')}}">
                                                 <option value=""> </option>
                                                 @foreach($masterTools as $ma)
                                                 <option data-image="{{ get_dropdown_image(trim_str($ma)) }}" value="{{$ma.'.master'}}">{{get_tools(trim_str($ma)).' (master)'}}</option>
@@ -878,7 +878,7 @@
                                             <input type="file" name="request_file" class="" id="request_file">
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" name="attachment_request_file" id="attachment_request_file" type="text" placeholder="File">
+                                            <input class="file-path validate" name="attachment_request_file" id="attachment_request_file" type="text" placeholder="{{__('File')}}">
                                         </div>
                                         @error('request_file')
                                         <p class="invalid-feedback" role="alert">
@@ -899,7 +899,7 @@
                         </div>
                     </div>
                     <div class="tab-footer text-center">
-                        <button class="btn btn-red waves-effect waves-light submit-new-request" id="submit-file-request" type="submit" disabled><i class="fa fa-hand-o-right"></i>Next</button>
+                        <button class="btn btn-red waves-effect waves-light submit-new-request" id="submit-file-request" type="submit" disabled><i class="fa fa-hand-o-right"></i>{{__('Next')}}</button>
                     </div>
                     </form>
                 </div>
@@ -910,10 +910,10 @@
                         @csrf
                         <input type="hidden" name="file_id" value="{{$file->id}}">
                         <div class="tab-content">
-                            <label style="font-size: 16px;">Ask for engineer's support</label>
+                            <label style="font-size: 16px;">{{__('Ask for engineers support')}}</label>
                             <div class="row mt-5">
                                 <div class="input-field col s12">
-                                    <textarea id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="Internal note for Engineers."></textarea>
+                                    <textarea id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="{{__('Internal note for Engineers.')}}"></textarea>
 
                                     <div class="file-field input-field col s12">
                                         <div class="btn">
@@ -921,7 +921,7 @@
                                             <input type="file" name="engineers_attachement" class="" id="engineers_attachement">
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" name="engineers_attachement_field" id="engineers_attachement_field" type="text" placeholder="File">
+                                            <input class="file-path validate" name="engineers_attachement_field" id="engineers_attachement_field" type="text" placeholder="{{__('File')}}">
                                         </div>
                                         @error('engineers_attachement')
                                         <p class="invalid-feedback" role="alert">
@@ -942,7 +942,7 @@
                             </div>
                         </div>
                         <div class="tab-footer text-center">
-                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Send</button>
+                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>{{__('Send')}}</button>
                         </div>
                     </form>
                 </div>
@@ -952,15 +952,14 @@
                         @csrf
                         <input type="hidden" name="file_id" value="{{$file->id}}">
                         <div class="tab-content">
-                            <p style="font-size: 16px;">Add internal note to vehicle's timeline</p>
+                            <p style="font-size: 16px;">{{__('Add internal note to vehicles timeline')}}</p>
                             <br>
-                            <small class="blue-olsx-text"><i class="fa fa-warning"></i> You are the only one to see this information, engineers are not notified. This is not a support
-                                request.
+                            <small class="blue-olsx-text"><i class="fa fa-warning"></i> {{__('You are the only one to see this information, engineers are not notified. This is not a support request.')}}
                             </small>
 
                             <div class="row mt-5">
                                 <div class="input-field col s12">
-                                    <textarea id="events_internal_notes" name="events_internal_notes" class="materialize-textarea" placeholder="Internal note description."></textarea>
+                                    <textarea id="events_internal_notes" name="events_internal_notes" class="materialize-textarea" placeholder="{{__('Internal note description.')}}"></textarea>
 
                                     <div class="file-field input-field col s12">
                                         <div class="btn">
@@ -968,7 +967,7 @@
                                             <input type="file" name="events_attachement" class="" id="events_attachement">
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" name="events_attachement_field" id="events_attachement_field" type="text" placeholder="File">
+                                            <input class="file-path validate" name="events_attachement_field" id="events_attachement_field" type="text" placeholder="{{__('File')}}">
                                         </div>
                                         @error('engineers_attachement')
                                         <p class="invalid-feedback" role="alert">
@@ -980,7 +979,7 @@
                             </div>
                         </div>
                         <div class="tab-footer text-center">
-                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Send</button>
+                            <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>{{__('Send')}}</button>
                         </div>
                     </form>
                 </div>
@@ -992,7 +991,7 @@
                         </div>
                         <div class="timeline-content">
                             <span class="push-bit">
-                                File Sent
+                                {{__('File Sent')}}
                             </span>
                             <ul class="actions-list">
                                 <li>
@@ -1005,14 +1004,14 @@
                             <small class="timeline-time-small">{{ $file->created_at->format('H:i:s d/m/Y') }}</small>
                             <div class="divider"></div>
                             <span>
-                                <span class="red-olsx-text">Filename :</span> {{ $file->file_attached }}
+                                <span class="red-olsx-text">{{__('Filename')}} :</span> {{ $file->file_attached }}
                             </span>
                             <div class="divider">
                             </div>
 
 
                             <p class="push-bit m-t-em">
-                                The file has been sent to engineers with the following request :
+                                {{__('The file has been sent to engineers with the following request')}} :
                             </p>
 
                             @if($file->stages)
@@ -1034,7 +1033,7 @@
                             </div>
 
                             <div class="push-bit">
-                                <span class="red-olsx-text">Reading tool : </span>
+                                <span class="red-olsx-text">{{__('Reading tool')}} : </span>
                                 <span class="chip-stage">
                                     <img src="{{ get_dropdown_image($file->tool) }}" class="tool-logo-small">{{ strtoupper($file->tool_type) }}</span>
                                 </span>
@@ -1043,25 +1042,25 @@
                                 </div>
                                 <p></p>
                                 <p class="push-bit">
-                                    <span class="red-olsx-text">Brand Group: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="feedback-logo">
+                                    <span class="red-olsx-text">{{__('Brand Group')}}: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="feedback-logo">
                                 </p>
                                 <p class="push-bit">
-                                    <span class="red-olsx-text">Brand: </span>{{ $file->brand }}
+                                    <span class="red-olsx-text">{{__('Brand')}}: </span>{{ $file->brand }}
                                 </p>
                                 <p class="push-bit">
-                                    <span class="red-olsx-text">Model: </span>{{ $file->model }}
+                                    <span class="red-olsx-text">{{__('Model')}}: </span>{{ $file->model }}
                                 </p>
                                 <p class="push-bit">
-                                    <span class="red-olsx-text">Version:</span> {{ $file->version }}
+                                    <span class="red-olsx-text">{{__('Version')}}:</span> {{ $file->version }}
                                 </p>
                                 <p class="push-bit">
-                                    <span class="red-olsx-text">Engine:</span> {{ $file->engine }}
+                                    <span class="red-olsx-text">{{__('Engine')}}:</span> {{ $file->engine }}
                                 </p>
                                 <p class="push-bit">
                                     <span class="red-olsx-text">ECU:</span> {{ $file->ecu }}
                                 </p>
                                 <p class="push-bit">
-                                    <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
+                                    <span class="red-olsx-text">{{__('Gear Box')}}: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
                                 </p>
                             </div>
                         </div>
@@ -1074,9 +1073,9 @@
                         <div class="timeline-content-subevent">
                             <span class="push-bit">
                                 @if($engineersMessage->engineer)
-                                Message received
+                                {{__('Message received')}}
                                 @else
-                                Message sent
+                                {{__('Message sent')}}
                                 @endif
                             </span>
                             <div class="row m-b-none">
@@ -1107,7 +1106,7 @@
                         </div>
                         <div class="timeline-content-subevent">
                             <span class="push-bit">
-                                Message sent
+                                {{__('Message sent')}}
                             </span>
                             <div class="row m-b-none">
                                 <div class="col s6">
@@ -1123,7 +1122,7 @@
                             <p></p>
                             @if($row->file_url_attachment)
                             <div class="divider"></div>
-                            <span class="red-olsx-text">Filename: </span>{{$row->file_url_attachment}}
+                            <span class="red-olsx-text">{{__('Filename')}}: </span>{{$row->file_url_attachment}}
                             @endif
                         </div>
                     </li>
@@ -1136,7 +1135,7 @@
                         </div>
                         <div class="timeline-content-subevent">
                             <span class="push-bit">
-                                Message sent
+                                {{__('Message sent')}}
                             </span>
                             <div class="row m-b-none">
                                 <div class="col s6">
@@ -1152,7 +1151,7 @@
                             <p></p>
                             @if($row->events_attachement)
                             <div class="divider"></div>
-                            <span class="red-olsx-text">Filename: </span>{{$row->events_attachement}}
+                            <span class="red-olsx-text">{{__('Filename')}}: </span>{{$row->events_attachement}}
                             @endif
                         </div>
                     </li>
@@ -1165,7 +1164,7 @@
                         </div>
                         <div class="timeline-content">
                             <span class="push-bit">
-                                File Sent
+                                {{__('File Sent')}}
                             </span>
 
                             <div class="divider"></div>
@@ -1175,7 +1174,7 @@
                                 <span>
                                     @if($row->engineer == 1)
 
-                                    <span class="red-olsx-text">Filename :</span>
+                                    <span class="red-olsx-text">{{__('Filename')}} :</span>
 
                                     {{ $row->request_file }}
 
@@ -1197,7 +1196,7 @@
                                     <span> --}}
 
                                 <p class="push-bit m-t-em">
-                                    The file has been sent to engineers with the following request :
+                                    {{__('The file has been sent to engineers with the following request')}} :
                                 </p>
 
                                 @if($file->stages)
@@ -1228,7 +1227,7 @@
 
 
                                 <div class="push-bit">
-                                    <span class="red-olsx-text">Reading tool : </span>
+                                    <span class="red-olsx-text">{{__('Reading tool')}} : </span>
                                     <span class="chip-stage">
                                         <img src="{{ get_dropdown_image($file->tool) }}" class="tool-logo-small">{{ strtoupper($file->tool_type) }}</span>
                             </span>
@@ -1238,25 +1237,25 @@
 
                             <p></p>
                             <p class="push-bit">
-                                <span class="red-olsx-text">Brand Group: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="feedback-logo">
+                                <span class="red-olsx-text">{{__('Brand Group')}}: </span> <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="feedback-logo">
                             </p>
                             <p class="push-bit">
-                                <span class="red-olsx-text">Brand: </span>{{ $file->brand }}
+                                <span class="red-olsx-text">{{__('Brand')}}: </span>{{ $file->brand }}
                             </p>
                             <p class="push-bit">
-                                <span class="red-olsx-text">Model: </span>{{ $file->model }}
+                                <span class="red-olsx-text">{{__('Model')}}: </span>{{ $file->model }}
                             </p>
                             <p class="push-bit">
-                                <span class="red-olsx-text">Version:</span> {{ $file->version }}
+                                <span class="red-olsx-text">{{__('Version')}}:</span> {{ $file->version }}
                             </p>
                             <p class="push-bit">
-                                <span class="red-olsx-text">Engine:</span> {{ $file->engine }}
+                                <span class="red-olsx-text">{{__('Engine')}}:</span> {{ $file->engine }}
                             </p>
                             <p class="push-bit">
                                 <span class="red-olsx-text">ECU:</span> {{ $file->ecu }}
                             </p>
                             <p class="push-bit">
-                                <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
+                                <span class="red-olsx-text">{{__('Gear Box')}}: </span>{{ ucwords(str_replace('_',' ',$file->gear_box)) }}
                             </p>
 
                             @if($row->engineer == 1)
@@ -1266,8 +1265,8 @@
 
 
                             <div class="tab" style="height: 70px;">
-                                <button class="tablinks-smaller defaulti tablinks{{$row->id}}" onclick="openCity1(event, 'London1', {{$row->id}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>Results</button>
-                                <button class="tablinks-smaller tablinks{{$row->id}}" onclick="openCity1(event, 'Paris1', {{$row->id}})"><i class="fa fa-file" style="margin-right:10px;"></i>Logs</button>
+                                <button class="tablinks-smaller defaulti tablinks{{$row->id}}" onclick="openCity1(event, 'London1', {{$row->id}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>{{__('Results')}}</button>
+                                <button class="tablinks-smaller tablinks{{$row->id}}" onclick="openCity1(event, 'Paris1', {{$row->id}})"><i class="fa fa-file" style="margin-right:10px;"></i>{{__('Logs')}}</button>
                             </div>
 
                             <!-- Tab content -->
@@ -1343,7 +1342,7 @@
                                     @csrf
                                     <input type="hidden" name="file_id" value="{{$file->id}}">
                                     <div class="tab-content">
-                                        <p style="font-size: 16px;">Upload and watch the datalogs</p>
+                                        <p style="font-size: 16px;">{{__('Upload and watch the datalogs')}}</p>
                                         <div class="row mt-5">
                                             <div class="input-field col s12">
                                                 <textarea id="file_url" name="file_url" class="materialize-textarea" placeholder="URL"></textarea>
@@ -1353,7 +1352,7 @@
                                                         <input type="file" name="file_url_attachment" id="file_url_attachment">
                                                     </div>
                                                     <div class="file-path-wrapper">
-                                                        <input class="file-path validate" name="file_url_attachment_field" id="file_url_attachment_field" type="text" placeholder="File">
+                                                        <input class="file-path validate" name="file_url_attachment_field" id="file_url_attachment_field" type="text" placeholder="{{__('File')}}">
                                                     </div>
                                                     @error('file_url_attachment')
                                                     <p class="invalid-feedback" role="alert">
@@ -1365,7 +1364,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-footer text-center">
-                                        <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Add To The Timeline</button>
+                                        <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>{{__('Add To The Timeline')}}</button>
                                     </div>
                                 </form>
                             </div>
@@ -1384,7 +1383,7 @@
                 </div>
                 <div class="timeline-content">
                     <span class="push-bit">
-                        File Sent
+                        {{__('File Sent')}}
                     </span>
 
                     <ul class="actions-list">
@@ -1405,7 +1404,7 @@
                                     <span> --}}
 
                             <p class="push-bit m-t-em">
-                                The file has been sent to engineers with the following request :
+                                {{__('The file has been sent to engineers with the following request')}} :
                             </p>
 
                             @if($row->stages)
@@ -1430,7 +1429,7 @@
                             </div>
 
                             <div class="push-bit">
-                                <span class="red-olsx-text">Reading tool : </span>
+                                <span class="red-olsx-text">{{__('Reading tool')}} : </span>
                                 <span class="chip-stage">
                                     <img src="{{ get_dropdown_image($row->tool) }}" class="tool-logo-small">{{ strtoupper($row->tool_type) }}</span>
                         </span>
@@ -1440,25 +1439,25 @@
 
                         <p></p>
                         <p class="push-bit">
-                            <span class="red-olsx-text">Brand Group: </span> <img src="{{ $row->vehicle()->Brand_image_URL }}" alt="{{$row->brand}}" class="feedback-logo">
+                            <span class="red-olsx-text">{{__('Brand Group')}}: </span> <img src="{{ $row->vehicle()->Brand_image_URL }}" alt="{{$row->brand}}" class="feedback-logo">
                         </p>
                         <p class="push-bit">
-                            <span class="red-olsx-text">Brand: </span>{{ $row->brand }}
+                            <span class="red-olsx-text">{{__('Brand')}}: </span>{{ $row->brand }}
                         </p>
                         <p class="push-bit">
-                            <span class="red-olsx-text">Model: </span>{{ $row->model }}
+                            <span class="red-olsx-text">{{__('Model')}}: </span>{{ $row->model }}
                         </p>
                         <p class="push-bit">
-                            <span class="red-olsx-text">Version:</span> {{ $row->version }}
+                            <span class="red-olsx-text">{{__('Version')}}:</span> {{ $row->version }}
                         </p>
                         <p class="push-bit">
-                            <span class="red-olsx-text">Engine:</span> {{ $row->engine }}
+                            <span class="red-olsx-text">{{__('Engine')}}:</span> {{ $row->engine }}
                         </p>
                         <p class="push-bit">
                             <span class="red-olsx-text">ECU:</span> {{ $row->ecu }}
                         </p>
                         <p class="push-bit">
-                            <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$row->gear_box)) }}
+                            <span class="red-olsx-text">{{__('Gear Box')}}: </span>{{ ucwords(str_replace('_',' ',$row->gear_box)) }}
                         </p>
 
                         <div class="divider">
@@ -1468,10 +1467,10 @@
                             @csrf
                             <input type="hidden" name="file_id" value="{{$row->id}}">
                             <div class="tab-content">
-                                <label style="font-size: 16px;">Ask for engineer's support</label>
+                                <label style="font-size: 16px;">{{__('Ask for engineers support')}}</label>
                                 <div class="row mt-5">
                                     <div class="input-field col s12">
-                                        <textarea id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="Internal note for Engineers."></textarea>
+                                        <textarea id="car-info-memo" name="egnineers_internal_notes" class="materialize-textarea" placeholder="{{__('Internal note for Engineers.')}}"></textarea>
 
                                         <div class="file-field input-field col s12">
                                             <div class="btn">
@@ -1479,7 +1478,7 @@
                                                 <input type="file" name="engineers_attachement" class="" id="engineers_attachement">
                                             </div>
                                             <div class="file-path-wrapper">
-                                                <input class="file-path validate" name="engineers_attachement_field" id="engineers_attachement_field" type="text" placeholder="File">
+                                                <input class="file-path validate" name="engineers_attachement_field" id="engineers_attachement_field" type="text" placeholder="{{__('File')}}">
                                             </div>
                                             @error('engineers_attachement')
                                             <p class="invalid-feedback" role="alert">
@@ -1500,7 +1499,7 @@
                                 </div>
                             </div>
                             <div class="tab-footer text-center">
-                                <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Send</button>
+                                <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>{{__('Send')}}</button>
                             </div>
                         </form>
 
@@ -1518,9 +1517,9 @@
             <div class="timeline-content-subevent">
                 <span class="push-bit">
                     @if($engineersMessage->engineer)
-                    Message received
+                    {{__('Message received')}}
                     @else
-                    Message sent
+                    {{__('Message sent')}}
                     @endif
                 </span>
                 <div class="row m-b-none">
@@ -1539,7 +1538,7 @@
                 <p></p>
                 @if($engineersMessage->engineers_attachement)
                 <div class="divider"></div>
-                <span class="red-olsx-text">Filename: </span>{{$engineersMessage->engineers_attachement}}
+                <span class="red-olsx-text">{{__('Filename')}}: </span>{{$engineersMessage->engineers_attachement}}
                 @endif
             </div>
         </li>
@@ -1552,7 +1551,7 @@
             </div>
             <div class="timeline-content-subevent">
                 <span class="push-bit">
-                    Message sent
+                    {{__('Message sent')}}
                 </span>
                 <div class="row m-b-none">
                     <div class="col s6">
@@ -1568,7 +1567,7 @@
                 <p></p>
                 @if($r->file_url_attachment)
                 <div class="divider"></div>
-                <span class="red-olsx-text">Filename: </span>{{$r->file_url_attachment}}
+                <span class="red-olsx-text">{{__('Filename')}}: </span>{{$r->file_url_attachment}}
                 @endif
             </div>
         </li>
@@ -1581,7 +1580,7 @@
             </div>
             <div class="timeline-content">
                 <span class="push-bit">
-                    File Received
+                    {{__('File Received')}}
                 </span>
 
                 <div class="divider"></div>
@@ -1591,7 +1590,7 @@
                     <span>
                         @if($internal->engineer == 1)
 
-                        <span class="red-olsx-text">Filename :</span>
+                        <span class="red-olsx-text">{{__('Filename')}} :</span>
 
                         {{ $internal->request_file }}
 
@@ -1617,7 +1616,7 @@
                                         <span> --}}
 
         <p class="push-bit m-t-em">
-            The file has been sent to engineers with the following request :
+            {{__('The file has been sent to engineers with the following request')}} :
         </p>
 
         {{-- @php 
@@ -1648,7 +1647,7 @@
         </div>
 
         <div class="push-bit">
-            <span class="red-olsx-text">Reading tool : </span>
+            <span class="red-olsx-text">{{__('Reading tool')}} : </span>
             <span class="chip-stage">
                 <img src="{{ get_dropdown_image($row->tool) }}" class="tool-logo-small">{{ strtoupper($row->tool_type) }}</span>
             </span>
@@ -1658,25 +1657,25 @@
 
             <p></p>
             <p class="push-bit">
-                <span class="red-olsx-text">Brand Group: </span> <img src="{{ $row->vehicle()->Brand_image_URL }}" alt="{{$row->brand}}" class="feedback-logo">
+                <span class="red-olsx-text">{{__('Brand Group')}}: </span> <img src="{{ $row->vehicle()->Brand_image_URL }}" alt="{{$row->brand}}" class="feedback-logo">
             </p>
             <p class="push-bit">
-                <span class="red-olsx-text">Brand: </span>{{ $row->brand }}
+                <span class="red-olsx-text">{{__('Brand')}}: </span>{{ $row->brand }}
             </p>
             <p class="push-bit">
-                <span class="red-olsx-text">Model: </span>{{ $row->model }}
+                <span class="red-olsx-text">{{__('Model')}}: </span>{{ $row->model }}
             </p>
             <p class="push-bit">
-                <span class="red-olsx-text">Version:</span> {{ $row->version }}
+                <span class="red-olsx-text">{{__('Version')}}:</span> {{ $row->version }}
             </p>
             <p class="push-bit">
-                <span class="red-olsx-text">Engine:</span> {{ $row->engine }}
+                <span class="red-olsx-text">{{__('Engine')}}:</span> {{ $row->engine }}
             </p>
             <p class="push-bit">
                 <span class="red-olsx-text">ECU:</span> {{ $row->ecu }}
             </p>
             <p class="push-bit">
-                <span class="red-olsx-text">Gear Box: </span>{{ ucwords(str_replace('_',' ',$row->gear_box)) }}
+                <span class="red-olsx-text">{{__('Gear Box')}}: </span>{{ ucwords(str_replace('_',' ',$row->gear_box)) }}
             </p>
 
             @if($internal->engineer == 1)
@@ -1686,8 +1685,8 @@
 
 
             <div class="tab" style="height: 70px;">
-                <button class="tablinks-smaller defaulti tablinks{{$internal->id}}" onclick="openCity1(event, 'London1', {{$internal->id}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>Results</button>
-                <button class="tablinks-smaller tablinks{{$internal->id}}" onclick="openCity1(event, 'Paris1', {{$internal->id}})"><i class="fa fa-file" style="margin-right:10px;"></i>Logs</button>
+                <button class="tablinks-smaller defaulti tablinks{{$internal->id}}" onclick="openCity1(event, 'London1', {{$internal->id}})"><i class="fa fa-smile-o" style="margin-right:10px;"></i>{{__('Results')}}</button>
+                <button class="tablinks-smaller tablinks{{$internal->id}}" onclick="openCity1(event, 'Paris1', {{$internal->id}})"><i class="fa fa-file" style="margin-right:10px;"></i>{{__('Logs')}}</button>
             </div>
 
             <!-- Tab content -->
@@ -1763,7 +1762,7 @@
                     @csrf
                     <input type="hidden" name="file_id" value="{{$row->id}}">
                     <div class="tab-content">
-                        <p style="font-size: 16px;">Upload and watch the datalogs</p>
+                        <p style="font-size: 16px;">{{__('Upload and watch the datalogs')}}</p>
                         <div class="row mt-5">
                             <div class="input-field col s12">
                                 <textarea id="file_url" name="file_url" class="materialize-textarea" placeholder="URL"></textarea>
@@ -1773,7 +1772,7 @@
                                         <input type="file" name="file_url_attachment" id="file_url_attachment">
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input class="file-path validate" name="file_url_attachment_field" id="file_url_attachment_field" type="text" placeholder="File">
+                                        <input class="file-path validate" name="file_url_attachment_field" id="file_url_attachment_field" type="text" placeholder="{{__('File')}}">
                                     </div>
                                     @error('file_url_attachment')
                                     <p class="invalid-feedback" role="alert">
@@ -1785,7 +1784,7 @@
                         </div>
                     </div>
                     <div class="tab-footer text-center">
-                        <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>Add To The Timeline</button>
+                        <button class="btn btn-red waves-effect waves-light submit-new-request" type="submit"><i class="fa fa-hand-o-right"></i>{{__('Add To The Timeline')}}</button>
                     </div>
                 </form>
             </div>
@@ -2217,13 +2216,13 @@
 
         <div class="vehicle-id">
             <form action="{{route('edit-milage');}}" class="car-info-form" name="car-info" enctype="application/x-www-form-urlencoded" method="post" novalidate="novalidate">
-                <h3 class="id-info">Car information</h3>
+                <h3 class="id-info">{{__('Car information')}}</h3>
 
                 @csrf
                 <input type="hidden" name="id" value="{{$file->id}}">
 
-                <p>VIN <span class="label">{{$file->vin_number}}</span></p>
-                <p>Gearbox
+                <p>{{__('VIN')}} <span class="label">{{$file->vin_number}}</span></p>
+                <p>{{__('Gearbox')}}
                     <span class="label">
                         {{$file->gear_box}}
                     </span>
@@ -2234,24 +2233,24 @@
                     </span>
                 </p>
                 <p>
-                    Plate
+                    {{__('Plate')}}
                     <input type="text" name="license_plate" value="{{$file->license_plate}}" class="validate vehicle-id-input">
                 </p>
                 <p>
-                    1st registration year
+                    {{__('1st registration year')}}
                     <input type="text" name="first_registration" value="{{$file->first_registration}}" class="validate vehicle-id-input" pattern="[0-9]{4}">
                 </p>
                 <p>
-                    Mileage
+                    {{__('Mileage')}}
                     <input type="text" name="kilometrage" value="{{$file->kilometrage}}" class="validate vehicle-id-input">
                 </p>
 
                 <div class="input-field ">
-                    <textarea id="car-info-memo" name="vehicle_internal_notes" class="materialize-textarea" placeholder="Internal note related to the vehicle :">{{$file->vehicle_internal_notes}}</textarea>
+                    <textarea id="car-info-memo" name="vehicle_internal_notes" class="materialize-textarea" placeholder="{{__('Internal note related to the vehicle')}} :">{{$file->vehicle_internal_notes}}</textarea>
                 </div>
                 <div class="center">
                     <button type="submit" class="btn btn-clear waves-effect waves-light btn-vehicle-id">
-                        Save <i class="fa fa-save"></i>
+                        {{__('Save')}} <i class="fa fa-save"></i>
                         <i class="fa fa-refresh fa-spin fa-fw loading-icon"></i>
                         <i class="fa fa-check success-icon"></i>
                         <i class="fa fa-times error-icon"></i>
@@ -2260,31 +2259,31 @@
             </form>
         </div>
         <div class="vehicle-id">
-            <h3 class="id-info">Parts</h3>
+            {{-- <h3 class="id-info">Parts</h3> --}}
         </div>
         <div class="vehicle-id">
             <form action="{{route('add-customer-note');}}" class="customer-info-form" name="customer-info" enctype="application/x-www-form-urlencoded" method="post" novalidate="novalidate">
                 @csrf
                 <input type="hidden" name="id" value="{{$file->id}}">
-                <span class="id-info">Customer information</span>
+                <span class="id-info">{{__('Customer information')}}</span>
                 <div class="input-field ">
                     <i class="fa fa-user prefix" style="margin-top: 8px;"></i>
-                    <input id="icon_prefix" type="text" class="validate" required="" name="name" value="{{$file->name}}" placeholder="Customer name">
+                    <input id="icon_prefix" type="text" class="validate" required="" name="name" value="{{$file->name}}" placeholder="{{__('Customer name')}}">
                 </div>
                 <div class="input-field">
                     <i class="fa fa-phone prefix" style="margin-top: 8px;"></i>
-                    <input id="icon_telephone" type="tel" class="validate" name="phone" value="{{$file->phone}}" placeholder="Phone">
+                    <input id="icon_telephone" type="tel" class="validate" name="phone" value="{{$file->phone}}" placeholder="{{__('Phone')}}">
                 </div>
                 <div class="input-field">
                     <i class="fa fa-envelope prefix" style="margin-top: 8px;"></i>
-                    <input id="icon_telephone" type="email" class="validate" name="email" value="{{$file->email}}" placeholder="Email">
+                    <input id="icon_telephone" type="email" class="validate" name="email" value="{{$file->email}}" placeholder="{{__('Email')}}">
                 </div>
                 <div class="input-field ">
-                    <textarea id="icon_prefix2" class="materialize-textarea" name="customer_internal_notes" placeholder="Internal note related to the customer :">{{$file->customer_internal_notes}}</textarea>
+                    <textarea id="icon_prefix2" class="materialize-textarea" name="customer_internal_notes" placeholder="{{__('Internal note related to the customer')}} :">{{$file->customer_internal_notes}}</textarea>
                 </div>
                 <div class="center">
                     <button class="btn btn-clear waves-effect waves-light btn-vehicle-id" type="submit">
-                        Save <i class="fa fa-save"></i>
+                        {{__('Save')}} <i class="fa fa-save"></i>
                         <i class="fa fa-refresh fa-spin fa-fw loading-icon"></i>
                         <i class="fa fa-check success-icon"></i>
                         <i class="fa fa-times error-icon"></i>
