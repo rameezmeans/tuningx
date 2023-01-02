@@ -129,12 +129,19 @@ class FileController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function postStages(Request $request)
-    {
+    {   
+        $request->validate([
+            'total_credits_to_submit' => 'required',
+            'tuning' => 'required',
+            'option' => 'required',
+        ]);
+
         $credits = $request->total_credits_to_submit;
         $file = File::findOrFail($request->file_id); 
 
         $file->stages = $request->tuning;
-        if( $request->option && sizeof($request->option) >0 ){
+
+        if( $request->option && sizeof($request->option) > 0 ){
          $file->options = implode(',', $request->option );
         }
 

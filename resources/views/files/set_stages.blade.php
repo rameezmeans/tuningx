@@ -95,6 +95,13 @@ input[type='radio']:checked:before {
                                 <a href="#options">Go to options <i class="fa fa-caret-down"></i></a>
                             </div>
                         </div>
+                        <div>
+                        @error('tuning')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        </div>
                         <ul>
                             @foreach($stages as $stage)
                                 <li>
@@ -309,6 +316,12 @@ input[type='radio']:checked:before {
                                     <a href="#stages">Go to stages <i class="fa fa-caret-up"></i></a>
                                 </div>
                             </div>
+                            
+                            @error('option')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             <ul>
                                 @foreach($options as $option)
                                     <li class="option-wrapper enable">
