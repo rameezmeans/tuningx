@@ -4,7 +4,7 @@
 @include('layouts.nav')
 <main>
     <div class="container">
-        <h1 class="h1-olsx-history">Invoices</h1>
+        <h1 class="h1-olsx-history">{{__('Invoices')}}</h1>
         <div class="table-history-panel">
             <div class="row invoice-panel">
                 <table class="invoices">
