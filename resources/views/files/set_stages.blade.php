@@ -1791,8 +1791,8 @@ input[type='radio']:checked:before {
                                     </div>
                                 </div>
                                 <div id="rows-for-credits">
-                                    <div class="divider-light"></div>
-                                    <p class="tuning-resume">Stage 0 <small>3 credits</small></p>
+                                    {{-- <div class="divider-light"></div> --}}
+                                    {{-- <p class="tuning-resume">Stage 0 <small>3 credits</small></p> --}}
                                 </div>
                                 <div class="options-resume"></div>
                                 <div class="divider-light"></div>
@@ -1818,9 +1818,11 @@ input[type='radio']:checked:before {
 <script type="text/javascript">
     $(document).ready(function(){
         
-        let value = 0;
+        let value = 3;
         let checkbox_credits_count = 0;
-        let stages_str = "";
+
+        let stages_str = '<div class="divider-light"></div><p class="tuning-resume">Stage 0 <small>3 credits</small></p>';
+        $('#rows-for-credits').html(stages_str);
 
         $(document).on('change', '.with-gap', function(){
             if ($(this).is(':checked')) {
