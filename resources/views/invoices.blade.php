@@ -13,7 +13,7 @@
                             <th>{{__('Invoice Ref.')}}</th>
                             <th>{{__('Date')}}</th>
                             <th>{{__('Amount')}}</th>
-                            <th>{{__('Status')}}s</th>
+                            <th>{{__('Status')}}</th>
                             <th>{{__('Action')}}</th>
                         </tr>
                     </thead>
