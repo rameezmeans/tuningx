@@ -103,6 +103,7 @@ input[type='radio']:checked:before {
                         @enderror
                         </div>
                         <ul>
+                            @php $count = 1; @endphp
                             @foreach($stages as $stage)
                                 <li>
                                     
@@ -118,7 +119,7 @@ input[type='radio']:checked:before {
                                                     <strong class="stage-price"><span class="price">{{$stage['credits']}}</span> Credits</strong>
                                                 </div>
                                                 <div class="col s4 m3 l3 center">
-                                                    <input name="tuning" class="with-gap" type="radio" id="tuning-{{$stage['id']}}" value="{{$stage['name']}}" data-name="{{$stage['name']}}" data-price="{{$stage['credits']}}" data-code="stage0" data-options="vmax,dtc,dpf,egr,adblue,vmax30">
+                                                    <input @if($count == 1) checked @endif name="tuning" class="with-gap" type="radio" id="tuning-{{$stage['id']}}" value="{{$stage['name']}}" data-name="{{$stage['name']}}" data-price="{{$stage['credits']}}" data-code="stage0" data-options="vmax,dtc,dpf,egr,adblue,vmax30">
                                                     <label for="tuning-{{$stage['id']}}"></label>
                                                 </div>
                                             </div>
@@ -131,6 +132,7 @@ input[type='radio']:checked:before {
                                             </div>
                                         </div>
                                     </li>
+                                @php $count++; @endphp
                                 @endforeach
                                 {{-- <li>
                                     <div class="stage-option">
@@ -1789,14 +1791,14 @@ input[type='radio']:checked:before {
                                     </div>
                                 </div>
                                 <div id="rows-for-credits">
-                                    {{-- <div class="divider-light"></div> --}}
-                                    {{-- <p class="tuning-resume">Stage 0 <small>3 credits</small></p> --}}
+                                    <div class="divider-light"></div>
+                                    <p class="tuning-resume">Stage 0 <small>3 credits</small></p>
                                 </div>
                                 <div class="options-resume"></div>
                                 <div class="divider-light"></div>
-                                <div class="totals"><h5 class="red-olsx-text">{{__('Total')}} <small><span id="total-credits">0</span> credits</small></h5></div>
+                                <div class="totals"><h5 class="red-olsx-text">{{__('Total')}} <small><span id="total-credits">3</span> credits</small></h5></div>
                             </div>
-                            <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit">
+                            <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit" value="3">
                             <div class="center">
                                 <button class="btn-floating btn-large waves-effect waves-light btn-red btn-middle-panel" type="submit">
                                     <i class="fa fa-arrow-right"></i>
