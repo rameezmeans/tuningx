@@ -130,11 +130,22 @@ class FileController extends Controller
      */
     public function postStages(Request $request)
     {   
-        $request->validate([
-            'total_credits_to_submit' => 'required',
-            'tuning' => 'required',
-            'option' => 'required',
-        ]);
+
+        if($request->tuning == 'Stage 0'){
+            $request->validate([
+                'total_credits_to_submit' => 'required',
+                'tuning' => 'required',
+                'option' => 'required'
+            ]);
+        }
+
+        else{
+
+            $request->validate([
+                'total_credits_to_submit' => 'required',
+                'tuning' => 'required'
+            ]);
+        }
 
         $credits = $request->total_credits_to_submit;
         $file = File::findOrFail($request->file_id); 

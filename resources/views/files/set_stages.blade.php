@@ -96,6 +96,11 @@ input[type='radio']:checked:before {
                             </div>
                         </div>
                         <div>
+                        @error('option')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         @error('tuning')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -319,11 +324,6 @@ input[type='radio']:checked:before {
                                 </div>
                             </div>
                             
-                            @error('option')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                             <ul>
                                 @foreach($options as $option)
                                     <li class="option-wrapper enable">
