@@ -33,6 +33,10 @@
         white-space: normal;
     }
 
+    span {
+        white-space: normal;
+    }
+
     .tablinks-smaller {
         height: 50px;
         width: 50% !important;

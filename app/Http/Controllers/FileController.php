@@ -385,6 +385,7 @@ class FileController extends Controller
 
         $user = Auth::user();
         $masterTools = explode(',',  Auth::user()->master_tools );
+        dd($masterTools);
         $slaveTools = explode(',',  Auth::user()->slave_tools );
 
         return view('files.show_file', [ 'file' => $file, 'masterTools' => $masterTools,  'slaveTools' => $slaveTools, 'vehicle' => $vehicle ]);
