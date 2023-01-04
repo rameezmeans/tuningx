@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Credit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 class InvoicesController extends Controller
@@ -25,7 +26,8 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        $invoices = Credit::orderBy('created_at', 'desc')->whereNotNull('stripe_id')->get();
+        $user = Auth::user();
+        $invoices = Credit::orderBy('created_at', 'desc')->where('user_id', $user->id)->whereNotNull('stripe_id')->get();
         return view('invoices', ['invoices' => $invoices]);
     }
 

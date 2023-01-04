@@ -7,6 +7,10 @@
         <h1 class="h1-olsx-history">{{__('Invoices')}}</h1>
         <div class="table-history-panel">
             <div class="row invoice-panel">
+                @if(count($invoices) == 0)
+                    <p>{{__('No Invoices found.')}}</p>
+                @else
+
                 <table class="invoices">
                     <thead>
                         <tr>
@@ -39,6 +43,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                @endif
             </div>
         </div>
     </div>

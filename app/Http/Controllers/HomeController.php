@@ -28,7 +28,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $todaysFilesCount = File::where('created_at', '>=', Carbon::today())->count();
         $yesterdaysFilesCount = File::whereDate('created_at', Carbon::yesterday())->count();
         $previousYearsFilesCount = File::whereYear('created_at', now()->subYear()->year)->count();
@@ -99,8 +98,6 @@ class HomeController extends Controller
             $month = $date->format('m');
             $weekCount []= File::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
         }
-
-        // dd($twoFiles);
         
         return view('home', [ 
             'todaysFilesCount' => $todaysFilesCount, 
