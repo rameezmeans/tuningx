@@ -464,7 +464,7 @@
     }
 
     .f-dropdown>span>span {
-        white-space: nowrap;
+        white-space: normal;
         overflow: hidden;
         text-overflow: ellipsis;
         padding-right: 12px;
