@@ -338,7 +338,7 @@
                                                 {{ $credit->invoice_id }}
                                                
                                         </td>            
-                                        <td>@if($credit->credits => 0)  {{ $credit->price_payed.'€' }} @endif</td>
+                                        <td>@if($credit->credits >= 0)  {{ $credit->price_payed.'€' }} @endif</td>
                                     </tr>
                                 @endforeach
                             </tbody>
