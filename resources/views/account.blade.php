@@ -291,8 +291,7 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th style="width: 10%;">{{__('Date')}}</th>
-                                <th></th>
+                                <th style="width: 20%;">{{__('Date')}}</th>
                                 <th>Credits</th>
                                 <th>{{__('Total Credits')}}</th>
                                 <th></th>
@@ -308,9 +307,6 @@
                                     <tr @if($credit->file_id) class="redirect-click  @if($credit->credits < 0) minus @else plus @endif" href="#" data-redirect="{{route('file', $credit->file_id)}}" @else class="@if($credit->credits < 0) minus @else plus @endif" @endif>
                                         <td></td>
                                         <td>{{$credit->created_at->format('Y-m-d')}}</td>
-                                        <td><strong>
-                                            User
-                                        </strong></td>
                                         <td>
                                             @if($credit->credits < 0)
                                                 <label class="label label-credit-admin red">{{$credit->credits}}</label>
