@@ -30,6 +30,7 @@
 
     .tab .tablinks .wow small {
         display: block;
+        white-space: normal;
     }
 
     .tablinks-smaller {
