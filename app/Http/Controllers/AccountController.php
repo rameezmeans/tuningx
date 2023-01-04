@@ -33,7 +33,7 @@ class AccountController extends Controller
     public function index()
     {
         $languages = Language::where('user_id', Auth::user()->id)->get();
-        $credits = Credit::orderBy('created_at', 'asc')->get();
+        $credits = Credit::orderBy('created_at', 'asc')->where('user_id', Auth::user()->id)->get();
         $masterTools = explode(',', Auth::user()->master_tools);
         $slaveTools = explode(',', Auth::user()->slave_tools);
 
