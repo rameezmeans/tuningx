@@ -865,9 +865,11 @@
                                                 @foreach($masterTools as $ma)
                                                 <option data-image="{{ get_dropdown_image(trim_str($ma)) }}" value="{{$ma.'.master'}}">{{get_tools(trim_str($ma)).' (master)'}}</option>
                                                 @endforeach
-                                                @foreach($slaveTools as $s)
-                                                <option data-image="{{ get_dropdown_image(trim_str($s)) }}" value="{{$s.'.slave'}}" data-tool_type='Slave'>{{get_tools(trim_str($s)).' (slave)'}}</option>
-                                                @endforeach
+                                                @if($slaveTools)
+                                                    @foreach($slaveTools as $s)
+                                                    <option data-image="{{ get_dropdown_image(trim_str($s)) }}" value="{{$s.'.slave'}}" data-tool_type='Slave'>{{get_tools(trim_str($s)).' (slave)'}}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
 
                                         </div>
