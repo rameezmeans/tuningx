@@ -383,8 +383,6 @@ class FileController extends Controller
             $file->save();
         }
 
-        $user = Auth::user();
-        
         $slaveTools = [];
         $masterTools = [];
 
