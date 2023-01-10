@@ -240,8 +240,8 @@ class FileController extends Controller
 
             $file->save();
 
-        $admin = User::where('email', 'xrkalix@gmail.com')->first();
-        // $admin = User::where('is_admin', 1)->first();
+        // $admin = User::where('email', 'xrkalix@gmail.com')->first();
+        $admin = User::where('is_admin', 1)->first();
 
         $template = EmailTemplate::where('name', 'File Uploaded')->first();
 
