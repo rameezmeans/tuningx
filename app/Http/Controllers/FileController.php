@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Credit;
+use App\Models\EmailTemplate;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\FileFeedback;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Laravel\Ui\Presets\React;
 use Carbon\Carbon;
+use Twilio\Rest\Client;
 
 class FileController extends Controller
 {
@@ -184,7 +186,27 @@ class FileController extends Controller
         'factor' => $factor,
         'tax' => $tax,
         'group' =>  $customer->group
-         ] );
+        ] );
+    }
+
+    public function sendMessage($receiver, $message)
+    {
+        try {
+            $accountSid = env("TWILIO_SID");
+            $authToken = env("TWILIO_AUTH_TOKEN");
+            $twilioNumber = env("TWILIO_NUMBER"); 
+            $client = new Client($accountSid, $authToken);
+
+            $message = $client->messages
+                  ->create($receiver, // to
+                           ["body" => $message, "from" => "ecutech"]
+            );
+
+            \Log::info('message sent to:'.$receiver);
+
+        } catch (\Exception $e) {
+            \Log::info($e->getMessage());
+        }
     }
 
     /**
@@ -217,6 +239,47 @@ class FileController extends Controller
             $file->assignment_time = Carbon::now();
 
             $file->save();
+
+        $admin = User::where('email', 'xrkalix@gmail.com')->first();
+        // $admin = User::where('is_admin', 1)->first();
+
+        $template = EmailTemplate::where('name', 'File Uploaded')->first();
+
+        $html = $template->html;
+
+        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
+        $html = str_replace("#customer_name", $file->name ,$html);
+        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
+        
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+            
+        foreach($file->options() as $option) {
+            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+            $tunningType .=  $option;  
+            $tunningType .= '</div>';
+        }
+
+        $html = str_replace("#tuning_type", $tunningType,$html);
+        $html = str_replace("#file_url", route('file', $file->id),$html);
+
+        $optionsMessage = "";
+        foreach($file->options() as $option) {
+            $optionsMessage .= ",".$option." ";
+        }
+
+        $message = "Hi, New File is being uploaded by a Client. 
+        Customer: ".$file->name." 
+        ". 
+        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
+        ". 
+        "Tuning Type: ".$file->stages." ".$optionsMessage." 
+        ";
+
+        $subject = "ECU Tech: File Uploaded!";
+
+        \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+        $this->sendMessage($admin->phone, $message);
         }
         
         return redirect()->route('file-history',['success' => 'File successfully Added!']);
@@ -282,7 +345,6 @@ class FileController extends Controller
         if($second_str != '')              
             $ecusArray []= $second_str; 
 
-        // $requestFile['request_file'] = $fileName;
         $requestFile['master_tools'] = $first_str;
         $requestFile['tool_type'] = $second_str;
 
@@ -313,7 +375,6 @@ class FileController extends Controller
     }
 
     public function getComments(Request $request){
-
 
         $commentObj = Comment::where('engine', $request->engine);
 
