@@ -247,8 +247,10 @@ class FileController extends Controller
 
         $html = $template->html;
 
+        $uploader = User::findOrFail($file->user_id);
+
         $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-        $html = str_replace("#customer_name", $file->name ,$html);
+        $html = str_replace("#customer_name", $uploader->name ,$html);
         $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
         
         $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
@@ -269,7 +271,7 @@ class FileController extends Controller
         }
 
         $message = "Hi, New File is being uploaded by a Client. 
-        Customer: ".$file->name." 
+        Customer: ".$uploader->name." 
         ". 
         "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
         ". 
@@ -366,6 +368,56 @@ class FileController extends Controller
         $old->save();
 
         $newFileCreated = File::create($newFile);
+
+        $admin = User::where('is_admin', 1)->first();
+
+        $template = EmailTemplate::where('name', 'Request File Uploaded')->first();
+
+        $html = $template->html;
+
+        $uploader = User::findOrFail($newFileCreated ->user_id);
+
+        $html = str_replace("#brand_logo", get_image_from_brand($newFileCreated->brand) ,$html);
+        $html = str_replace("#customer_name", $uploader->name ,$html);
+        $html = str_replace("#vehicle_name", $newFileCreated->brand." ".$newFileCreated->engine." ".$newFileCreated->vehicle()->TORQUE_standard ,$html);
+        
+        $tunningType = '<img alt=".'.$newFileCreated->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $newFileCreated->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$newFileCreated->stages.'</span>';
+            
+        foreach($newFileCreated->options() as $option) {
+            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+            $tunningType .=  $option;  
+            $tunningType .= '</div>';
+        }
+
+        $html = str_replace("#tuning_type", $tunningType,$html);
+        $html = str_replace("#file_url", route('file', $newFileCreated->id),$html);
+
+        $optionsMessage = "";
+        foreach($newFileCreated->options() as $option) {
+            $optionsMessage .= ",".$option." ";
+        }
+
+        $message = "Hi, New File is being uploaded by a Client. 
+        Customer: ".$uploader->name." 
+        ". 
+        "Vehicle: ".$newFileCreated->brand." ".$newFileCreated->engine." ".$newFileCreated->vehicle()->TORQUE_standard." 
+        ". 
+        "Tuning Type: ".$newFileCreated->stages." ".$optionsMessage." 
+        ";
+
+        $subject = "ECU Tech: New Request File Uploaded!";
+
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+            
+            if($newFileCreated->assigned_to){
+                $engineer = User::FindOrFail($newFileCreated->assigned_to);
+                \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+                $this->sendMessage($engineer->phone, $message);
+            }
+
+            $this->sendMessage($admin->phone, $message);
+        
 
         if($newFileCreated){
 
@@ -510,6 +562,55 @@ class FileController extends Controller
 
         $file->file_id = $request->file_id;
         $file->save();
+
+        $admin = User::where('is_admin', 1)->first();
+
+        $template = EmailTemplate::where('name', 'Message To Engineer')->first();
+
+        $html = $template->html;
+
+        $uploader = User::findOrFail($file ->user_id);
+
+        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
+        $html = str_replace("#customer_name", $uploader->name ,$html);
+        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
+        
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $newFileCreated->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+            
+        foreach($file->options() as $option) {
+            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+            $tunningType .=  $option;  
+            $tunningType .= '</div>';
+        }
+
+        $html = str_replace("#tuning_type", $tunningType,$html);
+        $html = str_replace("#file_url", route('file', $file->id),$html);
+
+        $optionsMessage = "";
+        foreach($file->options() as $option) {
+            $optionsMessage .= ",".$option." ";
+        }
+
+        $message = "Hi, Client sent a support message. 
+        Customer: ".$uploader->name." 
+        ". 
+        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
+        ". 
+        "Tuning Type: ".$file->stages." ".$optionsMessage." 
+        ";
+
+        $subject = "ECU Tech: Client support message!";
+
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+            
+            if($file->assigned_to){
+                $engineer = User::FindOrFail($file->assigned_to);
+                \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+                $this->sendMessage($engineer->phone, $message);
+            }
+            
+            $this->sendMessage($admin->phone, $message);
         
         $old = File::findOrFail($request->file_id);
         $old->checked_by = 'customer';
