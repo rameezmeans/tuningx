@@ -266,8 +266,10 @@ class FileController extends Controller
         $html = str_replace("#file_url", route('file', $file->id),$html);
 
         $optionsMessage = "";
-        foreach($file->options() as $option) {
-            $optionsMessage .= ",".$option." ";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
         }
 
         $message = "Hi, New File is being uploaded by a Client. 
@@ -383,19 +385,24 @@ class FileController extends Controller
         
         $tunningType = '<img alt=".'.$newFileCreated->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $newFileCreated->stages)->first()->icon .'">';
         $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$newFileCreated->stages.'</span>';
-            
-        foreach($newFileCreated->options() as $option) {
-            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-            $tunningType .=  $option;  
-            $tunningType .= '</div>';
+        
+        if($newFileCreated->options){
+            foreach($newFileCreated->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
         }
 
         $html = str_replace("#tuning_type", $tunningType,$html);
         $html = str_replace("#file_url", route('file', $newFileCreated->id),$html);
 
         $optionsMessage = "";
-        foreach($newFileCreated->options() as $option) {
-            $optionsMessage .= ",".$option." ";
+
+        if($newFileCreated->options){
+            foreach($newFileCreated->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
         }
 
         $message = "Hi, New File is being uploaded by a Client. 
@@ -550,18 +557,20 @@ class FileController extends Controller
      */
     public function fileEngineersNotes(Request $request)
     {
-        $file = new EngineerFileNote();
-        $file->egnineers_internal_notes = $request->egnineers_internal_notes;
+        $reply = new EngineerFileNote();
+        $reply->egnineers_internal_notes = $request->egnineers_internal_notes;
 
         if($request->file('engineers_attachement')){
             $attachment = $request->file('engineers_attachement');
             $fileName = $attachment->getClientOriginalName();
             $attachment->move(public_path('uploads'),$fileName);
-            $file->engineers_attachement = $fileName;
+            $reply->engineers_attachement = $fileName;
         }
 
-        $file->file_id = $request->file_id;
-        $file->save();
+        $reply->file_id = $request->file_id;
+        $reply->save();
+
+        $file = File::findOrFail($request->file_id);
 
         $admin = User::where('is_admin', 1)->first();
 
@@ -578,18 +587,23 @@ class FileController extends Controller
         $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $newFileCreated->stages)->first()->icon .'">';
         $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
             
-        foreach($file->options() as $option) {
-            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-            $tunningType .=  $option;  
-            $tunningType .= '</div>';
+        if($file->options){
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
         }
 
         $html = str_replace("#tuning_type", $tunningType,$html);
         $html = str_replace("#file_url", route('file', $file->id),$html);
 
         $optionsMessage = "";
-        foreach($file->options() as $option) {
-            $optionsMessage .= ",".$option." ";
+        
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
         }
 
         $message = "Hi, Client sent a support message. 
