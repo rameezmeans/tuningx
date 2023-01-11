@@ -281,7 +281,7 @@ class FileController extends Controller
         $subject = "ECU Tech: Task Assigned!";
 
         \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html1' => $html1, 'subject' => $subject]));
+        \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html1, 'subject' => $subject]));
 
         $this->sendMessage($head->phone, $message);
         $this->sendMessage($admin->phone, $message);
