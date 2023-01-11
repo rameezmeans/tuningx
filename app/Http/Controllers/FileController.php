@@ -544,9 +544,10 @@ class FileController extends Controller
         $slaveTools = [];
         $masterTools = [];
 
-        if(Auth::user()->masterTools != ''){
+        if(Auth::user()->master_tools != ''){
             $masterTools = explode(',',  Auth::user()->master_tools );
         }
+
         if(Auth::user()->slave_tools != ''){
             $slaveTools = explode(',',  Auth::user()->slave_tools );
         }
@@ -595,6 +596,7 @@ class FileController extends Controller
      */
     public function fileEngineersNotes(Request $request)
     {
+
         $reply = new EngineerFileNote();
         $reply->egnineers_internal_notes = $request->egnineers_internal_notes;
 
@@ -609,7 +611,7 @@ class FileController extends Controller
         $reply->save();
 
         $file = File::findOrFail($request->file_id);
-
+        
         $admin = User::where('is_admin', 1)->first();
         // $admin = User::where('email', 'xrkalix@gmail.com')->first();
 
