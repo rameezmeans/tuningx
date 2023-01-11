@@ -267,7 +267,7 @@ class FileController extends Controller
 
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
-        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+        $html1 = str_replace("#file_url",env('BACKEND_URL').'file/'.$file->id,$html1);
 
         $optionsMessage = "";
         if($file->options){
@@ -281,10 +281,10 @@ class FileController extends Controller
         $subject = "ECU Tech: Task Assigned!";
 
         \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html1, 'subject' => $subject]));
+        // \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html1, 'subject' => $subject]));
 
         $this->sendMessage($head->phone, $message);
-        $this->sendMessage($admin->phone, $message);
+        // $this->sendMessage($admin->phone, $message);
 
         // $admin = User::where('email', 'xrkalix@gmail.com')->first();
         // $admin = User::where('is_admin', 1)->first();
