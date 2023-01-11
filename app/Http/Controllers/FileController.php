@@ -610,8 +610,8 @@ class FileController extends Controller
 
         $file = File::findOrFail($request->file_id);
 
-        $admin = User::where('is_admin', 1)->first();
-        // $admin = User::where('email', 'xrkalix@gmail.com')->first();
+        // $admin = User::where('is_admin', 1)->first();
+        $admin = User::where('email', 'xrkalix@gmail.com')->first();
 
         $template = EmailTemplate::where('name', 'Message To Engineer')->first();
 
