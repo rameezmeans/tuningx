@@ -218,6 +218,8 @@ class FileController extends Controller
 
         $credits = $request->credits;
 
+        $head =  User::where('is_head', 1)->first();
+
         $creditsInAccount = Auth::user()->credits->sum('credits');
 
         if($creditsInAccount >= $request->credits){
@@ -236,12 +238,58 @@ class FileController extends Controller
             $file->credits = $credits;
             $file->is_credited = true;
             $file->assignment_time = Carbon::now();
+            $file->assigned_to = $head->id; // auto assigned to Nick (Head)
 
             $file->save();
 
-        // $admin = User::where('email', 'xrkalix@gmail.com')->first();
+        $engineer = User::findOrFail($request->assigned_to);
+        $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
+    
+        $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
 
+        $html1 = $template->html;
+
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+        if($file->options){
+
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
+        }
+
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $optionsMessage = "";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
+        }
+
+        $message = "Hi, You have been assigned to a Task by Customer: ".$customer->name;
+
+        $subject = "ECU Tech: Task Assigned!";
+
+        \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html1' => $html1, 'subject' => $subject]));
+
+        $this->sendMessage($head->phone, $message);
+        $this->sendMessage($admin->phone, $message);
+
+        // $admin = User::where('email', 'xrkalix@gmail.com')->first();
+        // $admin = User::where('is_admin', 1)->first();
+        
         $template = EmailTemplate::where('name', 'File Uploaded')->first();
 
         $html = $template->html;
@@ -276,8 +324,9 @@ class FileController extends Controller
 
         $subject = "ECU Tech: File Uploaded!";
 
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
-            $this->sendMessage($admin->phone, $message);
+        \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+        $this->sendMessage($admin->phone, $message);
+            
         }
         
         return redirect()->route('file-history',['success' => 'File successfully Added!']);
