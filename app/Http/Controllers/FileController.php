@@ -635,6 +635,7 @@ class FileController extends Controller
         }
 
         $html = str_replace("#tuning_type", $tunningType,$html);
+        $html = str_replace("#note", $request->egnineers_internal_notes,$html);
         $html = str_replace("#file_url", env('BACKEND_URL').'file/'.$file->id,$html);
 
         $optionsMessage = "";
