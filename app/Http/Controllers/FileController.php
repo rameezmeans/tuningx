@@ -132,15 +132,14 @@ class FileController extends Controller
      */
     public function postStages(Request $request)
     {   
-
         if($request->tuning == 'Stage 0'){
+
             $request->validate([
                 'total_credits_to_submit' => 'required',
                 'tuning' => 'required',
                 'option' => 'required'
             ]);
         }
-
         else{
 
             $request->validate([
@@ -198,7 +197,7 @@ class FileController extends Controller
             $client = new Client($accountSid, $authToken);
 
             $message = $client->messages
-                  ->create($receiver, // to
+                  ->create($receiver, 
                            ["body" => $message, "from" => "ecutech"]
             );
 
@@ -262,8 +261,8 @@ class FileController extends Controller
             $tunningType .= '</div>';
         }
 
-        $html = str_replace("#tuning_type", $tunningType,$html);
-        $html = str_replace("#file_url", route('file', $file->id),$html);
+        $html = str_replace("#tuning_type", $tunningType, $html);
+        $html = str_replace("#file_url", env('BACKEND_URL').'file/'.$file->id, $html);
 
         $optionsMessage = "";
         if($file->options){
@@ -272,18 +271,13 @@ class FileController extends Controller
             }
         }
 
-        $message = "Hi, New File is being uploaded by a Client. 
-        Customer: ".$uploader->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ";
+        $message = "Hi, New File is being uploaded by Client: ".$uploader->name."";
+        
 
         $subject = "ECU Tech: File Uploaded!";
 
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
-        $this->sendMessage($admin->phone, $message);
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+            $this->sendMessage($admin->phone, $message);
         }
         
         return redirect()->route('file-history',['success' => 'File successfully Added!']);
@@ -572,7 +566,8 @@ class FileController extends Controller
 
         $file = File::findOrFail($request->file_id);
 
-        $admin = User::where('is_admin', 1)->first();
+        // $admin = User::where('is_admin', 1)->first();
+        $admin = User::where('email', 'xrkalix@gmail.com')->first();
 
         $template = EmailTemplate::where('name', 'Message To Engineer')->first();
 
@@ -606,13 +601,7 @@ class FileController extends Controller
             }
         }
 
-        $message = "Hi, Client sent a support message. 
-        Customer: ".$uploader->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ";
+        $message = "Hi, a support message is sent by: ".$uploader->name;
 
         $subject = "ECU Tech: Client support message!";
 
