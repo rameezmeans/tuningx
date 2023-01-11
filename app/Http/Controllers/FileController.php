@@ -241,8 +241,7 @@ class FileController extends Controller
             $file->assigned_to = $head->id; // auto assigned to Nick (Head)
 
             $file->save();
-
-        $engineer = User::findOrFail($request->assigned_to);
+        
         $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
     
