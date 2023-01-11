@@ -301,11 +301,13 @@ class FileController extends Controller
         
         $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
         $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-            
-        foreach($file->options() as $option) {
-            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-            $tunningType .=  $option;  
-            $tunningType .= '</div>';
+        
+        if($file->options){
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
         }
 
         $html = str_replace("#tuning_type", $tunningType, $html);
