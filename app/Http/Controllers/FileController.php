@@ -399,13 +399,7 @@ class FileController extends Controller
             }
         }
 
-        $message = "Hi, New File is being uploaded by a Client. 
-        Customer: ".$uploader->name." 
-        ". 
-        "Vehicle: ".$newFileCreated->brand." ".$newFileCreated->engine." ".$newFileCreated->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$newFileCreated->stages." ".$optionsMessage." 
-        ";
+        $message = "Hi, New File is being uploaded by a Customer: ".$uploader->name;
 
         $subject = "ECU Tech: New Request File Uploaded!";
 
@@ -601,7 +595,7 @@ class FileController extends Controller
             }
         }
 
-        $message = "Hi, a support message is sent by: ".$uploader->name;
+        $message = "Hi, A support message is sent by: ".$uploader->name;
 
         $subject = "ECU Tech: Client support message!";
 
