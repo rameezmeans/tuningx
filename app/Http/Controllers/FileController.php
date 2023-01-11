@@ -116,6 +116,9 @@ class FileController extends Controller
         $file['credits'] = 0;
         $file['checked_by'] = 'customer';
 
+        $head = User::where('is_head', 1)->first();
+        $file['assigned_to'] = $head->id; // auto assigned to Nick (Head)
+
         $newFile = File::create($file);
 
         if($newFile){
@@ -238,7 +241,7 @@ class FileController extends Controller
             $file->credits = $credits;
             $file->is_credited = true;
             $file->assignment_time = Carbon::now();
-            $file->assigned_to = $head->id; // auto assigned to Nick (Head)
+            // $file->assigned_to = $head->id; // auto assigned to Nick (Head)
 
             $file->save();
         
@@ -403,6 +406,7 @@ class FileController extends Controller
         $newFile['file_attached'] =  $fileName;
         $newFile['request_type'] =   $requestFile['request_type'];
         $newFile['original_file_id'] =   $requestFile['file_id'];
+        $newFile['assigned_to'] =   $file['assigned_to'];
         $newFile['file_type'] =   $requestFile['file_type'];
         $newFile['tool'] =   $requestFile['master_tools'];
         $newFile['tool_type'] =   $requestFile['tool_type'];
@@ -611,7 +615,7 @@ class FileController extends Controller
         $reply->save();
 
         $file = File::findOrFail($request->file_id);
-        
+
         $admin = User::where('is_admin', 1)->first();
         // $admin = User::where('email', 'xrkalix@gmail.com')->first();
 
