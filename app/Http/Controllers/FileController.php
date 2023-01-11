@@ -389,7 +389,7 @@ class FileController extends Controller
         }
 
         $html = str_replace("#tuning_type", $tunningType,$html);
-        $html = str_replace("#file_url", route('file', $newFileCreated->id),$html);
+        $html = str_replace("#file_url", env('BACKEND_URL').'file/'.$newFileCreated->id ,$html);
 
         $optionsMessage = "";
 
@@ -573,13 +573,13 @@ class FileController extends Controller
 
         $html = $template->html;
 
-        $uploader = User::findOrFail($file ->user_id);
+        $uploader = User::findOrFail($file->user_id);
 
         $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
         $html = str_replace("#customer_name", $uploader->name ,$html);
         $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
         
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $newFileCreated->stages)->first()->icon .'">';
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
         $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
             
         if($file->options){
@@ -591,7 +591,7 @@ class FileController extends Controller
         }
 
         $html = str_replace("#tuning_type", $tunningType,$html);
-        $html = str_replace("#file_url", route('file', $file->id),$html);
+        $html = str_replace("#file_url", env('BACKEND_URL').'file/'.$file->id,$html);
 
         $optionsMessage = "";
         
