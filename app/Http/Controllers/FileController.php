@@ -58,7 +58,7 @@ class FileController extends Controller
             $slaveTools = explode(',',Auth::user()->slave_tools);
         }
         
-        $brandsObjects = Vehicle::select('make')->distinct()->get();
+        $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
 
         $brands = [];
         foreach($brandsObjects as $b){
