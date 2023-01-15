@@ -7,6 +7,7 @@ use App\Models\File;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -28,38 +29,42 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $todaysFilesCount = File::where('created_at', '>=', Carbon::today())->count();
-        $yesterdaysFilesCount = File::whereDate('created_at', Carbon::yesterday())->count();
-        $previousYearsFilesCount = File::whereYear('created_at', now()->subYear()->year)->count();
-        $twoYearsAgoFilesCount = File::whereYear('created_at', now()->subYears(2)->year)->count();
+        $user = Auth::user();
+        $todaysFilesCount = File::where('created_at', '>=', Carbon::today())->where('user_id', $user->id)->count();
+        $yesterdaysFilesCount = File::whereDate('created_at', Carbon::yesterday())->where('user_id', $user->id)->count();
+        $previousYearsFilesCount = File::whereYear('created_at', now()->subYear()->year)->where('user_id', $user->id)->count();
+        $twoYearsAgoFilesCount = File::whereYear('created_at', now()->subYears(2)->year)->where('user_id', $user->id)->count();
           
         $startPrevWeek = Carbon::now()->subWeek()->startOfWeek(); 
         $endPrevWeek   = Carbon::now()->subWeek()->endOfWeek();  
 
-        $previousWeeksFilesCount    = File::query()->whereBetween('created_at',[ $startPrevWeek,$endPrevWeek ])->count();
+        $previousWeeksFilesCount    = File::query()->whereBetween('created_at',[ $startPrevWeek,$endPrevWeek ])->where('user_id', $user->id)->count();
 
         $previousMonthsFilesCount = File::whereMonth(
             'created_at', '=', Carbon::now()->subMonth()->month
-        )->count();
+        )->where('user_id', $user->id)->count();
 
-        $thisWeeksFilesCount = File::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-        $thisMonthsFilesCount = File::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at',Carbon::now()->month)->count();
+        $thisWeeksFilesCount = File::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('user_id', $user->id)->count();
+        $thisMonthsFilesCount = File::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at',Carbon::now()->month)->where('user_id', $user->id)->count();
         
         $thisWeeksCreditsCount = - (Credit::whereMonth('created_at',Carbon::now()->month)
-        ->WhereNotNull('file_id')
+        ->WhereNotNull('file_id')->where('user_id', $user->id)
         ->sum('credits'));
 
-        $thisYearsFilesCount = File::whereYear('created_at', Carbon::now()->year)->count();
-        $thisYearsCreditsCount = -(Credit::whereYear('created_at', Carbon::now()->year)
+        $thisYearsFilesCount = File::whereYear('created_at', Carbon::now()->year)->where('user_id', $user->id)->count();
+        $thisYearsCreditsCount = -(Credit::whereYear('created_at', Carbon::now()->year)->where('user_id', $user->id)
         ->WhereNotNull('file_id')->sum('credits'));
 
-        $twoFiles = File::orderBy('created_at', 'desc')->take(2)->get();
+        $twoFiles = File::orderBy('created_at', 'desc')->where('user_id', $user->id)->take(2)->get();
 
-        $items = File::select('id', 'created_at')
+        $items = File::select('id', 'created_at')->where('user_id', $user->id)
         ->get()
         ->groupBy(function($date) {
-            //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
-            return Carbon::parse($date->created_at)->format('m'); // grouping by months
+
+            if(Carbon::parse($date->created_at)->format('Y') == date('Y')){
+                //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
+                return Carbon::parse($date->created_at)->format('m'); // grouping by months
+            }
         });
 
         $count = [];
@@ -83,7 +88,7 @@ class HomeController extends Controller
         for($i = 1; $i <=  date('t'); $i++){
             // add the date to the dates array
             $datesMonth[] =  str_pad($i, 2, '0', STR_PAD_LEFT).'-'. date('M');
-            $datesMonthCount []= File::whereMonth('created_at',date('m'))->whereDay('created_at',$i)->count();
+            $datesMonthCount []= File::whereMonth('created_at',date('m'))->whereDay('created_at',$i)->where('user_id', $user->id)->count();
         }
 
         $thisWeekStart = Carbon::now()->startOfWeek();
@@ -92,12 +97,14 @@ class HomeController extends Controller
         $weekRange = $this->createDateRangeArray($thisWeekStart, $thisWeekEnd);
 
         $weekCount = [];
-        foreach($weekRange as $r){
+        foreach($weekRange as $r) {
             $date = DateTime::createFromFormat('d/m/Y', $r);
             $day = $date->format('d');
             $month = $date->format('m');
-            $weekCount []= File::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+            $weekCount []= File::whereMonth('created_at',$month)->whereDay('created_at',$day)->where('user_id', $user->id)->count();
         }
+
+        // dd($countYear);
         
         return view('home', [ 
             'todaysFilesCount' => $todaysFilesCount, 
