@@ -140,7 +140,7 @@
 
                             <h3 style="margin-left:12px;">{{__('Customer Vehicle Info')}}</h3>
                             <div class="input-field col s6">
-                                <input type="text" id="model_year" name="model_year" class="@error('model_year') is-invalid @enderror" required="required" placeholder="{{__('Model')}} " value="{{ old('model_year') }}">
+                                <input type="text" id="model_year" name="model_year" class="@error('model_year') is-invalid @enderror" required="required" placeholder="{{__('Model Year')}} " value="{{ old('model_year') }}">
                                 @error('model_year')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
