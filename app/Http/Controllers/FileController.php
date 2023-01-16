@@ -745,7 +745,7 @@ class FileController extends Controller
     public function getModels(Request $request)
     {
         $brand = $request->brand;
-        $models = Vehicle::select('model')->distinct()->where('make', '=', $brand)->get();
+        $models = Vehicle::OrderBy('model', 'asc')->select('model')->distinct()->where('make', '=', $brand)->get();
         return response()->json( [ 'models' => $models ] );
     }
 
@@ -759,7 +759,7 @@ class FileController extends Controller
         $model = $request->model;
         $brand = $request->brand;
 
-        $versions = Vehicle::select('generation')->distinct()
+        $versions = Vehicle::OrderBy('generation', 'asc')->select('generation')->distinct()
         ->where('Make', '=', $brand)
         ->where('Model', '=', $model)
         ->get();
@@ -778,7 +778,7 @@ class FileController extends Controller
         $brand = $request->brand;
         $version = $request->version;
 
-        $engines = Vehicle::select('engine')->distinct()
+        $engines = Vehicle::OrderBy('engine', 'asc')->select('engine')->distinct()
         ->where('Make', '=', $brand)
         ->where('Model', '=', $model)
         ->where('Generation', '=', $version)
@@ -799,7 +799,7 @@ class FileController extends Controller
         $version = $request->version;
         $engine = $request->engine;
        
-        $ecus = Vehicle::select('Engine_ECU')->distinct()
+        $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->select('Engine_ECU')->distinct()
         ->where('Make', '=', $brand)
         ->where('Model', '=', $model)
         ->where('Generation', '=', $version)
