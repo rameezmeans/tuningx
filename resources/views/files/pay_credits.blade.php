@@ -388,9 +388,9 @@ $( document ).ready(function(event) {
 
         Swal.fire({
         title: '{{__('Payment Details')}}',
-        html: `<input type="text" value="Test" id="cardname" class="swal2-input" placeholder="Card Name">
-        <input type="text" value="4242424242424242" id="cardnumber" class="swal2-input" placeholder="Card Number">
-        <div class="row-form"><input value="123" type="text" id="cvc" class="swal2-input" placeholder="CVC"><input value="12" type="text" id="expiry_month" class="swal2-input" placeholder="Expiry Month"><input value="2024" type="text" id="expiry_year" class="swal2-input" placeholder="Expiry Year"></div>`,
+        html: `<input type="text" value="" id="cardname" class="swal2-input" placeholder="Card Name">
+        <input type="text" value="" id="cardnumber" class="swal2-input" placeholder="Card Number">
+        <div class="row-form"><input value="" type="text" id="cvc" class="swal2-input" placeholder=""><input value="" type="text" id="expiry_month" class="swal2-input" placeholder="Expiry Month"><input value="" type="text" id="expiry_year" class="swal2-input" placeholder="Expiry Year"></div>`,
         
         confirmButtonText: '{{__('Pay')}}',
         focusConfirm: false,
