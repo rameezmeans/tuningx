@@ -10,6 +10,7 @@ use App\Models\File;
 use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
 use App\Models\FileUrl;
+use App\Models\MessageTemplate;
 use App\Models\Price;
 use App\Models\RequestFile;
 use App\Models\User;
@@ -279,7 +280,11 @@ class FileController extends Controller
             }
         }
 
-        $message = "Hi, You have been assigned to a Task by Customer: ".$customer->name;
+        $messageTemplate = MessageTemplate::where('name', 'Engineer Assignment')->first();
+        $message = $messageTemplate->text;
+        $message = str_replace("#customer", $customer->name,$message);
+
+        // $message = "Hi, You have been assigned to a Task by Customer: ".$customer->name;
 
         $subject = "ECU Tech: Task Assigned!";
 
@@ -323,9 +328,12 @@ class FileController extends Controller
             }
         }
 
-        $message = "Hi, New File is being uploaded by Client: ".$uploader->name."";
-        
+        $messageTemplate = MessageTemplate::where('name', 'File Uploaded')->first();
+        $message = $messageTemplate->text;
+        $message = str_replace("#customer", $uploader->name,$message);
 
+        // $message = "Hi, New File is being uploaded by Client: ".$uploader->name."";
+        
         $subject = "ECU Tech: File Uploaded!";
 
         \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
@@ -453,7 +461,11 @@ class FileController extends Controller
             }
         }
 
-        $message = "Hi, New File is being uploaded by a Customer: ".$uploader->name;
+        $messageTemplate = MessageTemplate::where('name', 'Request File Uploaded')->first();
+        $message = $messageTemplate->text;
+        $message = str_replace("#customer", $uploader->name,$message);
+
+        // $message = "Hi, New File is being uploaded by a Customer: ".$uploader->name;
 
         $subject = "ECU Tech: New Request File Uploaded!";
 
@@ -652,7 +664,11 @@ class FileController extends Controller
             }
         }
 
-        $message = "Hi, A support message is sent by: ".$uploader->name;
+        $messageTemplate = MessageTemplate::where('name', 'Message To Engineer')->first();
+        $message = $messageTemplate->text;
+        $message = str_replace("#customer", $uploader->name,$message);
+
+        // $message = "Hi, A support message is sent by: ".$uploader->name;
 
         $subject = "ECU Tech: Client support message!";
 
