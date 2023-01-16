@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\NewsFeed;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -51,6 +53,13 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+
+        $feeds = NewsFeed::where('active', 1)->get();
+
+        foreach($feeds as $feed){
+            Session::put('feed', $feed);
+        }
+
         $this->validateLogin($request);
         
         // If the class is using the ThrottlesLogins trait, we can automatically throttle

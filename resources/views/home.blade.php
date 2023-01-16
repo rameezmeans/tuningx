@@ -2,6 +2,12 @@
 
 @section('content')
 @include('layouts.nav')
+    @php 
+        $feed = Illuminate\Support\Facades\Session::get('feed');
+    @endphp
+    @if(isset($feed))
+        <div class="chip alert-message @if($feed->type == 'warning') alert-blue @elseif($feed->type == 'good_news') alert-green @else alert-red @endif"><span><i class="fa fa-info-circle"></i>{{$feed->feed}}<button class="close-feed" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
+    @endif
 <main>
 <div class="container">
     <h1>{{__('Dashboard')}}</h1>
@@ -218,6 +224,21 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
+
+        $(document).on('click', '.close-feed', function(e){
+
+            $(this).parent().parent().hide();
+
+            $.ajax({
+                url: "/clear_feed",
+                type: "POST",
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            }); 
+
+        });
 
         $(document).on('change', '.graph-select', function(e){
             let value = $(this).val();
