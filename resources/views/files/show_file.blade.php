@@ -712,7 +712,7 @@
 
                 // }
 
-                $coverImage = env('BACKEND_URL').'/icons/logos/logo_white.png';
+                $coverImage = env('BACKEND_URL').'/icons/logos/header.png';
 
                 @endphp
                 <img src="{{$coverImage}}" style="display: block; /*transform: translate3d(-50%, 659px, 0px);*/">
