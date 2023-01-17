@@ -1759,7 +1759,7 @@ input[type='radio']:checked:before {
                     <div class="col s12 l4 m3">
                         <div class="target wow fadeInDownBig pinned" style="visibility: visible; top: 65px;">
                             <div class="brand-middle-panel hide-on-med-and-down">
-                                <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="logo">
+                                <img src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }} @else {{ env('BACKEND_URL').'/icons/logos/logo_white.png' }} @endif" alt="logo">
                             <div class="car-loader" id="car-loader" style="display: none;"></div>
                             </div>
                             <div class="stage-pricing" data-stageevo="0">
