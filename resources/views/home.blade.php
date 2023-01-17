@@ -208,7 +208,7 @@
                 <div class="divider-light"></div>
                 <div class="card-content height-table center">
                     @if(!$twoFiles->isEmpty())
-                        <img class="responsive-img logo-brand-dashboard" src="{{$twoFiles[0]->vehicle()->Brand_image_URL}}">
+                        {{-- <img class="responsive-img logo-brand-dashboard" src="{{$twoFiles[0]->vehicle()->Brand_image_URL}}"> --}}
                     @endif
                 </div>
             </div>
