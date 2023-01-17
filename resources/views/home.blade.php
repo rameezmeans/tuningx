@@ -170,10 +170,10 @@
                                     </td>
                                     <td>
                                         <a class="car-info" href="{{route('file', $file->id)}}">
-                                            {{$file->vehicle()->Name}} 
+                                            {{-- {{$file->vehicle()->Name}}  --}}
                                         </a>
                                         <span class="car-name">
-                                            {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}
+                                            {{-- {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }} --}}
                                         </span>
                                     </td>
                                 </tr>
