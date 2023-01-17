@@ -121,7 +121,12 @@ if(!function_exists('get_logo_for_stages_and_options')){
 if(!function_exists('get_image_from_brand')){
 
     function get_image_from_brand( $brand ){
-        return Vehicle::where('make', '=', $brand)->whereNotNull('Brand_image_URL')->first()->Brand_image_URL;
+        if(Vehicle::where('make', '=', $brand)->whereNotNull('Brand_image_URL')->first()){
+            return Vehicle::where('make', '=', $brand)->whereNotNull('Brand_image_URL')->first()->Brand_image_URL;
+        }
+        else {
+            return env('BACKEND_URL').'/icons/logos/daf.png';
+        }
     }
 }
 
