@@ -281,7 +281,10 @@ class FileController extends Controller
             }
         }
 
-        $messageTemplate = MessageTemplate::where('name', 'Engineer Assignment')->first();
+        // $messageTemplate = MessageTemplate::where('name', 'Engineer Assignment')->first();
+
+        $messageTemplate = MessageTemplate::findOrFail(1);
+
         $message = $messageTemplate->text;
         $message = str_replace("#customer", $customer->name,$message);
 
@@ -329,8 +332,11 @@ class FileController extends Controller
             }
         }
 
-        $messageTemplate = MessageTemplate::where('name', 'File Uploaded')->first();
+        // $messageTemplate = MessageTemplate::where('name', 'File Uploaded')->first();
+        $messageTemplate = MessageTemplate::findOrFail(2);
+
         $message = $messageTemplate->text;
+        
         $message = str_replace("#customer", $uploader->name,$message);
 
         // $message = "Hi, New File is being uploaded by Client: ".$uploader->name."";
@@ -462,7 +468,9 @@ class FileController extends Controller
             }
         }
 
-        $messageTemplate = MessageTemplate::where('name', 'Request File Uploaded')->first();
+        // $messageTemplate = MessageTemplate::where('name', 'Request File Uploaded')->first();
+        $messageTemplate = MessageTemplate::findOrFail(3);
+
         $message = $messageTemplate->text;
         $message = str_replace("#customer", $uploader->name,$message);
 
@@ -665,7 +673,9 @@ class FileController extends Controller
             }
         }
 
-        $messageTemplate = MessageTemplate::where('name', 'Message To Engineer')->first();
+        // $messageTemplate = MessageTemplate::where('name', 'Message To Engineer')->first();
+        $messageTemplate = MessageTemplate::findOrFail(5);
+
         $message = $messageTemplate->text;
         $message = str_replace("#customer", $uploader->name,$message);
 
