@@ -166,7 +166,7 @@
                             @foreach($twoFiles as $file)
                                 <tr>
                                     <td>
-                                        <img src="{{ $file->vehicle()->Brand_image_URL }}" alt=" logo" class="logo-id">
+                                        <img src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }} @else {{ env('BACKEND_URL').'/icons/logos/daf.png' }} @endif" alt=" logo" class="logo-id">
                                     </td>
                                     <td>
                                         <a class="car-info" href="{{route('file', $file->id)}}">
