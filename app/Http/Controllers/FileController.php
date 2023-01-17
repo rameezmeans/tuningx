@@ -249,7 +249,8 @@ class FileController extends Controller
         $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
     
-        $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
+        // $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
+        $template = EmailTemplate::findOrFail(1);
 
         $html1 = $template->html;
 
@@ -297,7 +298,7 @@ class FileController extends Controller
         // $admin = User::where('email', 'xrkalix@gmail.com')->first();
         // $admin = User::where('is_admin', 1)->first();
         
-        $template = EmailTemplate::where('name', 'File Uploaded')->first();
+        $template = EmailTemplate::findOrFail(2);
 
         $html = $template->html;
 
@@ -429,7 +430,7 @@ class FileController extends Controller
 
         $admin = User::where('is_admin', 1)->first();
 
-        $template = EmailTemplate::where('name', 'Request File Uploaded')->first();
+        $template = EmailTemplate::findOrFail(3);
 
         $html = $template->html;
 
@@ -631,7 +632,7 @@ class FileController extends Controller
         $admin = User::where('is_admin', 1)->first();
         // $admin = User::where('email', 'xrkalix@gmail.com')->first();
 
-        $template = EmailTemplate::where('name', 'Message To Engineer')->first();
+        $template = EmailTemplate::findOrFail(4);
 
         $html = $template->html;
 
