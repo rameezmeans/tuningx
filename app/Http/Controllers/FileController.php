@@ -152,6 +152,8 @@ class FileController extends Controller
             ]);
         }
 
+        // dd($request->total_credits_to_submit);
+
         $credits = $request->total_credits_to_submit;
         $file = File::findOrFail($request->file_id); 
 
@@ -192,26 +194,6 @@ class FileController extends Controller
         ] );
     }
 
-    public function sendMessage($receiver, $message)
-    {
-        try {
-            $accountSid = env("TWILIO_SID");
-            $authToken = env("TWILIO_AUTH_TOKEN");
-            $twilioNumber = env("TWILIO_NUMBER"); 
-            $client = new Client($accountSid, $authToken);
-
-            $message = $client->messages
-                  ->create($receiver, 
-                           ["body" => $message, "from" => "ecutech"]
-            );
-
-            \Log::info('message sent to:'.$receiver);
-
-        } catch (\Exception $e) {
-            \Log::info($e->getMessage());
-        }
-    }
-
     public function paymentActionFile(Request $request){
 
         $user         = Auth::user();
@@ -241,7 +223,7 @@ class FileController extends Controller
 
         \Cart::remove(101);
 
-        $credits = $request->credits;
+        $credits = 0;
         // $credits = $request->total_credits_to_submit;
 
         $file = File::findOrFail($request->file_id); 
@@ -279,6 +261,28 @@ class FileController extends Controller
       }
 
     }
+
+    public function sendMessage($receiver, $message)
+    {
+        try {
+            $accountSid = env("TWILIO_SID");
+            $authToken = env("TWILIO_AUTH_TOKEN");
+            $twilioNumber = env("TWILIO_NUMBER"); 
+            $client = new Client($accountSid, $authToken);
+
+            $message = $client->messages
+                  ->create($receiver, 
+                           ["body" => $message, "from" => "ecutech"]
+            );
+
+            \Log::info('message sent to:'.$receiver);
+
+        } catch (\Exception $e) {
+            \Log::info($e->getMessage());
+        }
+    }
+
+    
 
     /**
      * Show the application dashboard.
