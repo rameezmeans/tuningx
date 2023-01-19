@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe;
+use Laravel\Cashier\Exceptions\IncompletePayment;
 
 class PaymentController extends Controller
 {
@@ -19,6 +20,44 @@ class PaymentController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function stripe() {
+      return view('stripe');
+  }
+
+    public function paymentAction(Request $request) {
+      $user         = Auth::user();
+      try {
+
+          $amount = $request->amount;
+          $stripeCharge = $user->charge( $amount*100, $request->pmethod);
+
+      } catch (IncompletePayment $exception) {
+          return redirect()->route(
+              'cashier.payment',
+              [$exception->payment->id, 'redirect' => route('shop-product')]
+          );
+      }
+
+      if($stripeCharge->status == "succeeded"){
+
+        $creditsBought = $request->credits;
+
+        $credit = new Credit();
+        $credit->credits = $creditsBought;
+        $credit->user_id = Auth::user()->id;
+        $credit->stripe_id = $stripeCharge->id;
+        $credit->price_payed = $request->amount;
+        $credit->invoice_id = 'INV-'.mt_rand(1000,9999);
+        $credit->save();
+
+        \Cart::remove(101);
+
+        return redirect()->route('shop-product', ['success' => 'Credits purchased!']);
+      }
+
+         
+  }
 
     /**
      * Show the application dashboard.

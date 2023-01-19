@@ -57,6 +57,54 @@
 
 @section('content')
 @include('layouts.nav')
+
+<div id="payment-modal" class="modal bottom-sheet" style="z-index: 1011; opacity: 1; bottom: 0px;">
+
+    <div class="modal-header">
+        <div class="row m-n">
+            <div class="container">
+                <div class="col s10">
+                    <h4 class="shades-text text-white">Payment</h4>
+                </div>
+                <div class="col s2">
+                    <a href="#" class="modal-close-payment">
+                            <span aria-hidden="true">
+                                <div class="close-icon">
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+          <div class="modal-content">
+            <div class="row">
+                <div class="container m-t-20">
+                    <div class="">
+                        <div class="text-center">
+                            <p id="errors" style="color:red;"></p>
+                            <form action="{{route('payment-process-file')}}" id="stripe" method="post">
+                                <input id="card-holder-name" placeholder="Card Holder Name" type="text">
+                                
+                                <!-- Stripe Elements Placeholder -->
+                                <div id="card-element"></div>
+                                <input name="pmethod" type="hidden" id="pmethod" value="" />
+                                <input name="amount" type="hidden" id="amount" value="" />
+                                <input name="credits" type="hidden" id="credits" value="" />
+                                <input name="file_id" type="hidden" id="file_id" value="{{$file->id}}" />
+                                <button id="card-button">
+                                    Process Payment
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
 <main class="">
     <div class="header-background-classic-full"></div>
         <div class="container">
@@ -287,12 +335,75 @@
           </div>
           
     </div>
-
 @endsection
 
 @section('pagespecificscripts')
 
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+    const stripe = Stripe('{{ env("STRIPE_KEY") }}');
+
+    // Pass the appearance object to the Elements instance
+    const elements = stripe.elements();
+
+    // const elements = stripe.elements();
+    // const cardElement = elements.create('card');
+
+    /**
+   * Card Element
+   */
+  var cardElement = elements.create('card', {
+    iconStyle: 'solid',
+    style: {
+      base: {
+        iconColor: '#f02429',
+        color: '#f02429',
+        fontWeight: 500,
+        fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+        fontSize: '16px',
+        fontSmoothing: 'antialiased',
+        border: '1px solid grey',
+
+        ':-webkit-autofill': {
+          color: '#000000',
+        },
+        '::placeholder': {
+          color: '#000000',
+        },
+      },
+      invalid: {
+        iconColor: '#f02429',
+        color: '#f02429',
+      },
+    },
+  });
+
+    cardElement.mount('#card-element');
+    const cardHolderName = document.getElementById('card-holder-name');
+    const form = document.getElementById('stripe');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const { paymentMethod, error } = await stripe.createPaymentMethod(
+            'card', cardElement, {
+                billing_details: { name: cardHolderName.value }
+            }
+        );
+        if (error) {
+            document.getElementById('errors').innerHTML = error.message;
+            // Display "error.message" to the user...
+        } else {
+            console.log('Card verified successfully');
+            console.log(paymentMethod.id);
+            document.getElementById('pmethod').setAttribute('value', paymentMethod.id);
+            document.getElementById('amount').setAttribute('value', $('#total').text() );
+            document.getElementById('credits').setAttribute('value', $('#qty-input').val() );
+            form.submit();
+        }
+    });
+</script>
+
+{{-- <script type="text/javascript" src="https://js.stripe.com/v2/"></script> --}}
 
 <script type="text/javascript">
 
@@ -301,6 +412,14 @@ function roundToTwo(value) {
 }
 
 $( document ).ready(function(event) {
+
+    $(document).on('click','.modal-close-payment', function(e){
+        $(function () {
+            $('#payment-modal').css("display", "none");
+        });   
+   });
+
+
    
     $(document).on('change','#qty-input', function(e){
 
@@ -343,7 +462,7 @@ $( document ).ready(function(event) {
         $('#taxValue').text(roundToTwo(taxAmount));
         $('#total').text(roundToTwo(adjustedPrice + taxAmount));
 
-        $('.modal').css("display", "block");
+        $('#modalcheckout').css("display", "block");
     });
 
     $(document).on('click','#remove-item', function(e){
@@ -379,78 +498,84 @@ $( document ).ready(function(event) {
 
    $(document).on('click','#cart-close', function(e){
         $(function () {
-            $('.modal').css("display", "none");
+            $('#modalcheckout').css("display", "none");
         });   
    });
 
    $(document).on('click','#pay', function(e){
         console.log('pay button clicked');
 
-        Swal.fire({
-        title: '{{__('Payment Details')}}',
-        html: `<input type="text" value="" id="cardname" class="swal2-input" placeholder="Card Name">
-        <input type="text" value="" id="cardnumber" class="swal2-input" placeholder="Card Number">
-        <div class="row-form"><input value="" type="text" id="cvc" class="swal2-input" placeholder=""><input value="" type="text" id="expiry_month" class="swal2-input" placeholder="Expiry Month"><input value="" type="text" id="expiry_year" class="swal2-input" placeholder="Expiry Year"></div>`,
+        $(function () {
+            $('#modalcheckout').css("display", "none");
+        }); 
+
+        $('#payment-modal').css("display", "block");
+
+        // Swal.fire({
+        // title: '{{__('Payment Details')}}',
+        // html: `<input type="text" value="" id="cardname" class="swal2-input" placeholder="Card Name">
+        // <input type="text" value="" id="cardnumber" class="swal2-input" placeholder="Card Number">
+        // <div class="row-form"><input value="" type="text" id="cvc" class="swal2-input" placeholder=""><input value="" type="text" id="expiry_month" class="swal2-input" placeholder="Expiry Month"><input value="" type="text" id="expiry_year" class="swal2-input" placeholder="Expiry Year"></div>`,
         
-        confirmButtonText: '{{__('Pay')}}',
-        focusConfirm: false,
-        preConfirm: () => {
-            const cardname = Swal.getPopup().querySelector('#cardname').value
-            const cardnumber = Swal.getPopup().querySelector('#cardnumber').value
-            const cvc = Swal.getPopup().querySelector('#cvc').value
-            const expiry_month = Swal.getPopup().querySelector('#expiry_month').value
-            const expiry_year = Swal.getPopup().querySelector('#expiry_year').value
-            if (!cardname || !cardnumber || !cvc || !expiry_month || !expiry_year) {
-                Swal.showValidationMessage(`Fill All the Fields`)
-            }
-            return { cardname: cardname, cardnumber: cardnumber, cvc:cvc, expiry_month:expiry_month, expiry_year:expiry_year }
-        }
-        }).then((result) => {
+        // confirmButtonText: '{{__('Pay')}}',
+        // focusConfirm: false,
+        // preConfirm: () => {
+        //     const cardname = Swal.getPopup().querySelector('#cardname').value
+        //     const cardnumber = Swal.getPopup().querySelector('#cardnumber').value
+        //     const cvc = Swal.getPopup().querySelector('#cvc').value
+        //     const expiry_month = Swal.getPopup().querySelector('#expiry_month').value
+        //     const expiry_year = Swal.getPopup().querySelector('#expiry_year').value
+        //     if (!cardname || !cardnumber || !cvc || !expiry_month || !expiry_year) {
+        //         Swal.showValidationMessage(`Fill All the Fields`)
+        //     }
+        //     return { cardname: cardname, cardnumber: cardnumber, cvc:cvc, expiry_month:expiry_month, expiry_year:expiry_year }
+        // }
+        // }).then((result) => {
 
             
 
-            let values = result.value;
+        //     let values = result.value;
            
-            Stripe.setPublishableKey($('#stripe-publishable-key').val());
-            Stripe.createToken({
-            number:Swal.getPopup().querySelector('#cardnumber').value,
-            cvc: Swal.getPopup().querySelector('#cvc').value,
-            exp_month: Swal.getPopup().querySelector('#expiry_month').value,
-            exp_year: Swal.getPopup().querySelector('#expiry_year').value
-          }, function(s,e) {
+        //     Stripe.setPublishableKey($('#stripe-publishable-key').val());
+        //     Stripe.createToken({
+        //     number:Swal.getPopup().querySelector('#cardnumber').value,
+        //     cvc: Swal.getPopup().querySelector('#cvc').value,
+        //     exp_month: Swal.getPopup().querySelector('#expiry_month').value,
+        //     exp_year: Swal.getPopup().querySelector('#expiry_year').value
+        //   }, function(s,e) {
 
-              console.log(e);
-              values['stripeToken'] = e.id;
-              values['total'] = $('#total').text();
-              values['credits'] = $('#qty-input').val();
+        //       console.log(e);
+        //       values['stripeToken'] = e.id;
+        //       values['total'] = $('#total').text();
+        //       values['credits'] = $('#qty-input').val();
 
-              $.ajax({
-                    url: "/make_payment",
-                    type: "POST",
-                    headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                    data: values,
-                    success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Payment Accepted',
-                            text: 'Your Payment is successful',
-                            timer: 3000
-                        });
-                        location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        let err = JSON.parse(xhr.responseText);
-                        console.log(err);
-                        Swal.fire({
-                            icon: 'error',
-                            title:'Payment Not Successful',
-                            text: err.error,
-                        });
-                    }
+        //       $.ajax({
+        //             url: "/make_payment",
+        //             type: "POST",
+        //             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        //             data: values,
+        //             success: function(response) {
+        //                 Swal.fire({
+        //                     icon: 'success',
+        //                     title: 'Payment Accepted',
+        //                     text: 'Your Payment is successful',
+        //                     timer: 3000
+        //                 });
+        //                 location.reload();
+        //             },
+        //             error: function (xhr, status, error) {
+        //                 let err = JSON.parse(xhr.responseText);
+        //                 console.log(err);
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title:'Payment Not Successful',
+        //                     text: err.error,
+        //                 });
+        //             }
 
-                });
-            });
-        });
+        //         });
+        //     });
+        // });
 
     });
 
