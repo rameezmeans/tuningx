@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Redirect;
 use Laravel\Ui\Presets\React;
 use Carbon\Carbon;
 use Twilio\Rest\Client;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FileController extends Controller
 {
@@ -129,6 +130,103 @@ class FileController extends Controller
         return redirect()->back()->withInput();
     }
 
+    public function successFile(Request $request) {
+
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $sessionId = $request->get('session_id'); 
+
+        // dd($request->all());
+
+        try {
+
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+            if (!$session) {
+                throw new NotFoundHttpException;
+            }
+
+            $customer = \Stripe\Customer::retrieve($session->customer);
+
+            $creditsBought = $request->credits;
+
+            $credit = new Credit();
+
+            $credit->credits = $creditsBought;
+            $credit->user_id = Auth::user()->id;
+            $credit->stripe_id = $session->id;
+            $credit->price_payed = $request->unit_price * $creditsBought;
+            $credit->invoice_id = 'INV-'.mt_rand(1000,9999);
+            $credit->save();
+
+            \Cart::remove(101);
+
+        $credits = $request->total_credits_to_submit;
+
+        $file = File::findOrFail($request->file_id); 
+
+        $price = Price::where('label', 'credit_price')->first();
+
+        $customer = Auth::user();
+
+        $factor = 0;
+        $tax = 0;
+
+        if($customer->group->tax > 0){
+            $tax = (float) $customer->group->tax;
+        }
+
+        if($customer->group->raise > 0){
+            $factor = (float)  ($customer->group->raise / 100) * $price->value;
+        }
+
+        if($customer->group->discount > 0){
+            $factor =  -1* (float) ($customer->group->discount / 100) * $price->value;
+        }
+
+        
+        return view( 'files.pay_credits', [ 
+            'file' => $file, 
+            'credits' => $credits, 
+            'price' => $price,
+            'factor' => $factor,
+            'tax' => $tax,
+            'group' =>  $customer->group
+            ] );
+
+
+        } catch (\Exception $e) {
+            throw new NotFoundHttpException();
+        }
+
+    }
+
+    public function checkoutFile(Request $request){
+
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $lineItems = [];
+        
+        $lineItems[] = [
+          'price_data' => [
+              'currency' => 'eur',
+              'product_data' => [
+                'name' => "Tuning Credit(s)"
+            ],
+              'unit_amount' => $request->unit_price_for_checkout * 100,
+          ],
+          'quantity' => $request->credits_for_checkout,
+        ];
+        $session = \Stripe\Checkout\Session::create([
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => route('checkout.success-file', [], true) . "?session_id={CHECKOUT_SESSION_ID}&credits=".$request->credits_for_checkout."&unit_price=".$request->unit_price_for_checkout."&file_id=".$request->file_id."&total_credits_to_submit=".$request->total_credits_to_submit,
+            'cancel_url' => route('checkout.cancel', [], true),
+        ]);
+
+        return redirect($session->url);
+
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -151,8 +249,6 @@ class FileController extends Controller
                 'tuning' => 'required'
             ]);
         }
-
-        // dd($request->total_credits_to_submit);
 
         $credits = $request->total_credits_to_submit;
         $file = File::findOrFail($request->file_id); 
@@ -194,74 +290,6 @@ class FileController extends Controller
         ] );
     }
 
-    public function paymentActionFile(Request $request){
-
-        $user         = Auth::user();
-      try {
-
-          $amount = $request->amount;
-          $stripeCharge = $user->charge( $amount*100, $request->pmethod);
-
-      } catch (IncompletePayment $exception) {
-          return redirect()->route(
-              'cashier.payment',
-              [$exception->payment->id, 'redirect' => route('shop-product')]
-          );
-      }
-
-      if($stripeCharge->status == "succeeded"){
-
-        $creditsBought = $request->credits;
-
-        $credit = new Credit();
-        $credit->credits = $creditsBought;
-        $credit->user_id = Auth::user()->id;
-        $credit->stripe_id = $stripeCharge->id;
-        $credit->price_payed = $request->amount;
-        $credit->invoice_id = 'INV-'.mt_rand(1000,9999);
-        $credit->save();
-
-        \Cart::remove(101);
-
-        $credits = 0;
-        // $credits = $request->total_credits_to_submit;
-
-        $file = File::findOrFail($request->file_id); 
-
-        $price = Price::where('label', 'credit_price')->first();
-
-        $customer = Auth::user();
-
-        $factor = 0;
-        $tax = 0;
-
-        if($customer->group->tax > 0){
-            $tax = (float) $customer->group->tax;
-        }
-
-        if($customer->group->raise > 0){
-            $factor = (float)  ($customer->group->raise / 100) * $price->value;
-        }
-
-        if($customer->group->discount > 0){
-            $factor =  -1* (float) ($customer->group->discount / 100) * $price->value;
-        }
-
-        
-        return view( 'files.pay_credits', [ 
-            'file' => $file, 
-            'credits' => $credits, 
-            'price' => $price,
-            'factor' => $factor,
-            'tax' => $tax,
-            'group' =>  $customer->group
-            ] );
-
-
-      }
-
-    }
-
     public function sendMessage($receiver, $message)
     {
         try {
@@ -291,6 +319,8 @@ class FileController extends Controller
      */
     public function addCredits(Request $request)
     {
+
+        // dd($request->credits);
 
         $credits = $request->credits;
 

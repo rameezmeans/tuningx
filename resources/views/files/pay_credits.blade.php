@@ -85,7 +85,7 @@
                     <div class="">
                         <div class="text-center">
                             <p id="errors" style="color:red;"></p>
-                            <form action="{{route('payment-process-file')}}" id="stripe" method="post">
+                            {{-- <form action="{{route('payment-process-file')}}" id="stripe" method="post">
                                 <input id="card-holder-name" placeholder="Card Holder Name" type="text">
                                 
                                 <!-- Stripe Elements Placeholder -->
@@ -97,7 +97,7 @@
                                 <button id="card-button">
                                     Process Payment
                                 </button>
-                            </form>
+                            </form> --}}
                         </div>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                                 <div class="totals"><p class="red-olsx-text">{{__('Credits To Buy')}}<small><span id="to-buy-credits">@if(Auth::user()->credits->sum('credits') > $credits){{ Auth::user()->credits->sum('credits') - $credits  }}@else {{ $credits -  Auth::user()->credits->sum('credits') }} @endif</span> credits</small></p></div>
                             @endif
                         </div>
-                        <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit">
+                        <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit" value={{ $credits }}>
                         <div class="center">
                             @if( Auth::user()->credits->sum('credits') > $credits )
                             <form method="POST" action="{{ route('add-credits-to-file'); }}">
@@ -293,7 +293,15 @@
                                             <p>{{__('When validating your payment you will automatically be redirected to the Stripe website where you will be able to pay the amount due very easily.')}}</p>
                                         </div>
                                         <div class="card-action center">
-                                            <a class="btn btn-red" id="pay">{{__('Pay with card')}}</a>
+                                            <form action="{{route('checkout-file')}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="total_for_checkout" value="" id="total_for_checkout">
+                                                <input type="hidden" name="credits_for_checkout" value="" id="credits_for_checkout">
+                                                <input type="hidden" name="unit_price_for_checkout" value="" id="unit_price_for_checkout">
+                                                <input type="hidden" name="file_id" value="{{$file->id}}" id="file_id">
+                                                <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit" value={{ $credits }}>
+                                                <button class="btn btn-red" type="submit">{{__('Pay with card')}}</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -339,68 +347,68 @@
 
 @section('pagespecificscripts')
 
-<script src="https://js.stripe.com/v3/"></script>
+{{-- <script src="https://js.stripe.com/v3/"></script> --}}
 
 <script>
-    const stripe = Stripe('{{ env("STRIPE_KEY") }}');
+//     const stripe = Stripe('{{ env("STRIPE_KEY") }}');
 
-    // Pass the appearance object to the Elements instance
-    const elements = stripe.elements();
+//     // Pass the appearance object to the Elements instance
+//     const elements = stripe.elements();
 
-    // const elements = stripe.elements();
-    // const cardElement = elements.create('card');
+//     // const elements = stripe.elements();
+//     // const cardElement = elements.create('card');
 
-    /**
-   * Card Element
-   */
-  var cardElement = elements.create('card', {
-    iconStyle: 'solid',
-    style: {
-      base: {
-        iconColor: '#f02429',
-        color: '#f02429',
-        fontWeight: 500,
-        fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-        fontSize: '16px',
-        fontSmoothing: 'antialiased',
-        border: '1px solid grey',
+//     /**
+//    * Card Element
+//    */
+//   var cardElement = elements.create('card', {
+//     iconStyle: 'solid',
+//     style: {
+//       base: {
+//         iconColor: '#f02429',
+//         color: '#f02429',
+//         fontWeight: 500,
+//         fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+//         fontSize: '16px',
+//         fontSmoothing: 'antialiased',
+//         border: '1px solid grey',
 
-        ':-webkit-autofill': {
-          color: '#000000',
-        },
-        '::placeholder': {
-          color: '#000000',
-        },
-      },
-      invalid: {
-        iconColor: '#f02429',
-        color: '#f02429',
-      },
-    },
-  });
+//         ':-webkit-autofill': {
+//           color: '#000000',
+//         },
+//         '::placeholder': {
+//           color: '#000000',
+//         },
+//       },
+//       invalid: {
+//         iconColor: '#f02429',
+//         color: '#f02429',
+//       },
+//     },
+//   });
 
-    cardElement.mount('#card-element');
-    const cardHolderName = document.getElementById('card-holder-name');
-    const form = document.getElementById('stripe');
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const { paymentMethod, error } = await stripe.createPaymentMethod(
-            'card', cardElement, {
-                billing_details: { name: cardHolderName.value }
-            }
-        );
-        if (error) {
-            document.getElementById('errors').innerHTML = error.message;
-            // Display "error.message" to the user...
-        } else {
-            console.log('Card verified successfully');
-            console.log(paymentMethod.id);
-            document.getElementById('pmethod').setAttribute('value', paymentMethod.id);
-            document.getElementById('amount').setAttribute('value', $('#total').text() );
-            document.getElementById('credits').setAttribute('value', $('#qty-input').val() );
-            form.submit();
-        }
-    });
+//     cardElement.mount('#card-element');
+//     const cardHolderName = document.getElementById('card-holder-name');
+//     const form = document.getElementById('stripe');
+//     form.addEventListener('submit', async (e) => {
+//         e.preventDefault();
+//         const { paymentMethod, error } = await stripe.createPaymentMethod(
+//             'card', cardElement, {
+//                 billing_details: { name: cardHolderName.value }
+//             }
+//         );
+//         if (error) {
+//             document.getElementById('errors').innerHTML = error.message;
+//             // Display "error.message" to the user...
+//         } else {
+//             console.log('Card verified successfully');
+//             console.log(paymentMethod.id);
+//             document.getElementById('pmethod').setAttribute('value', paymentMethod.id);
+//             document.getElementById('amount').setAttribute('value', $('#total').text() );
+//             document.getElementById('credits').setAttribute('value', $('#qty-input').val() );
+//             form.submit();
+//         }
+//     });
 </script>
 
 {{-- <script type="text/javascript" src="https://js.stripe.com/v2/"></script> --}}
@@ -428,17 +436,28 @@ $( document ).ready(function(event) {
         let factor = $('#factor').val();
         let tax = $('#tax').val();
 
-        console.log(price);
+        // console.log(price);
         $('#subTotal').text(roundToTwo(qty*price));
         $('#vatSubTotal').text(roundToTwo(qty*factor));
 
         let adjustedPrice = (qty*price) + (qty*factor);
         let taxAmount = ( tax * adjustedPrice ) / 100;
 
+        let adjusted_unit_price = roundToTwo(price) + roundToTwo(factor);
+        let unit_price_tax = ( roundToTwo(tax) * roundToTwo(adjusted_unit_price) ) / 100;
+
+        let final_unit_price = roundToTwo(adjusted_unit_price + unit_price_tax);
+
         console.log(adjustedPrice);
+
+        console.log(adjusted_unit_price);
 
         $('#taxValue').text(roundToTwo(taxAmount));
         $('#total').text(roundToTwo(adjustedPrice + taxAmount));
+
+        $('#total_for_checkout').val(roundToTwo(adjustedPrice + taxAmount));
+        $('#credits_for_checkout').val(qty);
+        $('#unit_price_for_checkout').val(adjusted_unit_price);
 
     });
 
@@ -457,10 +476,17 @@ $( document ).ready(function(event) {
         let adjustedPrice = (required_credits*price) + (required_credits*factor);
         let taxAmount = ( tax * adjustedPrice ) / 100;
 
-        console.log(adjustedPrice);
+        let adjusted_unit_price = roundToTwo(price) + roundToTwo(factor);
+        let unit_price_tax = ( roundToTwo(tax) * roundToTwo(adjusted_unit_price) ) / 100;
+
+        let final_unit_price = roundToTwo(adjusted_unit_price + unit_price_tax);
 
         $('#taxValue').text(roundToTwo(taxAmount));
         $('#total').text(roundToTwo(adjustedPrice + taxAmount));
+
+        $('#total_for_checkout').val(roundToTwo(adjustedPrice + taxAmount));
+        $('#credits_for_checkout').val(required_credits);
+        $('#unit_price_for_checkout').val(adjusted_unit_price);
 
         $('#modalcheckout').css("display", "block");
     });
@@ -503,13 +529,13 @@ $( document ).ready(function(event) {
    });
 
    $(document).on('click','#pay', function(e){
-        console.log('pay button clicked');
+        // console.log('pay button clicked');
 
-        $(function () {
-            $('#modalcheckout').css("display", "none");
-        }); 
+        // $(function () {
+        //     $('#modalcheckout').css("display", "none");
+        // }); 
 
-        $('#payment-modal').css("display", "block");
+        // $('#payment-modal').css("display", "block");
 
         // Swal.fire({
         // title: '{{__('Payment Details')}}',

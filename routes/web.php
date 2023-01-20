@@ -69,9 +69,17 @@ Route::get('/clear_cart', [App\Http\Controllers\PaymentController::class, 'clear
 
 Route::get('/price-list', [App\Http\Controllers\AccountController::class, 'priceList'])->name('price-list');
 
-Route::post('/payment_process', [App\Http\Controllers\PaymentController::class, 'paymentAction'])->name('payment-process');
-Route::post('/payment_process_file', [App\Http\Controllers\FileController::class, 'paymentActionFile'])->name('payment-process-file');
-Route::get('/stripe', [App\Http\Controllers\PaymentController::class, 'stripe'])->name('stripe');
+
+Route::post('/checkout', [App\Http\Controllers\PaymentController::class, 'checkout'])->name('checkout');
+Route::post('/checkout_file', [App\Http\Controllers\FileController::class, 'checkoutFile'])->name('checkout-file');
+
+Route::get('/success_file', [App\Http\Controllers\FileController::class, 'successFile'])->name('checkout.success-file');
+Route::get('/success', [App\Http\Controllers\PaymentController::class, 'success'])->name('checkout.success');
+Route::get('/cancel', [App\Http\Controllers\PaymentController::class, 'cancel'])->name('checkout.cancel');
+
+// Route::post('/payment_process', [App\Http\Controllers\PaymentController::class, 'paymentAction'])->name('payment-process');
+// Route::post('/payment_process_file', [App\Http\Controllers\FileController::class, 'paymentActionFile'])->name('payment-process-file');
+// Route::get('/stripe', [App\Http\Controllers\PaymentController::class, 'stripe'])->name('stripe');
 
 Route::post('/cart_quantity', [App\Http\Controllers\PaymentController::class, 'getCartQuantity'])->name('get-cart');
 Route::get('/shop-product', [App\Http\Controllers\ShoppingController::class, 'shopProduct'])->name('shop-product');

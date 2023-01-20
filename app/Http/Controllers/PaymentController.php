@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe;
 use Laravel\Cashier\Exceptions\IncompletePayment;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PaymentController extends Controller
 {
@@ -21,9 +22,142 @@ class PaymentController extends Controller
         $this->middleware('auth');
     }
 
-    public function stripe() {
-      return view('stripe');
-  }
+
+    public function success_file(Request $request)
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $sessionId = $request->get('session_id');
+
+        try {
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+            dd($session);
+
+            if (!$session) {
+                throw new NotFoundHttpException;
+            }
+
+            $customer = \Stripe\Customer::retrieve($session->customer);
+
+            $creditsBought = $request->credits;
+
+            $credit = new Credit();
+            $credit->credits = $creditsBought;
+            $credit->user_id = Auth::user()->id;
+            $credit->stripe_id = $sessionId->id;
+            $credit->price_payed = $request->amount;
+            $credit->invoice_id = 'INV-'.mt_rand(1000,9999);
+            $credit->save();
+
+            \Cart::remove(101);
+
+        return redirect()->route('shop-product', ['success' => 'Credits purchased!']);
+
+            // return view('product.checkout-success', compact('customer'));
+
+        } catch (\Exception $e) {
+            throw new NotFoundHttpException();
+        }
+
+    }
+
+    public function cancel()
+    {
+
+    }
+
+    public function success(Request $request)
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $sessionId = $request->get('session_id'); 
+
+        try {
+
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+
+            if (!$session) {
+                throw new NotFoundHttpException;
+            }
+            
+            $customer = \Stripe\Customer::retrieve($session->customer);
+
+            $creditsBought = $request->credits;
+
+            $credit = new Credit();
+
+            $credit->credits = $creditsBought;
+            $credit->user_id = Auth::user()->id;
+            $credit->stripe_id = $session->id;
+            $credit->price_payed = $request->unit_price * $creditsBought;
+            $credit->invoice_id = 'INV-'.mt_rand(1000,9999);
+            $credit->save();
+
+            \Cart::remove(101);
+
+        return redirect()->route('shop-product', ['success' => 'Credits purchased!']);
+
+        } catch (\Exception $e) {
+            throw new NotFoundHttpException();
+        }
+
+    }
+
+
+    public function checkout(Request $request)
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $lineItems = [];
+        
+        $lineItems[] = [
+          'price_data' => [
+              'currency' => 'eur',
+              'product_data' => [
+                'name' => "Tuning Credit(s)"
+            ],
+              'unit_amount' => $request->unit_price_for_checkout * 100,
+          ],
+          'quantity' => $request->credits_for_checkout,
+        ];
+        $session = \Stripe\Checkout\Session::create([
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => route('checkout.success', [], true) . "?session_id={CHECKOUT_SESSION_ID}&credits=".$request->credits_for_checkout."&unit_price=".$request->unit_price_for_checkout,
+            'cancel_url' => route('checkout.cancel', [], true),
+        ]);
+
+        return redirect($session->url);
+    }
+
+
+    public function checkout_file(Request $request)
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        dd($request->all());
+
+        $lineItems = [];
+        
+        $lineItems[] = [
+          'price_data' => [
+              'currency' => 'eur',
+              'product_data' => [
+                'name' => "Tuning Credit(s)"
+            ],
+              'unit_amount' => $request->unit_price_for_checkout * 100,
+          ],
+          'quantity' => $request->credits_for_checkout,
+        ];
+        $session = \Stripe\Checkout\Session::create([
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => route('checkout.success', [], true) . "?session_id={CHECKOUT_SESSION_ID}&credits=".$request->credits_for_checkout."&unit_price=".$request->unit_price_for_checkout,
+            'cancel_url' => route('checkout.cancel', [], true),
+        ]);
+
+        return redirect($session->url);
+
+    }
 
     public function paymentAction(Request $request) {
       $user         = Auth::user();
