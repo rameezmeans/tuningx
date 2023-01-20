@@ -377,7 +377,7 @@ $( document ).ready(function(event) {
             let taxAmount = ( tax * adjustedPrice ) / 100;
 
             let adjusted_unit_price = roundToTwo(price) + roundToTwo(factor);
-            let unit_price_tax = ( roundToTwo(tax) * roundToTwo(adjusted_unit_price) ) / 100;
+            let unit_price_tax = ( tax * adjusted_unit_price ) / 100;
 
             let final_unit_price = roundToTwo(adjusted_unit_price + unit_price_tax);
 
@@ -390,7 +390,7 @@ $( document ).ready(function(event) {
 
             $('#total_for_checkout').val(roundToTwo(adjustedPrice + taxAmount));
             $('#credits_for_checkout').val(qty);
-            $('#unit_price_for_checkout').val(adjusted_unit_price);
+            $('#unit_price_for_checkout').val(final_unit_price);
     });
 
     // $(document).on('click','#remove-item', function(e){
@@ -470,7 +470,7 @@ $( document ).ready(function(event) {
 
             $('#total_for_checkout').val(roundToTwo(adjustedPrice + taxAmount));
             $('#credits_for_checkout').val(qty);
-            $('#unit_price_for_checkout').val(adjusted_unit_price);
+            $('#unit_price_for_checkout').val(final_unit_price);
 
             $('#modalcheckout').css("display", "block");
 
