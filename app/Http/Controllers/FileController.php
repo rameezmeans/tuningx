@@ -56,7 +56,7 @@ class FileController extends Controller
         if(Auth::user()->master_tools && Auth::user()->master_tools !== ''){
             $masterTools = explode(',',Auth::user()->master_tools);
         }
-        if(Auth::user()->slave_tools && Auth::user()->master_tools !== ''){
+        if(Auth::user()->slave_tools && Auth::user()->slave_tools !== ''){
             $slaveTools = explode(',',Auth::user()->slave_tools);
         }
         
@@ -134,8 +134,6 @@ class FileController extends Controller
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         $sessionId = $request->get('session_id'); 
-
-        // dd($request->all());
 
         try {
 
