@@ -21544,7 +21544,7 @@ table.olsx-history tbody > tr > td .img-circle-car-history {
     background: #fff;
     border-radius: 0.25em;
     height: 2.5em;
-    max-width: 2.5em;
+    max-width: 3.5em;
     padding: 0.3em;
     vertical-align: middle;
 }
@@ -29567,6 +29567,6 @@ button[type="submit"].error i.error-icon {
     display: none !important;
 }
 
-.transform-menu{
+.transform-menu {
     transform: translateX(0%);
 }

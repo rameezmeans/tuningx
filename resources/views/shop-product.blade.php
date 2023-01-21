@@ -448,8 +448,7 @@ $( document ).ready(function(event) {
                 let price = $('#price_per_unit').val();
                 let factor = $('#factor').val();
                 let tax = $('#tax').val();
-
-            // console.log(price);
+            
             $('#subTotal').text(roundToTwo(qty*price));
             $('#vatSubTotal').text(roundToTwo(qty*factor));
 
