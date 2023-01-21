@@ -60,6 +60,10 @@ class User extends Authenticatable
         return $this->hasMany(Credit::class); 
     }
 
+    public function total_credits(){
+        return Credit::where('user_id', '=', $this->id)->sum('credits');
+    }
+
     public function translation(){
         return $this->hasOne(Translation::class);
     }
