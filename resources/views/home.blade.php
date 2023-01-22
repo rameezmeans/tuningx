@@ -28,7 +28,7 @@
 <main>
 <div class="container">
     <div>
-    <div id="MyClockDisplay" @if($feed->type == 'danger') style="color: #f02429;" @elseif($feed->type == 'good_news') style="color: #1b5e20;" @else style="color: #428ce8;" @endif class="clock" onload="showTime()"></div>
+    <div id="MyClockDisplay" @if(isset($feed))  @if($feed->type == 'danger') style="color: #f02429;" @elseif($feed->type == 'good_news') style="color: #1b5e20;" @else style="color: #428ce8;" @endif @else style="color: #000;"  @endif class="clock" onload="showTime()"></div>
     </div>
     <h1>{{__('Dashboard')}}</h1>
     <div class="row no-m-b">
