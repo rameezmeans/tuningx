@@ -4,12 +4,32 @@
 @include('layouts.nav')
     @php 
         $feed = Illuminate\Support\Facades\Session::get('feed');
+
+       
     @endphp
     @if(isset($feed))
         <div class="chip alert-message @if($feed->type == 'warning') alert-blue @elseif($feed->type == 'good_news') alert-green @else alert-red @endif"><span><i class="fa fa-info-circle"></i>{{$feed->feed}}<button class="close-feed" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
     @endif
+
+    <style>
+
+
+        .clock {
+            position: absolute;
+            top: 5%;
+            left: 85%;
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 20px;
+            ont-family: Roboto, sans-serif !important;
+            letter-spacing: 7px;
+        }
+
+    </style>
 <main>
 <div class="container">
+    <div>
+    <div id="MyClockDisplay" @if($feed->type == 'danger') style="color: #f02429;" @elseif($feed->type == 'good_news') style="color: #1b5e20;" @else style="color: #428ce8;" @endif class="clock" onload="showTime()"></div>
+    </div>
     <h1>{{__('Dashboard')}}</h1>
     <div class="row no-m-b">
         <div class="col s12">
@@ -220,6 +240,36 @@
 @section('pagespecificscripts')
 
 <script type="text/javascript">
+
+        function showTime(){
+            var date = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/Athens'}));
+            var h = date.getHours(); // 0 - 23
+            var m = date.getMinutes(); // 0 - 59
+            var s = date.getSeconds(); // 0 - 59
+            var session = "AM";
+            
+            if(h == 0){
+                h = 12;
+            }
+            
+            if(h > 12){
+                h = h - 12;
+                session = "PM";
+            }
+            
+            h = (h < 10) ? "0" + h : h;
+            m = (m < 10) ? "0" + m : m;
+            s = (s < 10) ? "0" + s : s;
+            
+            var time = h + ":" + m + ":" + s + " " + session;
+            document.getElementById("MyClockDisplay").innerText = time;
+            document.getElementById("MyClockDisplay").textContent = time;
+            
+            setTimeout(showTime, 1000);
+            
+        }
+
+    showTime();
 
     $( document ).ready(function(event) {
 
