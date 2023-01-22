@@ -29031,7 +29031,7 @@ label.file-type-label:hover div.file-type-info:not(:hover) {
 }
 
 .parallax-container {
-    height: 50vh;
+    height: 40vh;
     overflow: hidden;
     position: relative;
 }
