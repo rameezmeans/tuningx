@@ -12,6 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <link href="{{ url('/') }}/css/newapp.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -26,6 +27,21 @@
 
     <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}</style>
 
+    <style>
+
+
+        .clock {
+            position: absolute;
+            top: 4%;
+            left: 58%;
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 20px;
+            font-family: Orbitron;
+            letter-spacing: 7px;
+        }
+
+    </style>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
@@ -36,9 +52,10 @@
     @yield('pagespecificstyles')
 </head>
 <body class="client-module">
+    
+    <div id="MyClockDisplay" style="color: #000;" class="clock" onload="showTime()"></div>
+   
 
-    
-    
     @if (request()->has('success'))
         <div class="chip alert-message alert-green"><span><i class="fa fa-info-circle"></i>{{ __(request()->get('success')) }}<button class="close-message" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
     @endif
@@ -51,6 +68,37 @@
 
     @yield('pagespecificscripts')
     <script type="text/javascript">
+
+    function showTime(){
+            var date = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/Athens'}));
+            var h = date.getHours(); // 0 - 23
+            var m = date.getMinutes(); // 0 - 59
+            var s = date.getSeconds(); // 0 - 59
+            var session = "AM";
+            
+            if(h == 0){
+                h = 12;
+            }
+            
+            if(h > 12){
+                h = h - 12;
+                session = "PM";
+            }
+            
+            h = (h < 10) ? "0" + h : h;
+            m = (m < 10) ? "0" + m : m;
+            s = (s < 10) ? "0" + s : s;
+            
+            var time = h + ":" + m + ":" + s + " " + session;
+            document.getElementById("MyClockDisplay").innerText = time;
+            document.getElementById("MyClockDisplay").textContent = time;
+            
+            setTimeout(showTime, 1000);
+            
+        }
+
+    showTime();
+
         var icons;
         $( document ).ready(function(event) {
 
