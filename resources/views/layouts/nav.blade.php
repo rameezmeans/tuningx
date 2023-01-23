@@ -105,6 +105,18 @@
                 <a href="{{route('invoices'); }}"><i class="fa-solid fa-file-invoice"></i><span>{{__('Invoices')}}</span></a>
             </li>
             
-                </ul>
+    </ul>
+    
+    <div style="color:white; margin: 20px; position: absolute; top: 630px;">
+        <b>Monday - Friday Timings:</b>
+        <br>
+        {{ date('h:i A', strtotime($workHours[0]->start))}} - {{ date('h:i A', strtotime($workHours[0]->end))}}
     </div>
+    <div style="color:white; margin: 20px; position: absolute; top: 680px;">
+        <b>Saturday Timings:</b>
+        <br>
+        {{ date('h:i A', strtotime($workHours[1]->start))}} - {{ date('h:i A', strtotime($workHours[1]->end))}}
+    </div>
+    </div>
+    
     </header>

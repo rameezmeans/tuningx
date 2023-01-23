@@ -24,12 +24,8 @@
     <link rel="stylesheet" href="https://phpcoder.tech/multiselect/css/jquery.multiselect.css">
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
-
     <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}</style>
-
     <style>
-
-
         .clock {
             position: absolute;
             top: 4%;
