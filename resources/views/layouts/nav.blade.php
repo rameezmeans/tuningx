@@ -107,12 +107,12 @@
             
     </ul>
     
-    <div style="color:white; margin: 20px; position: absolute; top: 630px;">
+    <div style="color:white; margin: 20px; position: absolute; top: 620px;">
         <b>Monday - Friday Timings:</b>
         <br>
         {{ date('h:i A', strtotime($workHours[0]->start))}} - {{ date('h:i A', strtotime($workHours[0]->end))}}
     </div>
-    <div style="color:white; margin: 20px; position: absolute; top: 680px;">
+    <div style="color:white; margin: 20px; position: absolute; top: 670px;">
         <b>Saturday Timings:</b>
         <br>
         {{ date('h:i A', strtotime($workHours[1]->start))}} - {{ date('h:i A', strtotime($workHours[1]->end))}}
