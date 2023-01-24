@@ -124,10 +124,10 @@ class FileController extends Controller
         $extenstion = substr($fileName, strpos($fileName, ".") + 1);
 
         if(isset($file['ecu'])){
-            $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.$file['ecu'].' cu.'.$extenstion;
+            $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.$file['ecu'].' cu vxx.'.$extenstion;
         }
         else{
-            $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.' cu.'.$extenstion;
+            $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.' cu vxx.'.$extenstion;
         }
 
         rename( public_path('uploads').'/'.$fileName, public_path('uploads').'/'.$newFileName );
@@ -143,6 +143,12 @@ class FileController extends Controller
         $newFile = File::create($file);
 
         if($newFile){
+
+            $newFileNameWithTaskID = 'Task'.$newFile->id.' '.$newFileName;
+            rename( public_path('uploads').'/'.$newFileName, public_path('uploads').'/'.$newFileNameWithTaskID );
+            $newFile->file_attached = $newFileNameWithTaskID;
+            $newFile->save();
+            
             return redirect()->route('stages', ['file_id' => $newFile->id]);
         }
 
