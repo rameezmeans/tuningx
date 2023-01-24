@@ -323,7 +323,7 @@ var dropzone = new Dropzone('#uploadfile', {
         success: function(file, response) {
             console.log(response);
             $('#upload-area').addClass('hide');
-            $('#file-name').html(response.success+' (File Attached)');
+            $('#file-name').html('(File Attached)');
             $('#file_attached').val(response.success);
             $('#file-name').removeClass('hide');
             $('#posting-file').removeClass('hide');

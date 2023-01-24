@@ -80,6 +80,12 @@ class FileController extends Controller
     {
         $file = $request->file('file');
         $fileName = $file->getClientOriginalName();
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        
+        $fileName = str_replace('#', '_', $fileName);
+        $fileName = str_replace('.', '_', $fileName);
+        $fileName = $fileName.'.'.$extension;
+
         $file->move(public_path('uploads'),$fileName);
      
         return response()->json(['success'=>$fileName]);
@@ -114,6 +120,19 @@ class FileController extends Controller
             'gear_box' => 'max:255',
         ]);
 
+        $fileName = $file['file_attached'];
+        $extenstion = substr($fileName, strpos($fileName, ".") + 1);
+
+        if(isset($file['ecu'])){
+            $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.$file['ecu'].' cu.'.$extenstion;
+        }
+        else{
+            $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.' cu.'.$extenstion;
+        }
+
+        rename( public_path('uploads').'/'.$fileName, public_path('uploads').'/'.$newFileName );
+
+        $file['file_attached'] = $newFileName;
         $file['tools'] = "tools value";//this is not required at all -- update it
         $file['credits'] = 0;
         $file['checked_by'] = 'customer';
@@ -318,14 +337,9 @@ class FileController extends Controller
     public function addCredits(Request $request)
     {
 
-        // dd($request->credits);
-
         $credits = $request->credits;
-
         $head =  User::where('is_head', 1)->first();
-
         $creditsInAccount = Auth::user()->credits->sum('credits');
-
         if($creditsInAccount >= $request->credits){
 
             $credit = new Credit();
@@ -333,16 +347,12 @@ class FileController extends Controller
             $credit->credits = -$credits;
             $credit->price_payed = 0;
             $credit->invoice_id = 'INV-'.mt_rand(1000,9999);
-            
             $credit->user_id = Auth::user()->id;
             $credit->save();
-
             $file = File::findOrFail($request->file_id); 
-
             $file->credits = $credits;
             $file->is_credited = true;
             $file->assignment_time = Carbon::now();
-            // $file->assigned_to = $head->id; // auto assigned to Nick (Head)
 
             $file->save();
         
@@ -393,13 +403,8 @@ class FileController extends Controller
         $subject = "ECU Tech: Task Assigned!";
 
         \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
-        // \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html1, 'subject' => $subject]));
-
+        
         $this->sendMessage($head->phone, $message);
-        // $this->sendMessage($admin->phone, $message);
-
-        // $admin = User::where('email', 'xrkalix@gmail.com')->first();
-        // $admin = User::where('is_admin', 1)->first();
         
         $template = EmailTemplate::findOrFail(2);
 
