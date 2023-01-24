@@ -15,7 +15,7 @@ class File extends Model
     'vin_number', 'brand', 'model','version', 
     'tools', 'gear_box', 'ecu', 'engine', 'credits', 'status', 
     'is_credited', 'stages', 'options', 'user_id','original_file_id', 'checked_by','assigned_to',
-    'request_type'];
+    'request_type', 'additional_comments'];
 
     public function files(){
         return $this->hasMany(RequestFile::class); 

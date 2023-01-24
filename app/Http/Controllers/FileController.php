@@ -118,6 +118,7 @@ class FileController extends Controller
             'ecu' => 'max:255',
             'user_id' => 'required',
             'gear_box' => 'max:255',
+            'additional_comments' => 'max:1024',
         ]);
 
         $fileName = $file['file_attached'];
@@ -148,7 +149,7 @@ class FileController extends Controller
             rename( public_path('uploads').'/'.$newFileName, public_path('uploads').'/'.$newFileNameWithTaskID );
             $newFile->file_attached = $newFileNameWithTaskID;
             $newFile->save();
-            
+
             return redirect()->route('stages', ['file_id' => $newFile->id]);
         }
 
