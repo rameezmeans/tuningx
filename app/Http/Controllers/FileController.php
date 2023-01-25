@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Laravel\Ui\Presets\React;
 use Carbon\Carbon;
+use Exception;
 use Twilio\Rest\Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -133,7 +134,7 @@ class FileController extends Controller
             $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.' cu vxx.'.$extenstion;
         }
 
-        rename( public_path('uploads').'/'.$fileName, public_path('uploads').'/'.$newFileName );
+        // rename( public_path('uploads').'/'.$fileName, public_path('uploads').'/'.$newFileName );
 
         $file['file_attached'] = $newFileName;
         $file['tools'] = "tools value";//this is not required at all -- update it
@@ -148,7 +149,15 @@ class FileController extends Controller
         if($newFile){
 
             $newFileNameWithTaskID = $newFile->id.' '.$newFileName;
-            rename( public_path('uploads').'/'.$newFileName, public_path('uploads').'/'.$newFileNameWithTaskID );
+
+            try {
+            
+                rename( public_path('uploads').'/'.$fileName, public_path('uploads').'/'.$newFileNameWithTaskID );
+            }
+            catch(\Exception $e){
+                return redirect()->route('file-upload', ['error' => 'Something went wrong. Please try again!']);
+            }
+            
             $newFile->file_attached = $newFileNameWithTaskID;
             $newFile->save();
 
