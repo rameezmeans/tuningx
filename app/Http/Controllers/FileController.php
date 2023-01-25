@@ -122,7 +122,9 @@ class FileController extends Controller
         ]);
 
         $fileName = $file['file_attached'];
-        $extenstion = substr($fileName, strpos($fileName, ".") + 1);
+        
+        $fileNameArr = explode( ".", $fileName );
+        $extenstion = end ( $fileNameArr ) ;
 
         if(isset($file['ecu'])){
             $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.$file['ecu'].' cu vxx.'.$extenstion;
@@ -145,7 +147,7 @@ class FileController extends Controller
 
         if($newFile){
 
-            $newFileNameWithTaskID = 'Task'.$newFile->id.' '.$newFileName;
+            $newFileNameWithTaskID = $newFile->id.' '.$newFileName;
             rename( public_path('uploads').'/'.$newFileName, public_path('uploads').'/'.$newFileNameWithTaskID );
             $newFile->file_attached = $newFileNameWithTaskID;
             $newFile->save();
