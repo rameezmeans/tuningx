@@ -544,6 +544,7 @@ class FileController extends Controller
         
         $old = File::findOrFail($requestFile['file_id']);
         $old->checked_by = 'customer';
+        $old->support_status = "open";
         $old->save();
 
         $newFileCreated = File::create($newFile);
@@ -750,6 +751,8 @@ class FileController extends Controller
         $reply->save();
 
         $file = File::findOrFail($request->file_id);
+        $file->support_status = "open";
+        $file->save();
 
         $admin = User::where('is_admin', 1)->first();
         // $admin = User::where('email', 'xrkalix@gmail.com')->first();
