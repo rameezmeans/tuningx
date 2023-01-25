@@ -225,15 +225,17 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="input-field col s12">
+                        
+                        <span style="margin-bottom: 0px !important; margin-left: 12px;
+                        margin-top: 16px; ">{{__('Additional Comments for Engineer')}}</span>
+                        <div class="input-field col s12" style="margin-top: 0.5rem !important;">
                             <div class="select-wrapper form-control">
                                 <textarea type="text" id="additional_comments" name="additional_comments" class="materialize-textarea @error('additional_comments') is-invalid @enderror" placeholder="{{__('Additional Comments')}} ">{{ old('additional_comments') }}</textarea>
-                            @error('additional_comments')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                                @error('additional_comments')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
 
