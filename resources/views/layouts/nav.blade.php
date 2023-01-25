@@ -107,16 +107,16 @@
             
     </ul>
     
-    <div style="color:white; margin: 20px; position: absolute; top: 600px; ">
-        <b style="font-size: 12px;">Monday - Friday Timings:</b>
+    <div style="color:white; margin: 20px; position: absolute; top: 630px; ">
+        <b style="font-size: 12px;">{{ __('Monday - Friday')}}:</b>
         <p style="font-size: 12px; margin: 0px;">{{ date('h:i A', strtotime($workHours[0]->start))}} - {{ date('h:i A', strtotime($workHours[0]->end))}}</p>
     </div>
-    <div style="color:white; margin: 20px; position: absolute; top: 640px;">
-        <b style="font-size: 12px;">Saturday Timings:</b>
+    <div style="color:white; margin: 20px; position: absolute; top: 670px;">
+        <b style="font-size: 12px;">{{__('Saturday')}}:</b>
         <p style="font-size: 12px; margin: 0px;">{{ date('h:i A', strtotime($workHours[1]->start))}} - {{ date('h:i A', strtotime($workHours[1]->end))}}</p>
     </div>
-    <div style="color:white; margin: 20px; position: absolute; top: 680px;">
-        <b style="font-size: 12px;">Sunday is off.</b>
+    <div style="color:white; margin: 20px; position: absolute; top: 710px;">
+        <b style="font-size: 12px;">{{__('Sunday closed')}}</b>
         
     </div>
     </div>
