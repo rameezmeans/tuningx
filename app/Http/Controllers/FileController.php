@@ -122,21 +122,20 @@ class FileController extends Controller
             'additional_comments' => 'max:1024',
         ]);
 
-        $fileName = $file['file_attached'];
+        // $fileName = $file['file_attached'];
         
-        $fileNameArr = explode( ".", $fileName );
-        $extenstion = end ( $fileNameArr ) ;
+        // $fileNameArr = explode( ".", $fileName );
+        // $extenstion = end ( $fileNameArr ) ;
 
-        if(isset($file['ecu'])){
-            $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.$file['ecu'].' cu vxx.'.$extenstion;
-        }
-        else{
-            $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.' cu vxx.'.$extenstion;
-        }
+        // if(isset($file['ecu'])){
+        //     $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.$file['ecu'].' cu vxx.'.$extenstion;
+        // }
+        // else{
+        //     $newFileName = $file['brand'].' '.$file['model'].' '.$file['engine'].' '.' cu vxx.'.$extenstion;
+        // }
 
-        // rename( public_path('uploads').'/'.$fileName, public_path('uploads').'/'.$newFileName );
-
-        $file['file_attached'] = $newFileName;
+        // $file['file_attached'] = $newFileName;
+        
         $file['tools'] = "tools value";//this is not required at all -- update it
         $file['credits'] = 0;
         $file['checked_by'] = 'customer';
@@ -148,18 +147,18 @@ class FileController extends Controller
 
         if($newFile){
 
-            $newFileNameWithTaskID = $newFile->id.' '.$newFileName;
+            // $newFileNameWithTaskID = $newFile->id.' '.$newFileName;
 
-            try {
+            // try {
             
-                rename( public_path('uploads').'/'.$fileName, public_path('uploads').'/'.$newFileNameWithTaskID );
-            }
-            catch(\Exception $e){
-                return redirect()->route('file-upload', ['error' => 'Something went wrong. Please try again!']);
-            }
+            //     rename( public_path('uploads').'/'.$fileName, public_path('uploads').'/'.$newFileNameWithTaskID );
+            // }
+            // catch(\Exception $e){
+            //     return redirect()->route('file-upload', ['error' => 'Something went wrong. Please try again!']);
+            // }
             
-            $newFile->file_attached = $newFileNameWithTaskID;
-            $newFile->save();
+            // $newFile->file_attached = $newFileNameWithTaskID;
+            // $newFile->save();
 
             return redirect()->route('stages', ['file_id' => $newFile->id]);
         }
