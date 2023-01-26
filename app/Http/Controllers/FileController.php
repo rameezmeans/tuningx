@@ -897,7 +897,9 @@ class FileController extends Controller
     public function getModels(Request $request)
     {
         $brand = $request->brand;
-        $models = Vehicle::OrderBy('model', 'asc')->select('model')->distinct()->where('make', '=', $brand)->get();
+        
+        $models = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $brand)->get();
+        
         return response()->json( [ 'models' => $models ] );
     }
 
