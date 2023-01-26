@@ -799,12 +799,12 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                            @error('egnineers_internal_notes')
+                            @error('events_internal_notes')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
-                            @error('egnineers_internal_notes')
+                            @error('file_url')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
