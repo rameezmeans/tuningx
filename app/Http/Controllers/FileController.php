@@ -268,6 +268,7 @@ class FileController extends Controller
      */
     public function postStages(Request $request)
     {   
+
         if($request->tuning == 'Stage 0'){
 
             $request->validate([
@@ -285,8 +286,9 @@ class FileController extends Controller
         }
 
         $credits = $request->total_credits_to_submit;
+        
         $file = File::findOrFail($request->file_id); 
-
+        $file->dtc_off_comments = $request->dtc_off_comments;
         $file->stages = $request->tuning;
 
         if( $request->option && sizeof($request->option) > 0 ){

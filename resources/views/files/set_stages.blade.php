@@ -329,28 +329,33 @@ input[type='radio']:checked:before {
                                     <li class="option-wrapper enable">
                                         <div class="stage-option">
                                             <div class="row m-n valign-wrapper">
-                                                    <div class="col s2 m2 l2 ">
-                                                        <img src="{{'https://backend.ecutech.gr/icons/'.$option['icon']}}" alt="logo" class="responsive-img stage-logo">
-                                                    </div>
-                                                    <div class="col s5 m5 l5 ">
-                                                        <span>{{__($option['name'])}}</span>
-                                                    </div>
-                                                    <div class="col s2 m2 l2 center">
-                                                        <strong class="stage-price"><span class="price">{{$option['credits']}}</span> Credits</strong>
-                                                    </div>
-                                                    <div class="col s4 m3 l3 switch center" style="display: table">
-                                                        <label class="switch-stage">
-                                                            <input type="checkbox" name="option[]" value="{{$option['name']}}" data-name="{{$option['name']}}" data-code="vmax" data-price="{{$option['credits']}}" data-default-price="{{$option['credits']}}">
-                                                            <span class="lever"></span>
-                                                        </label>
-                                                    </div>
+                                                <div class="col s2 m2 l2 ">
+                                                    <img src="{{'https://backend.ecutech.gr/icons/'.$option['icon']}}" alt="logo" class="responsive-img stage-logo">
                                                 </div>
+                                                <div class="col s5 m5 l5 ">
+                                                    <span>{{__($option['name'])}}</span>
+                                                </div>
+                                                <div class="col s2 m2 l2 center">
+                                                    <strong class="stage-price"><span class="price">{{$option['credits']}}</span> Credits</strong>
+                                                </div>
+                                                <div class="col s4 m3 l3 switch center" style="display: table">
+                                                    <label class="switch-stage">
+                                                        <input type="checkbox" id="{{ str_replace(' ','_', strtolower( $option['name'] ) )}}" name="option[]" value="{{$option['name']}}" data-name="{{$option['name']}}" data-code="{{$option['name']}}" data-price="{{$option['credits']}}" data-default-price="{{$option['credits']}}">
+                                                        <span class="lever"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="stage-option-definition">
                                             <div class="row m-n">
                                                 <div class="col s12">
                                                     <p>{{__(trim($option['description']))}}</p>
                                                 </div>
+                                                @if($option['name'] == 'DTC OFF')
+                                                <div class="col s12 m12 l12 hide dtc-off-textarea">
+                                                    <textarea name="dtc_off_comments" style="background: white; height:80px;"></textarea>
+                                                </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </li>
@@ -1823,6 +1828,20 @@ input[type='radio']:checked:before {
 
         let stages_str = '<div class="divider-light"></div><p class="tuning-resume">Stage 0 <small>3 credits</small></p>';
         $('#rows-for-credits').html(stages_str);
+
+        $(document).on('change', '#dtc_off', function(){
+            console.log("dtc_off changed");
+
+            let checked = $('#dtc_off').is(':checked');
+            if(checked){
+                $('.dtc-off-textarea').removeClass('hide');
+            }
+            else{
+                $('.dtc-off-textarea').addClass('hide');
+            }
+
+
+        });
 
         $(document).on('change', '.with-gap', function(){
             if ($(this).is(':checked')) {
