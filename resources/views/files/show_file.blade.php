@@ -794,6 +794,21 @@
 
                         <!-- Tab content -->
                         <div id="London" class="tabcontent timeline-actions z-depth-1">
+                            @error('egnineers_internal_notes')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            @error('egnineers_internal_notes')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            @error('egnineers_internal_notes')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                             <form method="POST" action="{{ route('request-file') }}" enctype="multipart/form-data">
                                 <div class="tab-content">
                                     <label style="font-size: 16px;">{{__('Send a new file request')}}</label>

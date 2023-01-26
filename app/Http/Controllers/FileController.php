@@ -747,6 +747,10 @@ class FileController extends Controller
     public function fileEngineersNotes(Request $request)
     {
 
+        $validated = $request->validate([
+            'egnineers_internal_notes' => 'required|max:1024'
+        ]);
+
         $reply = new EngineerFileNote();
         $reply->egnineers_internal_notes = $request->egnineers_internal_notes;
 
@@ -834,6 +838,11 @@ class FileController extends Controller
      */
     public function fileEventsNotes(Request $request)
     {
+
+        $validated = $request->validate([
+            'events_internal_notes' => 'required|max:1024'
+        ]);
+
         $file = new FileInternalEvent();
         $file->events_internal_notes = $request->events_internal_notes;
        
@@ -857,6 +866,10 @@ class FileController extends Controller
      */
     public function fileURL(Request $request)
     {
+
+        $validated = $request->validate([
+            'file_url' => 'required'
+        ]);
         $file = new FileUrl();
         $file->file_url = $request->file_url;
        
