@@ -492,6 +492,7 @@
                     'engine': engine,
                 },
                 success: function(items) {
+                    console.log(items);
                     $('#ecu').removeAttr('disabled');
                     $('#gear_box').removeAttr('disabled');
                     $.each(items.ecus, function(i, item) {

@@ -961,27 +961,40 @@ class FileController extends Controller
         $ecusArray = [];
 
         foreach($ecus as $e){
-            if(str_contains($e->Engine_ECU, ' / ')){
-                
-                $pos = strpos($e->Engine_ECU, ' / ');
-                $second_str = substr($e->Engine_ECU, $pos);
-                $first_str = substr($e->Engine_ECU,0, $pos);
-                $second_str = substr($second_str, 3);
-
-                if($first_str != '')
-                    $ecusArray []= $first_str;  
-                if($second_str != '')              
-                    $ecusArray []= $second_str;                
-                
-            }
-            else{
-                if($e->Engine_ECU != '')    
-                    $ecusArray []= $e->Engine_ECU;
-            }
+            $temp = explode(' / ', $e->Engine_ECU);
+            $ecusArray = array_merge($ecusArray,$temp);
         }
 
+        // $ecusArray = [];
+
+        // foreach($ecus as $e){
+        //     if(str_contains($e->Engine_ECU, ' / ')){
+                
+        //         $pos = strpos($e->Engine_ECU, ' / ');
+        //         $second_str = substr($e->Engine_ECU, $pos);
+        //         $first_str = substr($e->Engine_ECU,0, $pos);
+        //         $second_str = substr($second_str, 3);
+
+        //         if($first_str != '')
+        //             $ecusArray []= $first_str;  
+        //         if($second_str != '')              
+        //             $ecusArray []= $second_str;                
+                
+        //     }
+        //     else{
+        //         if($e->Engine_ECU != '')    
+        //             $ecusArray []= $e->Engine_ECU;
+        //     }
+        // }
+
+        //Bosch EDC17CP46 / Bosch EDC17CP57 / Bosch EDC17C66
+
+        //Bosch EDC17CP57"
+        //"Delphi CRD3P.B0 / Bosch CRD3.20
+        //
+
         $ecusArray = array_values(array_unique($ecusArray));
-        
+
         return response()->json( [ 'ecus' => $ecusArray ]);
     }
 
