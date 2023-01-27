@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Redirect;
 use Laravel\Ui\Presets\React;
 use Carbon\Carbon;
 use Exception;
+use stdClass;
 use Twilio\Rest\Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -647,32 +648,38 @@ class FileController extends Controller
     }
     public function getComments(Request $request){
 
-        $commentObj = Comment::where('engine', $request->engine);
-        $commentObj = $commentObj->where('comment_type', 'download');
-
-        if($request->make){
-            $commentObj->where('make',$request->make);
-        }
-
-        if($request->model){
-            $commentObj->where('model', $request->model);
-        }
-
         if($request->ecu){
-            $commentObj->where('ecu',$request->ecu);
-        }
 
-        if($request->generation){
-            $commentObj->where('generation', $request->generation);
-        }
+            $commentObj = Comment::where('engine', $request->engine);
+            $commentObj = $commentObj->where('comment_type', 'download');
+            if($request->make){
+                $commentObj->where('make',$request->make);
+            }
 
-        $comments = $commentObj->get();
+            if($request->model){
+                $commentObj->where('model', $request->model);
+            }
+
+            if($request->ecu){
+                $commentObj->where('ecu',$request->ecu);
+            }
+
+            if($request->generation){
+                $commentObj->where('generation', $request->generation);
+            }
+
+            $comments = $commentObj->get();
+        }
+        else{
+
+            $comments = [];
+        }
         
         $optionsArray = explode(',',$request->options);
 
         $optionComment = '';
 
-        if(!$comments->isEmpty()){
+        if(sizeof($comments) != 0){
 
             $optionComment .= '<ul class="bullets">';
 
