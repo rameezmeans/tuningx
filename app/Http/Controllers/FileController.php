@@ -648,6 +648,7 @@ class FileController extends Controller
     public function getComments(Request $request){
 
         $commentObj = Comment::where('engine', $request->engine);
+        $commentObj = $commentObj->where('comment_type', 'download');
 
         if($request->make){
             $commentObj->where('make',$request->make);
