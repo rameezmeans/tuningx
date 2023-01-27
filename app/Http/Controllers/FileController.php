@@ -621,6 +621,30 @@ class FileController extends Controller
 
     }
 
+    public function getUploadComments(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+
+        if($file->ecu){
+
+            $commentObj = Comment::where('engine', $file->engine);
+            $commentObj = $commentObj->where('comment_type', 'upload');
+            $commentObj = $commentObj->where('generation', $file->version);
+            $commentObj = $commentObj->where('make', $file->brand);
+            $commentObj = $commentObj->where('ecu', $file->ecu);
+            $commentObj = $commentObj->where('model', $file->model);
+            $commentObj = $commentObj->where('option', $request->option);
+            
+            $comments = $commentObj->get();
+        }
+
+        else{
+            $comments = [];
+        }
+
+        return response()->json(['comments'=> $comments]);
+
+    }
     public function getComments(Request $request){
 
         $commentObj = Comment::where('engine', $request->engine);
@@ -981,34 +1005,6 @@ class FileController extends Controller
             $temp = explode(' / ', $e->Engine_ECU);
             $ecusArray = array_merge($ecusArray,$temp);
         }
-
-        // $ecusArray = [];
-
-        // foreach($ecus as $e){
-        //     if(str_contains($e->Engine_ECU, ' / ')){
-                
-        //         $pos = strpos($e->Engine_ECU, ' / ');
-        //         $second_str = substr($e->Engine_ECU, $pos);
-        //         $first_str = substr($e->Engine_ECU,0, $pos);
-        //         $second_str = substr($second_str, 3);
-
-        //         if($first_str != '')
-        //             $ecusArray []= $first_str;  
-        //         if($second_str != '')              
-        //             $ecusArray []= $second_str;                
-                
-        //     }
-        //     else{
-        //         if($e->Engine_ECU != '')    
-        //             $ecusArray []= $e->Engine_ECU;
-        //     }
-        // }
-
-        //Bosch EDC17CP46 / Bosch EDC17CP57 / Bosch EDC17C66
-
-        //Bosch EDC17CP57"
-        //"Delphi CRD3P.B0 / Bosch CRD3.20
-        //
 
         $ecusArray = array_values(array_unique($ecusArray));
 

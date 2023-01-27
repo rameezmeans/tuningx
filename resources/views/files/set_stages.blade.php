@@ -83,7 +83,7 @@ input[type='radio']:checked:before {
     <div class="container">
         <div class="file-service-process">
             <form method="POST" action="{{ route('post-stages') }}"  enctype="application/x-www-form-urlencoded" name="file_upload_tuning" id="file-upload-tuning-form">
-                <input type="hidden" value="{{ $file->id }}" name="file_id">
+                <input type="hidden" value="{{ $file->id }}" name="file_id" id="file_id">
                 @csrf
                 <div class="row">
                     <div class="col l8 m9 s12">
@@ -339,8 +339,8 @@ input[type='radio']:checked:before {
                                                     <strong class="stage-price"><span class="price">{{$option['credits']}}</span> Credits</strong>
                                                 </div>
                                                 <div class="col s4 m3 l3 switch center" style="display: table">
-                                                    <label class="switch-stage">
-                                                        <input type="checkbox" id="{{ str_replace(' ','_', strtolower( $option['name'] ) )}}" name="option[]" value="{{$option['name']}}" data-name="{{$option['name']}}" data-code="{{$option['name']}}" data-price="{{$option['credits']}}" data-default-price="{{$option['credits']}}">
+                                                    <label class="switch-option">
+                                                        <input type="checkbox" class="options-checkbox" id="{{ str_replace(' ','_', strtolower( $option['name'] ) )}}" name="option[]" value="{{$option['name']}}" data-name="{{$option['name']}}" data-code="{{$option['name']}}" data-price="{{$option['credits']}}" data-default-price="{{$option['credits']}}">
                                                         <span class="lever"></span>
                                                     </label>
                                                 </div>
@@ -1805,7 +1805,7 @@ input[type='radio']:checked:before {
                             </div>
                             <input type="hidden" id="total_credits_to_submit" name="total_credits_to_submit" value="3">
                             <div class="center">
-                                <button class="btn-floating btn-large waves-effect waves-light btn-red btn-middle-panel" type="submit">
+                                <button class="btn-floating btn-large waves-effect waves-light btn-red btn-middle-panel" type="submit" id="btn-final-submit">
                                     <i class="fa fa-arrow-right"></i>
                                 </button>
                             </div>
@@ -1829,7 +1829,62 @@ input[type='radio']:checked:before {
         let stages_str = '<div class="divider-light"></div><p class="tuning-resume">Stage 0 <small>3 credits</small></p>';
         $('#rows-for-credits').html(stages_str);
 
+        $(document).on('change', '.options-checkbox', function(){
+            
+            let get_upload_comments_url = '{{route('get-upload-comments')}}';
+            let checked = $(this).is(':checked');
+
+            if(checked){
+
+                let file_id = $('#file_id').val();
+                let option = $(this).val();
+                console.log('file_id', file_id);
+                console.log('option', option);
+
+                $('#btn-final-submit').attr("disabled", true);
+
+                $.ajax({
+                    url: get_upload_comments_url,
+                    data: {
+                        option: option,
+                        file_id: file_id,
+                    },
+                    type: "POST",
+                    headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                    success: function(response) {
+
+                        $('#btn-final-submit').attr("disabled", false);   
+
+                        if(response.comments.length != 0){
+                            jQuery.each(response.comments, function(key, value){
+                                let comments = '';
+                                comments += value.comments+'<br>';
+                                console.log(value.comments);
+
+                                Swal.fire(
+                                    'Please Note!',
+                                    comments,
+                                    'warning'
+                                    );
+                                
+                                });
+                        }
+                        else{
+                            console.log('no comments found');
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+
+                        $('#btn-final-submit').attr("disabled", false);
+                        console.log("Status: " + textStatus); 
+                        console.log("Error: " + errorThrown); 
+                    } 
+                });
+            }
+        });
+
         $(document).on('change', '#dtc_off', function(){
+
             console.log("dtc_off changed");
 
             let checked = $('#dtc_off').is(':checked');
@@ -1839,7 +1894,6 @@ input[type='radio']:checked:before {
             else{
                 $('.dtc-off-textarea').addClass('hide');
             }
-
 
         });
 
