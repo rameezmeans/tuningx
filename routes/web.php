@@ -63,7 +63,7 @@ Route::post('/post_stages', [App\Http\Controllers\FileController::class, 'postSt
 Route::post('/add_credits_to_file', [App\Http\Controllers\FileController::class, 'addCredits'])->name('add-credits-to-file');
 Route::post('get_comments', [App\Http\Controllers\FileController::class, 'getComments'])->name('get-comments');
 Route::post('get_upload_comments', [App\Http\Controllers\FileController::class, 'getUploadComments'])->name('get-upload-comments');
-
+Route::get('record_feedback/{file_id}/{user_id}/{request_file_id}/{feedback}', [App\Http\Controllers\FileController::class, 'feedbackLink'])->name('record-feedback');
 
 // Route::get('/cart', [App\Http\Controllers\PaymentController::class, 'getCart'])->name('get-cart');
 Route::get('/clear_cart', [App\Http\Controllers\PaymentController::class, 'clearCart'])->name('clear-cart');

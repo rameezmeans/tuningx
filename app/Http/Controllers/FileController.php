@@ -36,7 +36,27 @@ class FileController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', [ 'except' => [ 'feedbackLink' ] ]);
+    }
+
+    public function feedbackLink($fileID, $userID, $requestFileID, $feedback) {
+
+        $reminder = EmailReminder::where('file_id', $fileID)->where('request_file_id', $requestFileID)->where('user_id', $userID)->first();
+        
+        if(!$reminder){
+            abort(404);
+        }
+
+        $reminder->delete();
+
+        $requestFile = new FileFeedback();
+        $requestFile->file_id = $fileID;
+        $requestFile->request_file_id = $requestFileID;
+        $requestFile->type = $feedback;
+        $requestFile->save();
+
+        return view('files.feedback_recorded');
+
     }
 
     public function download($file_name) {
