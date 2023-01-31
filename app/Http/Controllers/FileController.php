@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Credit;
+use App\Models\EmailReminder;
 use App\Models\EmailTemplate;
 use App\Models\EngineerFileNote;
 use App\Models\File;
@@ -926,13 +927,16 @@ class FileController extends Controller
     {
         FileFeedback::where('request_file_id','=', $request->request_file_id)->delete();
 
+        $reminder = EmailReminder::where('file_id', $request->file_id)->where('request_file_id', $request->request_file_id)->where('user_id', Auth::user()->id)->first();
+        $reminder->delete();
+
         $requestFile = new FileFeedback();
         $requestFile->file_id = $request->file_id;
         $requestFile->request_file_id = $request->request_file_id;
         $requestFile->type = $request->type;
         $requestFile->save();
 
-        return response()->json($request->all());
+        return response()->json($requestFile);
     }
 
 
