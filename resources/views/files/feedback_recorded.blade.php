@@ -14,8 +14,8 @@
 
                     <div class="form-body">
                         <div class="center">
-                            <h1 style="font-family: Roboto, sans-serif;">{{__('Thank You')}} !</h1>
-                            <span>{{__('Your Precious Feedback is Recorded!')}}</span>
+                            <h1 style="font-family: Roboto, sans-serif;">{{__('Thank You.')}} !</h1>
+                            <span>{{__('Your Precious Feedback is Recorded.')}}</span>
                         </div>
                     </div>
                 </div>
