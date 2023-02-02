@@ -505,12 +505,32 @@ class FileController extends Controller
     public function stages(Request $request)
     {
         $file = File::findOrFail($request->file_id);
+
+        $vehicle = $file->vehicle();
+        $vehicleType = $vehicle->type;
+
         $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
-        $stages = json_decode($responseStages->body(), true)['stages'];
-        $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
-        $options = json_decode($responseOptions->body(), true)['options'];
+        $stagesFromLive = json_decode($responseStages->body(), true)['stages'];
+
+        $stages = [];
+        $options = [];
+
+        foreach($stagesFromLive as $stage ){
+            if( in_array( $vehicleType ,  explode(',', $stage['vehicle_type'] ) ) ){
+                $stages []= $stage;
+            }
+        }
         
-        return view( 'files.set_stages', ['file' => $file, 'stages' => $stages, 'options' => $options] );
+        $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
+        $optionsFromLive = json_decode($responseOptions->body(), true)['options'];
+
+        foreach($optionsFromLive as $option ){
+            if( in_array( $vehicleType ,  explode(',', $option['vehicle_type'] ) ) ){
+                $options []= $option;
+            }
+        }
+        
+        return view( 'files.set_stages', ['vehicleType' => $vehicleType,'file' => $file, 'stages' => $stages, 'options' => $options] );
     }
 
     /**

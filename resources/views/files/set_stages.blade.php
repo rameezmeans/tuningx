@@ -110,6 +110,9 @@ input[type='radio']:checked:before {
                         <ul>
                             @php $count = 1; @endphp
                             @foreach($stages as $stage)
+
+                            
+
                                 <li>
                                     
                                         <div class="stage-option">
