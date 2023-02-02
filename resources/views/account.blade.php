@@ -301,9 +301,9 @@
                             </tr>
                             </thead>
                             <tbody> 
-                                @php $total = 0; @endphp
+                                @php $total = Auth::user()->total_credits(); @endphp
                                 @foreach($credits as $credit) 
-                                    @php $total += $credit->credits; @endphp                                                                                                                
+                                                                                                                                                   
                                     <tr @if($credit->file_id) class="redirect-click  @if($credit->credits < 0) minus @else plus @endif" href="#" data-redirect="{{route('file', $credit->file_id)}}" @else class="@if($credit->credits < 0) minus @else plus @endif" @endif>
                                         <td></td>
                                         <td>{{$credit->created_at->format('Y-m-d')}}</td>
@@ -336,6 +336,7 @@
                                         </td>            
                                         <td>@if($credit->credits >= 0)  {{ $credit->price_payed.'€' }} @endif</td>
                                     </tr>
+                                    @php $total -= $credit->credits; @endphp 
                                 @endforeach
                             </tbody>
                         </table>
