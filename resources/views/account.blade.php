@@ -323,15 +323,19 @@
                                             @if($credit->credits < 0 && $credit->file )
                                                 <img alt="" class="img-circle-car-history" height="30px" src="{{ get_image_from_brand($credit->file->brand) }}">
                                             @endif
+                                            
                                         </td>
                                         <td style="width: 45% !important;">
                                             @if($credit->credits < 0  && $credit->file)
                                                 {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}
                                             @endif
+                                            @if($credit->credits > 0 && $credit->price_payed == 0)
+                                                <b>A gift because you are a good customer.</b>
+                                            @endif
                                         </td>
                                         <td style="width: 10% !important;">
                                             
-                                                {{ $credit->invoice_id }}
+                                            {{ $credit->invoice_id }}
                                                
                                         </td>            
                                         <td>@if($credit->credits >= 0)  {{ $credit->price_payed.'€' }} @endif</td>
