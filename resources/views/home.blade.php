@@ -261,7 +261,7 @@
 
         });
 
-        var xValuesYears = ['January','Fabrury','Marck','April','May',
+        var xValuesYears = ['January','Fabrury','March','April','May',
         'June','July','August','September','October', 'November', 'December'];
 
         let yearObj = @php echo $countYear @endphp;

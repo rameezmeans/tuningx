@@ -26724,7 +26724,7 @@ div.panel-info-pricing {
 
 .brand-middle-panel img {
     display: block;
-    height: 64px;
+    /* height: 64px; */
     margin: auto;
     padding: 10px;
     width: 80px;
