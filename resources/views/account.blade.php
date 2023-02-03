@@ -330,7 +330,7 @@
                                                 {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}
                                             @endif
                                             @if($credit->credits > 0 && $credit->price_payed == 0)
-                                                <b>A gift because you are a good customer.</b>
+                                                <b>{{$credit->message_to_credit}}</b>
                                             @endif
                                         </td>
                                         <td style="width: 10% !important;">
