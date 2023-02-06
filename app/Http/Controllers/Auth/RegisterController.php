@@ -90,6 +90,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         
+        if(isset( $data['slave_tools_flag'])){
+            $slaveToolsFlag = $data['slave_tools_flag'];
+            $slaveTools = $data['slave_tools'];
+        }
+        else{
+            $slaveToolsFlag = 0;
+            $slaveTools = [];
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -102,9 +111,9 @@ class RegisterController extends Controller
             'status' => $data['status'],
             'company_name' => $data['company_name'],
             'company_id' => $data['company_id'],
-            'slave_tools_flag' => $data['slave_tools_flag'],
+            'slave_tools_flag' => $slaveToolsFlag,
             'master_tools' => implode(',', $data['master_tools']),
-            'slave_tools' =>  implode(',', $data['slave_tools']),
+            'slave_tools' =>  implode(',', $slaveTools),
             'password' => Hash::make($data['password']),
         ]);
     }

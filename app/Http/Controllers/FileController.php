@@ -192,11 +192,11 @@ class FileController extends Controller
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         $sessionId = $request->get('session_id'); 
-
+        
         try {
 
             $session = \Stripe\Checkout\Session::retrieve($sessionId);
-
+           
             if (!$session) {
                 throw new NotFoundHttpException;
             }
@@ -227,16 +227,18 @@ class FileController extends Controller
         $factor = 0;
         $tax = 0;
 
-        if($customer->group->tax > 0){
-            $tax = (float) $customer->group->tax;
-        }
+        if($customer->group){
+            if($customer->group->tax > 0){
+                $tax = (float) $customer->group->tax;
+            }
 
-        if($customer->group->raise > 0){
-            $factor = (float)  ($customer->group->raise / 100) * $price->value;
-        }
+            if($customer->group->raise > 0){
+                $factor = (float)  ($customer->group->raise / 100) * $price->value;
+            }
 
-        if($customer->group->discount > 0){
-            $factor =  -1* (float) ($customer->group->discount / 100) * $price->value;
+            if($customer->group->discount > 0){
+                $factor =  -1* (float) ($customer->group->discount / 100) * $price->value;
+            }
         }
 
         
@@ -324,16 +326,18 @@ class FileController extends Controller
         $factor = 0;
         $tax = 0;
 
-        if($customer->group->tax > 0){
-            $tax = (float) $customer->group->tax;
-        }
+        if($customer->group){
+            if($customer->group->tax > 0){
+                $tax = (float) $customer->group->tax;
+            }
 
-        if($customer->group->raise > 0){
-            $factor = (float)  ($customer->group->raise / 100) * $price->value;
-        }
+            if($customer->group->raise > 0){
+                $factor = (float)  ($customer->group->raise / 100) * $price->value;
+            }
 
-        if($customer->group->discount > 0){
-            $factor =  -1* (float) ($customer->group->discount / 100) * $price->value;
+            if($customer->group->discount > 0){
+                $factor =  -1* (float) ($customer->group->discount / 100) * $price->value;
+            }
         }
 
         $file->save();

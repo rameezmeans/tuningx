@@ -231,8 +231,11 @@
                                             <strong>{{ Auth::user()->company }}</strong><br>
                                             {{ Auth::user()->name }}<br>
                                             {{ Auth::user()->address }}<br>
-                                            {{ code_to_country(Auth::user()->country) }}<br>															
-                                            {{$group->name}} ({{$group->tax}}%)<br>
+                                            {{ code_to_country(Auth::user()->country) }}<br>
+                                            @if($group)															
+                                                {{$group->name}} ({{$group->tax}}%)
+                                            @endif
+                                            <br>
                                         </address>
                                     </div>
                                     <div class="col s6 ">&nbsp;</div>

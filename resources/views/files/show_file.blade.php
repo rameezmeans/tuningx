@@ -708,10 +708,7 @@
                 // libxml_clear_errors();
                 // $pokemon_xpath = new DOMXPath($pokemon_doc);
                 // $coverImage = $pokemon_xpath->evaluate('string(//*[@class="VisualTop__adaptive"]/@data-path)');
-
-
                 // }
-
                 $coverImage = env('BACKEND_URL').'/icons/logos/header.png';
 
                 @endphp
@@ -1027,7 +1024,7 @@
                                 </li>
                             </ul>
 
-                            <small class="timeline-time-small">{{ $file->created_at->format('H:i:s d/m/Y') }}</small>
+                            <small class="timeline-time-small">{{ Timezone::convertToLocal($file->created_at, 'H:i:s d/m/Y', false) }}</small>
                             <div class="divider"></div>
                             <span>
                                 <span class="red-olsx-text">{{__('Filename')}} :</span> {{ $file->file_attached }}
@@ -1106,7 +1103,7 @@
                             </span>
                             <div class="row m-b-none">
                                 <div class="col s6">
-                                    <small class="timeline-time-small">{{ \Carbon\Carbon::parse($engineersMessage->created_at)->format('H:i:s d/m/Y') }}</small>
+                                    <small class="timeline-time-small">{{ Timezone::convertToLocal($engineersMessage->created_at, 'H:i:s d/m/Y', false) }}</small>
                                 </div>
                                 <div class="col s6 right-align">
                                 </div>
@@ -1136,7 +1133,7 @@
                             </span>
                             <div class="row m-b-none">
                                 <div class="col s6">
-                                    <small class="timeline-time-small">{{ \Carbon\Carbon::parse($row->created_at)->format('H:i:s d/m/Y') }}</small>
+                                    <small class="timeline-time-small">{{ Timezone::convertToLocal( $row->created_at, 'H:i:s d/m/Y', false) }}</small>
                                 </div>
                                 <div class="col s6 right-align">
                                 </div>
@@ -1165,7 +1162,7 @@
                             </span>
                             <div class="row m-b-none">
                                 <div class="col s6">
-                                    <small class="timeline-time-small">{{ \Carbon\Carbon::parse($row->created_at)->format('H:i:s d/m/Y') }}</small>
+                                    <small class="timeline-time-small">{{ Timezone::convertToLocal($row->created_at, 'H:i:s d/m/Y', false) }}</small>
                                 </div>
                                 <div class="col s6 right-align">
                                 </div>
@@ -1195,7 +1192,7 @@
 
                             <div class="divider"></div>
                             <span>
-                                <small class="timeline-time-small">{{\Carbon\Carbon::parse($row->created_at)->format('H:i:s d/m/Y')}}</small>
+                                <small class="timeline-time-small">{{Timezone::convertToLocal($row->created_at, 'H:i:s d/m/Y', false) }}</small>
                                 <div class="divider"></div>
                                 <span>
                                     @if($row->engineer == 1)
@@ -1422,7 +1419,7 @@
 
                     <div class="divider"></div>
                     <span>
-                        <small class="timeline-time-small">{{\Carbon\Carbon::parse($row->created_at)->format('H:i:s d/m/Y')}}</small>
+                        <small class="timeline-time-small">{{Timezone::convertToLocal($row->created_at, 'H:i:s d/m/Y', false ) }}</small>
                         <div class="divider"></div>
                         <span>
 
@@ -1550,7 +1547,7 @@
                 </span>
                 <div class="row m-b-none">
                     <div class="col s6">
-                        <small class="timeline-time-small">{{ \Carbon\Carbon::parse($engineersMessage->created_at)->format('H:i:s d/m/Y') }}</small>
+                        <small class="timeline-time-small">{{ Timezone::convertToLocal($engineersMessage->created_at, 'H:i:s d/m/Y', false ) }}</small>
                     </div>
                     <div class="col s6 right-align">
                     </div>
@@ -1581,7 +1578,7 @@
                 </span>
                 <div class="row m-b-none">
                     <div class="col s6">
-                        <small class="timeline-time-small">{{ \Carbon\Carbon::parse($r->created_at)->format('H:i:s d/m/Y') }}</small>
+                        <small class="timeline-time-small">{{ Timezone::convertToLocal( $r->created_at, 'H:i:s d/m/Y', false ) }}</small>
                     </div>
                     <div class="col s6 right-align">
                     </div>
@@ -1611,7 +1608,7 @@
 
                 <div class="divider"></div>
                 <span>
-                    <small class="timeline-time-small">{{\Carbon\Carbon::parse($internal->created_at)->format('H:i:s d/m/Y')}}</small>
+                    <small class="timeline-time-small">{{Timezone::convertToLocal($internal->created_at, 'H:i:s d/m/Y', false)}}</small>
                     <div class="divider"></div>
                     <span>
                         @if($internal->engineer == 1)
