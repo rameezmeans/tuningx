@@ -1008,7 +1008,7 @@ class FileController extends Controller
         $model = $request->model;
         $brand = $request->brand;
 
-        $versions = Vehicle::OrderBy('generation', 'asc')->select('generation')->distinct()
+        $versions = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
         ->where('Make', '=', $brand)
         ->where('Model', '=', $model)
         ->get();
@@ -1027,7 +1027,7 @@ class FileController extends Controller
         $brand = $request->brand;
         $version = $request->version;
 
-        $engines = Vehicle::OrderBy('engine', 'asc')->select('engine')->distinct()
+        $engines = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
         ->where('Make', '=', $brand)
         ->where('Model', '=', $model)
         ->where('Generation', '=', $version)
@@ -1048,7 +1048,7 @@ class FileController extends Controller
         $version = $request->version;
         $engine = $request->engine;
        
-        $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->select('Engine_ECU')->distinct()
+        $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
         ->where('Make', '=', $brand)
         ->where('Model', '=', $model)
         ->where('Generation', '=', $version)

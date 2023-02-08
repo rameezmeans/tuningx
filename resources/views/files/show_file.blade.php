@@ -696,6 +696,7 @@
             </a>
             <div class="parallax">
                 @php
+
                 // $curl = curl_init($vehicle->Engine_URL);
                 // curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
                 // curl_setopt($curl,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
@@ -709,6 +710,7 @@
                 // $pokemon_xpath = new DOMXPath($pokemon_doc);
                 // $coverImage = $pokemon_xpath->evaluate('string(//*[@class="VisualTop__adaptive"]/@data-path)');
                 // }
+
                 $coverImage = env('BACKEND_URL').'/icons/logos/header.png';
 
                 @endphp
@@ -2158,9 +2160,7 @@
         });
 
         $(document).on('click', '.feedback li', function() {
-
-            // console.log('here we are again.');
-
+            
             $('.feedback li').removeClass('active');
             $(this).addClass('active');
             let type = $(this).data('type');
