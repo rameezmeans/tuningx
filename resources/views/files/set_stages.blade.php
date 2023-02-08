@@ -1826,6 +1826,11 @@ input[type='radio']:checked:before {
 <script type="text/javascript">
     $(document).ready(function(){
         
+        if (sessionStorage.getItem("Page2Visited")) {
+          sessionStorage.removeItem("Page2Visited");
+          window.location.reload(true); // force refresh page1
+        }
+
         let value = 3;
         let checkbox_credits_count = 0;
 

@@ -324,6 +324,8 @@ function roundToTwo(value) {
 
 $( document ).ready(function(event) {
 
+    sessionStorage.setItem("Page2Visited", "True");
+
     $(document).on('click','.modal-close-payment', function(e){
         $(function () {
             $('#payment-modal').css("display", "none");
