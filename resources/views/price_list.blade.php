@@ -112,7 +112,7 @@
                                     <strong class="m-l-md"> {{$stage['credits']}} credits</strong>
                                     </div>
                                     <div class="stage-price-card slave-red">
-                                        <p>{{$stage['description']}}</p>
+                                        <p>{{__(trim($stage['description']))}}</p>
                                 </div>
                             </div>
                         @endforeach
@@ -232,7 +232,7 @@
                                 <strong class="m-l-md"> {{$option['credits']}} credits</strong>
                             </div>
                             <div class="option-price-card slave-red">
-                                <p>{{$option['description']}}</p>
+                                <p>{{__(trim($option['description']))}}</p>
                             </div>
                         </div>
                         @endforeach
