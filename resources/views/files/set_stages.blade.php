@@ -1842,6 +1842,8 @@ input[type='radio']:checked:before {
             let get_upload_comments_url = '{{route('get-upload-comments')}}';
             let checked = $(this).is(':checked');
 
+            let locale = '{{Session::get('locale') }}';
+
             if(checked){
 
                 let file_id = $('#file_id').val();
@@ -1856,6 +1858,7 @@ input[type='radio']:checked:before {
                     data: {
                         option: option,
                         file_id: file_id,
+                        locale, locale
                     },
                     type: "POST",
                     headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
