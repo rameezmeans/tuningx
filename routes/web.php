@@ -115,6 +115,7 @@ Route::get('language/{locale}', function ($locale) {
         $translation->ip = get_client_ip();
         $translation->save();
     }
+    
     app()->setLocale($locale);
     session()->put('locale', $locale);
     return redirect()->back();

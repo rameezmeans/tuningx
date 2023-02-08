@@ -82,9 +82,13 @@ return [
     |
     */
 
+    'locales' => [
+        'gr' => 'https://backend.ecutech.gr/gr.json'
+    ],
+
     'available_locales' => [
         'English' => 'en',
-        'Russian' => 'gr'
+        'Greek' => 'gr'
       ],
 
     /*
