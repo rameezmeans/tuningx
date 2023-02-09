@@ -4,7 +4,7 @@ use App\Models\NewsFeed;
 use App\Models\Tool;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Http;
-
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 if(!function_exists('get_feeds')){
 
@@ -70,7 +70,7 @@ if(!function_exists('get_logo_for_stages_and_options')){
             $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
             $options = json_decode($responseOptions->body(), true)['options'];
         }
-        catch(\Exception $e){
+        catch(HttpException $e){
             abort(505);
         }
 
