@@ -6,7 +6,7 @@
         $feed = Illuminate\Support\Facades\Session::get('feed');       
     @endphp
     @if(isset($feed))
-        <div class="chip alert-message @if($feed->type == 'warning') alert-blue @elseif($feed->type == 'good_news') alert-green @else alert-red @endif"><span><i class="fa fa-info-circle"></i>{{$feed->feed}}<button class="close-feed" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
+        <div class="chip alert-message @if($feed->type == 'warning') alert-blue @elseif($feed->type == 'good_news') alert-green @else alert-red @endif"><span><i class="fa fa-info-circle"></i>{{__($feed->feed)}}<button class="close-feed" style="background: transparent; margin-left: 20px; border: white 1px solid;">x</button></div>
     @endif
 
 <main>
