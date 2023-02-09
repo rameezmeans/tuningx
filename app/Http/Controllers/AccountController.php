@@ -59,10 +59,15 @@ class AccountController extends Controller
      */
     public function priceList()
     {
-        $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
-        $stages = json_decode($responseStages->body(), true)['stages'];
-        $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
-        $options = json_decode($responseOptions->body(), true)['options'];
+        try{
+            $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
+            $stages = json_decode($responseStages->body(), true)['stages'];
+            $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
+            $options = json_decode($responseOptions->body(), true)['options'];
+        }
+        catch(\Exception $e){
+            abort(505);
+        }
         
         return view('price_list', ['stages' => $stages, 'options' => $options]);
     }

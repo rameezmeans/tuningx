@@ -513,11 +513,16 @@ class FileController extends Controller
         $vehicle = $file->vehicle();
         $vehicleType = $vehicle->type;
 
-        $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
-        $stagesFromLive = json_decode($responseStages->body(), true)['stages'];
-
         $stages = [];
         $options = [];
+
+        try{
+            $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
+            $stagesFromLive = json_decode($responseStages->body(), true)['stages'];
+        }catch(\Exception $e){
+            abort(505);
+        }
+        
 
         foreach($stagesFromLive as $stage ){
             if( in_array( $vehicleType ,  explode(',', $stage['vehicle_type'] ) ) ){
@@ -525,8 +530,12 @@ class FileController extends Controller
             }
         }
         
-        $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
-        $optionsFromLive = json_decode($responseOptions->body(), true)['options'];
+        try{
+            $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
+            $optionsFromLive = json_decode($responseOptions->body(), true)['options'];
+        }catch(\Exception $e){
+            abort(505);
+        }
 
         foreach($optionsFromLive as $option ){
             if( in_array( $vehicleType ,  explode(',', $option['vehicle_type'] ) ) ){
@@ -681,14 +690,15 @@ class FileController extends Controller
             $commentObj = $commentObj->where('model', $file->model);
             $commentObj = $commentObj->where('option', $request->option);
             
-            $comments = $commentObj->get();
+            $comment = $commentObj->first();
+            $comment->comments = __($comment->comments);
         }
 
         else{
-            $comments = [];
+            $comment = [];
         }
 
-        return response()->json(['comments'=> $comments]);
+        return response()->json(['comment'=> $comment]);
 
     }
     public function getComments(Request $request){
@@ -730,7 +740,7 @@ class FileController extends Controller
 
             foreach($comments as $comment){
                 if(in_array($comment->option,$optionsArray)){
-                    $optionComment  .= '<li>'.$comment->comments.'</li>';
+                    $optionComment  .= '<li>'.__($comment->comments).'</li>';
                 }
             }
 

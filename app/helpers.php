@@ -64,10 +64,15 @@ if(!function_exists('get_logo_for_stages_and_options')){
 
     function get_logo_for_stages_and_options( $str ){
 
-        $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
-        $stages = json_decode($responseStages->body(), true)['stages'];
-        $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
-        $options = json_decode($responseOptions->body(), true)['options'];
+        try{
+            $responseStages = Http::get('http://backend.ecutech.gr/api/get_stages');
+            $stages = json_decode($responseStages->body(), true)['stages'];
+            $responseOptions = Http::get('http://backend.ecutech.gr/api/get_options');
+            $options = json_decode($responseOptions->body(), true)['options'];
+        }
+        catch(\Exception $e){
+            abort(505);
+        }
 
         foreach($stages as $stage){
             if($stage['name'] == $str)

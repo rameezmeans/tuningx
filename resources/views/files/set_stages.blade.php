@@ -1864,21 +1864,22 @@ input[type='radio']:checked:before {
                     headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                     success: function(response) {
 
-                        $('#btn-final-submit').attr("disabled", false);   
+                        $('#btn-final-submit').attr("disabled", false); 
+                        
+                        let note = '{{__('Please Note')}}';
 
-                        if(response.comments.length != 0){
-                            jQuery.each(response.comments, function(key, value){
-                                let comments = '';
-                                comments += value.comments+'<br>';
-                                console.log(value.comments);
+                        console.log(response.comment.comments);
+                        let comment = response.comment.comments
 
-                                Swal.fire(
-                                    'Please Note!',
-                                    comments,
-                                    'warning'
-                                    );
-                                
-                                });
+                        if(comment != 'NULL'){
+                           
+                            console.log(comment);
+
+                            Swal.fire(
+                                note,
+                                comment,
+                                'warning'
+                                );
                         }
                         else{
                             console.log('no comments found');
