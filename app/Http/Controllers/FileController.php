@@ -13,6 +13,7 @@ use App\Models\FileInternalEvent;
 use App\Models\FileUrl;
 use App\Models\MessageTemplate;
 use App\Models\Price;
+use App\Models\ReminderManager;
 use App\Models\RequestFile;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -29,6 +30,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FileController extends Controller
 {
+    private $manager;
     /**
      * Create a new controller instance.
      *
@@ -36,6 +38,16 @@ class FileController extends Controller
      */
     public function __construct()
     {
+
+        $reminderManagers = ReminderManager::all();
+        $manager = [];
+        foreach($reminderManagers as $row){
+            $temp[$row->type] = $row->active;
+            $manager = array_merge($manager, $temp);
+        }
+
+        $this->manager = $manager;
+
         $this->middleware('auth', [ 'except' => [ 'feedbackLink' ] ]);
     }
 
@@ -447,9 +459,12 @@ class FileController extends Controller
 
         $subject = "ECU Tech: Task Assigned!";
 
-        \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
-        
-        $this->sendMessage($head->phone, $message);
+        if($this->manager['eng_assign_eng_email']){
+            \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        }
+        if($this->manager['eng_assign_eng_sms']){
+            $this->sendMessage($head->phone, $message);
+        }
         
         $template = EmailTemplate::findOrFail(2);
 
@@ -493,8 +508,12 @@ class FileController extends Controller
         
         $subject = "ECU Tech: File Uploaded!";
 
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
-        $this->sendMessage($admin->phone, $message);
+        if($this->manager['file_upload_admin_email']){
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+        }
+        if($this->manager['file_upload_admin_sms']){
+            $this->sendMessage($admin->phone, $message);
+        }
             
         }
         
@@ -657,16 +676,22 @@ class FileController extends Controller
         // $message = "Hi, New File is being uploaded by a Customer: ".$uploader->name;
 
         $subject = "ECU Tech: New Request File Uploaded!";
-
+        if($this->manager['file_new_req_admin_email']){
             \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+        }
             
             if($newFileCreated->assigned_to){
                 $engineer = User::FindOrFail($newFileCreated->assigned_to);
-                \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
-                $this->sendMessage($engineer->phone, $message);
+                if($this->manager['file_new_req_eng_email']){
+                    \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+                }
+                if($this->manager['file_new_req_eng_sms']){
+                    $this->sendMessage($engineer->phone, $message);
+                }
             }
-
-            $this->sendMessage($admin->phone, $message);
+            if($this->manager['file_new_req_admin_sms']){
+                $this->sendMessage($admin->phone, $message);
+            }
         
 
         if($newFileCreated){
@@ -901,15 +926,25 @@ class FileController extends Controller
 
         $subject = "ECU Tech: Client support message!";
 
+        if($this->manager['msg_cus_admin_email']){
             \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+        }
             
             if($file->assigned_to){
                 $engineer = User::FindOrFail($file->assigned_to);
-                \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
-                $this->sendMessage($engineer->phone, $message);
+
+                if($this->manager['msg_cus_eng_email']){
+                    \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+                }
+
+                if($this->manager['msg_cus_eng_sms']){
+                    $this->sendMessage($engineer->phone, $message);
+                }
             }
-            
-            $this->sendMessage($admin->phone, $message);
+
+            if($this->manager['msg_cus_admin_sms']){
+                $this->sendMessage($admin->phone, $message);
+            }
         
         $old = File::findOrFail($request->file_id);
         $old->checked_by = 'customer';
