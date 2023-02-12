@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Credit;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -50,7 +51,9 @@ class InvoicesController extends Controller
     public function makePDF(Request $request)
     {
         $invoice = Credit::findOrFail($request->id);
-        $pdf = PDF::loadView('files.pdf', ['invoice' => $invoice]);
+        $date = date('j F, Y');
+        $client = User::findOrFail($invoice->user_id);
+        $pdf = PDF::loadView('files.pdf', ['invoice' => $invoice, 'date' => $date, 'client' => $client]);
         return $pdf->download($invoice->invoice_id.'.pdf');
     }
 }
