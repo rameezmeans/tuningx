@@ -102,6 +102,7 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'front_end_id' => 2,
             'phone' => $data['phone'],
             'language' => $data['language'],
             'address' => $data['address'],

@@ -35,6 +35,7 @@ class User extends Authenticatable
         'slave_tools_flag',
         'master_tools',
         'slave_tools',
+        'front_end_id'
     ];
 
     /**
