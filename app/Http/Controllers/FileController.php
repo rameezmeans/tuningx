@@ -176,6 +176,7 @@ class FileController extends Controller
 
         $head = User::where('is_head', 1)->first();
         $file['assigned_to'] = $head->id; // auto assigned to Nick (Head)
+        $file['front_end_id'] = 2; // new portal
 
         $newFile = File::create($file);
 
