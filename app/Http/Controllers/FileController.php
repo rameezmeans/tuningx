@@ -179,7 +179,7 @@ class FileController extends Controller
         $file['front_end_id'] = 2; // new portal
 
         $newFile = File::create($file);
-
+        
         if($newFile){
 
             // $newFileNameWithTaskID = $newFile->id.' '.$newFileName;
